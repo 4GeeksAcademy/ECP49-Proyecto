@@ -31,3 +31,17 @@ class Videogame(db.Model):
             "pegi": self.pegi,
             "year": self.year
         }
+
+class Consoles(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(180), unique=False, nullable=False)
+    company = db.Column(db.String(180), unique=False, nullable=False)    
+    year = db.Column(db.Integer)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "company": self.pegi,
+            "year": self.year
+        }
