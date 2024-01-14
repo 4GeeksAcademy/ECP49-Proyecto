@@ -17,3 +17,13 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+
+class Genders(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(180), unique=False, nullable=False)
+   
+    def serialize(self):
+        return {
+            "id": self.id,
+            "type": self.type,
+        }
