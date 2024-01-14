@@ -45,3 +45,13 @@ class Consoles(db.Model):
             "company": self.pegi,
             "year": self.year
         }
+    
+class Genres(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(180), unique=False, nullable=False)
+   
+    def serialize(self):
+        return {
+            "id": self.id,
+            "type": self.type,
+        }

@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, abort, redirect
-from api.models import db, User, Videogame , Consoles
+from api.models import db, User, Videogame , Consoles, Genres
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
@@ -166,3 +166,50 @@ def delete_console(console_id):
     return jsonify({"msg": f"Consola con ID {console_id} eliminada exitosamente"}), 200
 
 ################# METODOS CONSOLAS ###############################
+
+################# START METHODS GENRES ###############################
+
+#GET ALL GENRES#
+
+@api.route('/genres', methods=['GET'])
+def get_all_genres():
+    genres = Genres.query.all()
+
+    if not genres:
+        return jsonify({"msg": "Genres Not Found"}), 404
+
+    serialized_genres = [genres.serialize() for genre in genres]
+    return jsonify(serialized_genres), 200
+
+#GET ONE GENRE BY ID#
+
+@api.route('/genres/<int:genre_id>', methods=['GET'])
+def get_genre_by_id(genre_id):
+    genre = Genres.query.get(genre_id)
+
+    if not genre:
+        return jsonify({"msg": "Genre Not Found"}), 404
+
+    serialized_genre = genre.serialize()
+    return jsonify(serialized_genre), 200
+
+#POST NEW GENRE#
+
+@api.route('/genres', methods=['POST'])
+def create_new_genre():
+    request_body = request.get_json()
+
+    if "type" not in request_body:
+        return jsonify({"error": "Incomplete Data"}), 400
+
+    new_genre = Genres(
+        type=request_body["type"]
+    )
+
+    db.session.add(new_genre)
+    db.session.commit()
+
+    return jsonify({"msg": "New Genre Created"}), 200
+
+################# END METHODS GENRES ###############################
+
