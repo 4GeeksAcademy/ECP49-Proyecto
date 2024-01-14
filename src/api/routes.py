@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint, abort, redirect
-from api.models import db, User, Videogame
+from api.models import db, User, Videogame , Consoles
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
@@ -76,3 +76,86 @@ def delete_videogame(id):
     db.session.commit()
 
     return redirect("/")
+
+
+
+
+################# METODOS CONSOLAS ###############################
+
+# Ruta para obtener todas las consolas
+@api.route('/consoles', methods=['GET'])
+def get_all_consoles():
+    consoles = Consoles.query.all()
+
+    if not consoles:
+        return jsonify({"msg": "No se encontraron consolas"}), 404
+
+    serialized_consoles = [console.serialize() for console in consoles]
+    return jsonify(serialized_consoles), 200
+
+# Ruta para obtener una consola por su ID
+@api.route('/consoles/<int:console_id>', methods=['GET'])
+def get_console_by_id(console_id):
+    console = Consoles.query.get(console_id)
+
+    if not console:
+        return jsonify({"msg": "Consola no encontrada"}), 404
+
+    serialized_console = console.serialize()
+    return jsonify(serialized_console), 200
+
+# Ruta para crear una nueva consola
+@api.route('/consoles', methods=['POST'])
+def create_console():
+    request_body = request.get_json()
+
+    if "name" not in request_body or "company" not in request_body or "year" not in request_body:
+        return jsonify({"error": "Datos incompletos"}), 400
+
+    new_console = Consoles(
+        name=request_body["name"],
+        company=request_body["company"],
+        year=request_body["year"]
+    )
+
+    db.session.add(new_console)
+    db.session.commit()
+
+    return jsonify({"msg": "Nueva consola añadida exitosamente"}), 200
+
+# Ruta para actualizar una consola por su ID
+@api.route('/consoles/<int:console_id>', methods=['PUT'])
+def update_console(console_id):
+    console = Consoles.query.get(console_id)
+
+    if not console:
+        return jsonify({"msg": "Consola no encontrada"}), 404
+
+    request_body = request.get_json()
+
+    # Actualizar los campos proporcionados en el cuerpo de la solicitud
+    if "name" in request_body:
+        console.name = request_body["name"]
+    if "company" in request_body:
+        console.company = request_body["company"]
+    if "year" in request_body:
+        console.year = request_body["year"]
+
+    db.session.commit()
+
+    return jsonify({"msg": f"Consola con ID {console_id} actualizada exitosamente"}), 200
+
+# Ruta para eliminar una consola por su ID
+@api.route('/consoles/<int:console_id>', methods=['DELETE'])
+def delete_console(console_id):
+    console = Consoles.query.get(console_id)
+
+    if not console:
+        return jsonify({"msg": "Consola no encontrada"}), 404
+
+    db.session.delete(console)
+    db.session.commit()
+
+    return jsonify({"msg": f"Consola con ID {console_id} eliminada exitosamente"}), 200
+
+################# METODOS CONSOLAS ###############################
