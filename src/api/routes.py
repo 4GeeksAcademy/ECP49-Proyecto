@@ -11,19 +11,26 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
 
+@api.route('/videogames', methods=['GET'])
+def getVideogames():
+    allVideogames = Videogame.query.all()
 
-@api.route('/videogame', methods=['GET'])
-def index():
-    videogame = Videogame.query.all()
+    result = list(map(lambda item: item.serialize(), allVideogames))
 
-#check that there is any videogame, if yes, show
-    if len(videogame) < 1:
-        return jsonify({"msg": "not found"}), 404
-    serialized_videogame = list(map(lambda x: x.serialize(), videogame))
-    return jsonify (serialized_videogame), 200 
+    return jsonify(result), 200
+
+# @api.route('/videogames', methods=['GET'])
+# def index():
+#     videogame = Videogame.query.all()
+
+# #check that there is any videogame, if yes, show
+#     if len(videogame) < 1:
+#         return jsonify({"msg": "not found"}), 404
+#     serialized_videogame = list(map(lambda x: x.serialize(), videogame))
+#     return jsonify (serialized_videogame), 200 
 
 #add new videogame
-@api.route("/videogame/new", methods=["GET", "POST"])
+@api.route("/videogames/new", methods=["GET", "POST"])
 def new_videogame():
     data = request.get_json()
     videogame = Videogame(
@@ -43,7 +50,7 @@ def new_videogame():
         return jsonify({"message":"error creating videogame"}), 500
 
 #update info videogame
-@api.route("/videogame/<int:id>", methods=["PUT" ])
+@api.route("/videogames/<int:id>", methods=["PUT" ])
 def update_videogame(id):
     videogame = Videogame.query.get(id)
 
@@ -65,7 +72,7 @@ def update_videogame(id):
         return redirect("/videogame/{}".format(videogame.id))
 
 #delete videogame
-@api.route("/videogame/<int:id>/delete", methods=["DELETE" ])
+@api.route("/videogames/<int:id>/delete", methods=["DELETE" ])
 def delete_videogame(id):
     videogame = Videogame.query.get(id)
 
