@@ -47,6 +47,9 @@ export const Videogame = ({ id }) => {
   };
   
 
-// Videogame.propTypes = {
-//   id: PropTypes.number.isRequired,
-//  };
+ Videogame.propTypes = {
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string,
+    pegi: PropTypes.number,
+    year: PropTypes.number,
+  };

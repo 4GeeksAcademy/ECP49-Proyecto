@@ -4,14 +4,16 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint, abort, redirect
 from api.models import db, User, Videogame , Consoles
 from api.utils import generate_sitemap, APIException
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
+
 
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
-
+#get all videogames
 @api.route('/videogames', methods=['GET'])
+@cross_origin(methods=["GET"], headers=["Content-Type", "Authorization"])
 def getVideogames():
     allVideogames = Videogame.query.all()
 
@@ -19,6 +21,17 @@ def getVideogames():
 
     return jsonify(result), 200
 
+#get single videogame
+@api.route('/videogames/<int:id>', methods=['GET'])
+@cross_origin(methods=["GET"], headers=["Content-Type", "Authorization"])
+def get_single_videogame(id):
+    videogame = Videogame.query.get(id)
+
+    videogame_json = videogame.to_json()
+    if '_sa_instance_state' in videogame_json:
+        del videogame_json['_sa_instance_state']
+
+    return videogame_json
 # @api.route('/videogames', methods=['GET'])
 # def index():
 #     videogame = Videogame.query.all()
