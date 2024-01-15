@@ -14,6 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .catch((err) => console.error(err));
 	},
+	
 	getSingleVideogame: (videogameId) => {
 		// fetch(`${process.env.BACKEND_URL}` + `/api/videogames/${videogameId}`)
 		// fetch(process.env.BACKEND_URL + `/api/videogames/${id}`)
