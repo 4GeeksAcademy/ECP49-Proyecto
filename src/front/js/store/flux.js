@@ -6,18 +6,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
       // Use getActions to call a function within a function
       getVideogames: () => {
+
+		fetch(process.env.BACKEND_URL + "/api/videogames/")
+		  .then((res) => res.json())
+          .then((data) => {
+            // console.log(data);
+
 		fetch(process.env.BACKEND_URL + "/api/videogames")
 		  .then((res) => res.json())
           .then((data) => {
             console.log(data);
+
             setStore({ videogames: data });
           })
           .catch((err) => console.error(err));
 	},
 
+	
+	getSingleVideogame: (videogameId) => {
+		// fetch(`${process.env.BACKEND_URL}` + `/api/videogames/${videogameId}`)
+		// fetch(process.env.BACKEND_URL + `/api/videogames/${id}`)
+		fetch(`${process.env.BACKEND_URL}/api/videogames/${videogameId}`)
+		.then((res) => res.json())
+		  .then((data) => {
+			//console.log(data);
+			setStore({ videojuegos: data.results });
+		  })
+		  .catch((err) => console.error(err));
+	  },
+
+			
+
 			
 			
 			
+
 			// exampleFunction: () => {
 			// 	getActions().changeColor(0, "green");
 			// },

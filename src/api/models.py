@@ -31,6 +31,10 @@ class Videogame(db.Model):
             "pegi": self.pegi,
             "year": self.year
         }
+    def to_json(self):
+        return self.serialize()
+# def __repr__(self):
+#         return '<Videogame %r>' % self.id
 
 class Consoles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
