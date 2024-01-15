@@ -1,8 +1,5 @@
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
-from flask import Flask, request, jsonify, url_for, Blueprint, abort, redirect
-from api.models import db, User, Videogame , Consoles, Genres
+from flask import request, jsonify, url_for, Blueprint, abort, redirect
+from api.models import db, User, Videogame, Consoles, Genres
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
@@ -11,12 +8,12 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
 
+
+### VIDEOGAME METHODS ###
 @api.route('/videogames', methods=['GET'])
-def getVideogames():
-    allVideogames = Videogame.query.all()
-
-    result = list(map(lambda item: item.serialize(), allVideogames))
-
+def get_videogames():
+    all_videogames = Videogame.query.all()
+    result = list(map(lambda item: item.serialize(), all_videogames))
     return jsonify(result), 200
 
 # @api.route('/videogames', methods=['GET'])
@@ -41,13 +38,12 @@ def new_videogame():
 
     db.session.add(videogame)
 
-#try commit,if created show a message, if not give an error with message
     try:
         db.session.commit()
-        return jsonify({"message":"videogame created succesfully"}),201
+        return jsonify({"message": "Videogame created successfully"}), 201
     except Exception as error:
         print(error)
-        return jsonify({"message":"error creating videogame"}), 500
+        return jsonify({"message": "Error creating videogame"}), 500
 
 #update info videogame
 @api.route("/videogames/<int:id>", methods=["PUT" ])
@@ -85,17 +81,14 @@ def delete_videogame(id):
     return redirect("/")
 
 
-
-
-################# METODOS CONSOLAS ###############################
-
+### CONSOLE METHODS ###
 # Ruta para obtener todas las consolas
 @api.route('/consoles', methods=['GET'])
 def get_all_consoles():
     consoles = Consoles.query.all()
 
     if not consoles:
-        return jsonify({"msg": "No se encontraron consolas"}), 404
+        return jsonify({"msg": "Consoles not found"}), 404
 
     serialized_consoles = [console.serialize() for console in consoles]
     return jsonify(serialized_consoles), 200
@@ -106,7 +99,7 @@ def get_console_by_id(console_id):
     console = Consoles.query.get(console_id)
 
     if not console:
-        return jsonify({"msg": "Consola no encontrada"}), 404
+        return jsonify({"msg": "Console not found"}), 404
 
     serialized_console = console.serialize()
     return jsonify(serialized_console), 200
@@ -117,7 +110,7 @@ def create_console():
     request_body = request.get_json()
 
     if "name" not in request_body or "company" not in request_body or "year" not in request_body:
-        return jsonify({"error": "Datos incompletos"}), 400
+        return jsonify({"error": "Incomplete data"}), 400
 
     new_console = Consoles(
         name=request_body["name"],
@@ -128,7 +121,7 @@ def create_console():
     db.session.add(new_console)
     db.session.commit()
 
-    return jsonify({"msg": "Nueva consola añadida exitosamente"}), 200
+    return jsonify({"msg": "New console added successfully"}), 200
 
 # Ruta para actualizar una consola por su ID
 @api.route('/consoles/<int:console_id>', methods=['PUT'])
@@ -136,7 +129,7 @@ def update_console(console_id):
     console = Consoles.query.get(console_id)
 
     if not console:
-        return jsonify({"msg": "Consola no encontrada"}), 404
+        return jsonify({"msg": "Console not found"}), 404
 
     request_body = request.get_json()
 
@@ -150,7 +143,7 @@ def update_console(console_id):
 
     db.session.commit()
 
-    return jsonify({"msg": f"Consola con ID {console_id} actualizada exitosamente"}), 200
+    return jsonify({"msg": f"Console with ID {console_id} updated successfully"}), 200
 
 # Ruta para eliminar una consola por su ID
 @api.route('/consoles/<int:console_id>', methods=['DELETE'])
@@ -158,17 +151,16 @@ def delete_console(console_id):
     console = Consoles.query.get(console_id)
 
     if not console:
-        return jsonify({"msg": "Consola no encontrada"}), 404
+        return jsonify({"msg": "Console not found"}), 404
 
     db.session.delete(console)
     db.session.commit()
 
-    return jsonify({"msg": f"Consola con ID {console_id} eliminada exitosamente"}), 200
+    return jsonify({"msg": f"Console with ID {console_id} successfully deleted"}), 200
 
-################# METODOS CONSOLAS ###############################
 
-################# START METHODS GENRES ###############################
 
+### GENRES METHODS ###
 #GET ALL GENRES#
 
 @api.route('/genres', methods=['GET'])
@@ -178,7 +170,7 @@ def get_all_genres():
     if not genres:
         return jsonify({"msg": "Genres Not Found"}), 404
 
-    serialized_genres = [genres.serialize() for genre in genres]
+    serialized_genres = [genre.serialize() for genre in genres]
     return jsonify(serialized_genres), 200
 
 #GET ONE GENRE BY ID#
@@ -211,5 +203,4 @@ def create_new_genre():
 
     return jsonify({"msg": "New Genre Created"}), 200
 
-################# END METHODS GENRES ###############################
 

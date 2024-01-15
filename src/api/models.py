@@ -42,7 +42,7 @@ class Consoles(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "company": self.pegi,
+            "company": self.company,
             "year": self.year
         }
     
