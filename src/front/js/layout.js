@@ -15,9 +15,6 @@ import { Footer } from "./component/footer";
 import { VideogamesList } from "./videogames/videogameList";
 import { Videogame } from "./videogames/videogame";
 
-import { VideogamesList } from "./videogames/videogamesLists";
-
-
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -38,10 +35,6 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" /> */}
                         <Route element={<VideogamesList />} path="/videogames" />
                         <Route element={<Videogame />} path="/videogames/:theid/" />
-
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<VideogamesList />} path="/videogames" />
 
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
