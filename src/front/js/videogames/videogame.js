@@ -41,12 +41,6 @@
 //        </>
 //      );
 //    };
-//   Videogame.propTypes = {
-//      // id: PropTypes.number.isRequired,
-//      name: PropTypes.string,
-//      pegi: PropTypes.number,
-//      year: PropTypes.number,
-//    };
 
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
@@ -54,32 +48,41 @@ import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Videogame = () => {
-	const { store, actions } = useContext(Context);
-	const params = useParams();
+  const { store, actions } = useContext(Context);
+  const params = useParams();
 
-	return (
-		<div className="jumbotron">
-			<h1 className="display-4">Name: {store.videogames[params.theid].name}</h1>
+  const handleUpdate = () => {
+	    actions.getSingleVideogame(videogameData.id);
+	  }
+
+	  
+
+  return (
+    <div className="jumbotron">
+      <h1 className="display-4">Name: {store.videogames[params.theid].name}</h1>
       <h1 className="display-4">Pegi: {store.videogames[params.theid].pegi}</h1>
-			<h1 className="display-4">Year: {store.videogames[params.theid].year}</h1>
-
+      <h1 className="display-4">Year: {store.videogames[params.theid].year}</h1>
+	  <button onClick={() => handleUpdate(videogame)}>Update</button>
       <hr className="my-4" />
 
-			<Link to="/">
-				<span className="btn btn-primary btn-lg" href="#" role="button">
-					Back home
-				</span>
-			</Link>
+      <Link to="/">
+        <span className="btn btn-primary btn-lg" href="#" role="button">
+          Back home
+        </span>
+      </Link>
       <Link to="/videogames">
-				<span className="btn btn-primary btn-lg" href="#" role="button">
-					Back to the list
-				</span>
-			</Link>
-		</div>
-	);
-}
-
-Videogame.propTypes = {
-	match: PropTypes.object
+        <span className="btn btn-primary btn-lg" href="#" role="button">
+          Back to the list
+        </span>
+      </Link>
+    </div>
+  );
 };
 
+Videogame.propTypes = {
+  match: PropTypes.object,
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string,
+  pegi: PropTypes.number,
+  year: PropTypes.number,
+};
