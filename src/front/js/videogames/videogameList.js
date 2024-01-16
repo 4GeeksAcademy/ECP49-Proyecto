@@ -1,23 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { Videogame } from "./videogame";
 
 import { Context } from "../store/appContext";
 
 export const VideogamesList = () => {
   const { store, actions } = useContext(Context);
-  // const {videogames, setVideogames} = useState()
-
-  useEffect(() => {
-    console.log(actions.getVideogames());
-    console.log(store.videogames);
-  }, []);
 
   return (
     <div className="container">
       <ul className="list-group">
 	  {store.videogames == false && (
-         <p>Error to Upload videogames, try again my friend!</p>
+         <p>...loading</p>
        )}
         {store.videogames.length > 0 &&
           store.videogames.map((item, index) => {
@@ -26,18 +21,18 @@ export const VideogamesList = () => {
                 key={index}
                 className="list-group-item d-flex justify-content-between"
               >
-                <Link to={"/videogames/" + index}>
-                  <span>Link to: {item.name}</span>
-                  <span>Link to: {item.pegi}</span>
-                  <span>Link to: {item.year}</span>
+                <Link to={"/videogames/" + index} className="text-decoration-none">
+                  <span>{item.name}</span>
+                  <span>{item.pegi}</span>
+                  <span>{item.year}</span>
                 </Link>
 
-                <button
+                <Link
                   className="btn btn-success"
-                  onClick={() => actions.getVideogames(index)}
+                  to={'/videogames/' + index}
                 >
-                  Change Color
-                </button>
+                  Learn More...
+                </Link>
               </li>
             );
           })}
