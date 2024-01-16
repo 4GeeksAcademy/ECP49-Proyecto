@@ -3,7 +3,6 @@
 // import { useContext, useEffect, useState } from "react";
 // import { Context } from "../store/appContext";
 // import { Videogame } from "../videogames/videogame";
-// import { Link } from "react-router-dom";
 
 // export const VideogamesList = () => {
 //   const { store, actions } = useContext(Context);
@@ -56,6 +55,7 @@
 //       {/* {store.videogames.length > 0 && */}
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import { Context } from "../store/appContext";
 
@@ -97,4 +97,9 @@ export const VideogamesList = () => {
 			</Link>
 		</div>
 	);
+};
+VideogamesList.propTypes = {
+  name: PropTypes.string,
+  pegi: PropTypes.number,
+  year: PropTypes.number,
 };

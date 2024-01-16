@@ -59,15 +59,20 @@ export const Videogame = () => {
 
 	return (
 		<div className="jumbotron">
-			<h1 className="display-4">This will show the demo element: {store.videogames[params.theid].name}</h1>
-      <h1 className="display-4">This will show the demo element: {store.videogames[params.theid].pegi}</h1>
-			<h1 className="display-4">This will show the demo element: {store.videogames[params.theid].year}</h1>
+			<h1 className="display-4">Name: {store.videogames[params.theid].name}</h1>
+      <h1 className="display-4">Pegi: {store.videogames[params.theid].pegi}</h1>
+			<h1 className="display-4">Year: {store.videogames[params.theid].year}</h1>
 
       <hr className="my-4" />
 
 			<Link to="/">
 				<span className="btn btn-primary btn-lg" href="#" role="button">
 					Back home
+				</span>
+			</Link>
+      <Link to="/videogames">
+				<span className="btn btn-primary btn-lg" href="#" role="button">
+					Back to the list
 				</span>
 			</Link>
 		</div>
