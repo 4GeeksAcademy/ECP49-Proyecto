@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import PropTypes from "prop-types";
 
 export const FormVideogame = () => {
-  const { store, actions } = useContext(Context);
+  const { actions } = useContext(Context);
   const [name, setName] = useState("");
   const [pegi, setPegi] = useState("");
   const [year, setYear] = useState("");
@@ -47,7 +48,7 @@ export const FormVideogame = () => {
     <div>
       <h2>Edit Videogame</h2>
       <form>
-        <label htmlFor="name" >Name:</label>
+        <label htmlFor="name">Name:</label>
         <input
           type="text"
           name="name"
@@ -58,7 +59,7 @@ export const FormVideogame = () => {
         />
         <br />
 
-        <label htmlFor="pegi" >PEGI:</label>
+        <label htmlFor="pegi">PEGI:</label>
         <input
           type="number"
           name="pegi"
@@ -69,7 +70,7 @@ export const FormVideogame = () => {
         />
         <br />
 
-        <label htmlFor="year" >Year:</label>
+        <label htmlFor="year">Year:</label>
         <input
           type="number"
           name="year"
@@ -80,13 +81,27 @@ export const FormVideogame = () => {
         />
         <br />
 
-        <button type="button" onClick={addVideogames} className="btn btn-primary">
+        <button
+          type="button"
+          onClick={addVideogames}
+          className="btn btn-primary"
+        >
           Submit
         </button>
-        <button type="button" onClick={deleteHandleInputChange} className="btn btn-primary">
+        <button
+          type="button"
+          onClick={deleteHandleInputChange}
+          className="btn btn-primary"
+        >
           Delete Videogame
         </button>
       </form>
     </div>
   );
+};
+
+FormVideogame.propTypes = {
+  name: PropTypes.string,
+  pegi: PropTypes.number,
+  year: PropTypes.number,
 };

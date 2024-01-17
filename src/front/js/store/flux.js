@@ -6,41 +6,40 @@ const getState = ({ getStore, getActions, setStore }) => {
     actions: {
       // Use getActions to call a function within a function
       getVideogames: async () => {
-        try{
-        const url = process.env.BACKEND_URL + "/api/videogames/";
-        const options = {
-				  method: 'GET',
-				  headers: { 'Content-Type': 'application/json' } 
-				};
-        await fetch(url, options)
-          .then((res) => res.json())
-          .then((data) => {
-            // console.log(data);
-            setStore({ videogames: data });
-          })
-         } catch(err) {console.error("Error loading list of videogames from backend", err)};
-        },
+        try {
+          const url = process.env.BACKEND_URL + "/api/videogames/";
+          const options = {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          };
+          await fetch(url, options)
+            .then((res) => res.json())
+            .then((data) => {
+              // console.log(data);
+              setStore({ videogames: data });
+            });
+        } catch (err) {
+          console.error("Error loading list of videogames from backend", err);
+        }
+      },
 
-      addVideogame: async(addVideogame) => {
+      addVideogame: async (addVideogame) => {
         try {
           const url = process.env.BACKEND_URL + "/api/videogames/new";
           const options = {
-            method: 'POST',
+            method: "POST",
             body: JSON.stringify(addVideogame),
-            headers: { 'Content-Type': 'application/json' } 
+            headers: { "Content-Type": "application/json" },
           };
           await fetch(url, options)
-          .then(res => res.json()) 
-				  .then(response => {
-					console.log('Success: ', JSON.stringify(response));
-				  })
-            // .then((res) => res.json())
-            // .then((data) => {
-            //   // console.log(data);
-            //   setStore({ videogames: data });
-            // })
-        } catch(error) {console.error("Error to add a videogame from backend", error)}
-      }
+            .then((res) => res.json())
+            .then((response) => {
+              console.log("Success: ", JSON.stringify(response));
+            });
+        } catch (error) {
+          console.error("Error to add a videogame from backend", error);
+        }
+      },
 
       // exampleFunction: () => {
       // 	getActions().changeColor(0, "green");
