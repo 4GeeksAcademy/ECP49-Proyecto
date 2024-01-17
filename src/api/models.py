@@ -59,3 +59,4 @@ class Genres(db.Model):
             "id": self.id,
             "type": self.type,
         }
+    
