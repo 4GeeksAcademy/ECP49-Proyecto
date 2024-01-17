@@ -2,6 +2,8 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       videogames: [],
+      consoles: [],
+      
     },
     actions: {
       // Use getActions to call a function within a function
@@ -40,6 +42,39 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error to add a videogame from backend", error);
         }
       },
+
+      getConsoles: async () => {
+        try {
+          const url = "https://opulent-space-winner-r4g7prq6ww6r3wx64-3001.app.github.dev/api/consoles";
+          const options = {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          };
+          const response = await fetch(url, options);
+          const data = await response.json();
+          setStore({ consoles: data });
+        } catch (error) {
+          console.error("Error loading list of consoles from backend", error);
+        }
+      },
+
+      getSingleConsole: async (consoleName) => {
+        try {
+            const url = `https://opulent-space-winner-r4g7prq6ww6r3wx64-3001.app.github.dev/api/consoles/${consoleName}`;
+            const options = {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+            };
+            const response = await fetch(url, options);
+            const data = await response.json();
+    
+            setStore({ singleConsole: data });
+        } catch (error) {
+            console.error("Error loading single console from backend", error);
+        }
+    },
+
+
 
       // exampleFunction: () => {
       // 	getActions().changeColor(0, "green");
