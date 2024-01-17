@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       videogames: [],
+      genres: [],
     },
     actions: {
       // Use getActions to call a function within a function
@@ -40,7 +41,56 @@ const getState = ({ getStore, getActions, setStore }) => {
             //   setStore({ videogames: data });
             // })
         } catch(error) {console.error("Error to add a videogame from backend", error)}
-      }
+      },
+
+      getGenres: async () => {
+        try {const resp = process.env.BACKEND_URL + "/api/genres/";
+        const options = {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        };
+        await fetch(resp, options)
+        .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              setStore({ genres: data });
+            });
+        }catch (err){console.error("Error loading list of videogames from backend", err);}
+      }, 
+
+      addGenres: async(addGenres) => {
+        try {
+          const url = process.env.BACKEND_URL + "/api/genres/";
+          const options = {
+            method: 'POST',
+            body: JSON.stringify(addGenres),
+            headers: { 'Content-Type': 'application/json' } 
+          };
+          await fetch(url, options)
+          .then(res => res.json()) 
+				  .then(response => {
+					console.log('Success: ', JSON.stringify(response));
+				  })
+            
+        } catch(error) {console.error("Error to add a gender from backend", error)}
+      },
+
+
+
+        //  getMessage: async () => {
+        // 	try{
+        // 		// fetching data from the backend
+        // 		const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
+        // 		const data = await resp.json()
+        // 		setStore({ message: data.message })
+        // 		// don't forget to return something, that is how the async resolves
+        // 		return data;
+        // 	}catch(error){
+        // 		console.log("Error loading message from backend", error)
+        // 	}
+        // },
+
+
 
       // exampleFunction: () => {
       // 	getActions().changeColor(0, "green");
