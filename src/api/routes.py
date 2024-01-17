@@ -228,4 +228,52 @@ def create_new_genre():
 
     return jsonify({"msg": "New Genre Created"}), 200
 
+#PUT ONE GENRE#
+
+@api.route('/genres/<int:genre_id>', methods=['PUT'])
+
+def update_genre(genre_id):
+    genre = Genres.query.get(genre_id)
+
+    if not genre:
+        return jsonify({"msg": "Genre Not Found"}), 404
+    
+    request_body = request.get_json()
+
+    if "type" in request_body:
+
+        genre.type = request_body["type"]
+
+    db.session.commit()
+
+    return jsonify({"msg": "Genre Updated"}), 200
+
+#DELETE ONE GENRE#
+
+@api.route('/genres/<int:genre_id>', methods=['DELETE'])
+
+def delete_genre(genre_id):
+    genre = Genres.query.get(genre_id)
+
+    if not genre:
+        return jsonify({"msg": "Genre Not Found"}), 404
+    
+    db.session.delete(genre)
+    db.session.commit()
+
+    return jsonify({"msg": "Genre Deleted"}), 200
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
