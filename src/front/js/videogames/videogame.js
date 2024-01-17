@@ -16,7 +16,7 @@ export const Videogame = () => {
       <h1 className="display-4">Name: {store.videogames[params.theid].name}</h1>
       <h1 className="display-4">Pegi: {store.videogames[params.theid].pegi}</h1>
       <h1 className="display-4">Year: {store.videogames[params.theid].year}</h1>
-	  <button onClick={() => handleUpdate(videogame)}>Update</button>
+	  <button onClick={() => handleUpdate(videogame)}></button>
       <hr className="my-4" />
 
       <Link to="/">
