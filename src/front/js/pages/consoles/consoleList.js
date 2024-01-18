@@ -7,7 +7,9 @@ import { Context } from "../../store/appContext";
 export const ConsoleList = () => {
   const { store, actions } = useContext(Context);
 
-
+  const handleDeleteConsole = (console_id) => {
+    actions.deleteConsole(console_id);
+  };
 
   return (
     <div className="container">
@@ -32,6 +34,13 @@ export const ConsoleList = () => {
                 >
                   Learn More...
                 </Link>
+
+                <button
+                  className="btn btn-danger"
+                  onClick={() => handleDeleteConsole(console.id)}
+                >
+                  Delete
+                </button>
               </li>
             );
           })}
