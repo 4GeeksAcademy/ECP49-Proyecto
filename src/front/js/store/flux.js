@@ -58,6 +58,41 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      addConsole: async (newConsole) => {
+        try {
+          const url = process.env.BACKEND_URL + "/api/consoles";
+          const options = {
+            method: "POST",
+            body: JSON.stringify(newConsole),
+            headers: { "Content-Type": "application/json" },
+          };
+          await fetch(url, options)
+            .then((res) => res.json())
+            .then((response) => {
+              console.log("Success: ", JSON.stringify(response));
+            });
+        } catch (error) {
+          console.error("Error to add a console from backend", error);
+        }
+      },
+
+      deleteConsole: async (console_id) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/consoles/${console_id}`;
+          const options = {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+          };
+          await fetch(url, options)
+            .then((res) => res.json())
+            .then((response) => {
+              console.log("Success: ", JSON.stringify(response));
+            });
+        } catch (error) {
+          console.error("Error deleting console from backend", error);
+        }
+      },
+
     //   getSingleConsole: async (consoleId) => {
     //     try {
     //         const url = `https://opulent-space-winner-r4g7prq6ww6r3wx64-3001.app.github.dev/api/consoles/${consoleId}`;
