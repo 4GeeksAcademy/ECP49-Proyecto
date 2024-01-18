@@ -23,6 +23,7 @@ const injectContext = PassedComponent => {
 
 		useEffect(() => {
 			state.actions.getVideogames()
+			state.actions.getGenres()
 
 			/**
 			 * EDIT THIS!

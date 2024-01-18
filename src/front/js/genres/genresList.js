@@ -15,13 +15,14 @@ export const Genres_list = () => {
 							key={index}
 							className="list-group-item d-flex justify-content-between"
 							style={{ background: item.background }}>
-							<Link to={"/genres/" + index}>
-								<span>Link to: {item.type}</span>
+							<Link to={"/genresList/" + index}>
+								<span>{item.type}</span>
 							</Link>
 							
-							//<button className="btn btn-success" onClick={() => actions.changeColor(index, "orange")}>
-								//Change Color
-							//</button>
+							<button className="btn btn-success" onClick={() => actions.changeColor(index, "orange")}>
+								Change Color
+							</button>
+
 						</li>
 					);
 				})}
@@ -29,6 +30,11 @@ export const Genres_list = () => {
 			<br />
 			<Link to="/">
 				<button className="btn btn-primary">Back home</button>
+			</Link>
+			<Link to="/formGenres/">
+				<span className="btn btn-primary btn-lg" href="#" role="button">
+					add genre
+				</span>
 			</Link>
 		</div>
 	);

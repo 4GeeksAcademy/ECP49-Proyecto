@@ -20,10 +20,13 @@ export const Genres = props => {
 					Back home
 				</span>
 			</Link>
+
 		</div>
 	);
 };
 
 Genres.propTypes = {
-	match: PropTypes.object
+	match: PropTypes.object,
+	id: PropTypes.number,
+  	type: PropTypes.string
 };
