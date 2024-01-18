@@ -7,22 +7,22 @@ export const Console = () => {
     const { store, actions } = useContext(Context);
     const params = useParams();
 
-    useEffect(() => {
-        actions.getSingleConsole(params.name);
-    }, [params.name]);
+    // useEffect(() => {
+    //     actions.getSingleConsole(params.theid);  
+    // }, [params.theid]);
 
-    const handleUpdate2 = () => {
-        actions.getSingleConsole(params.name);
-    }
+    // const handleUpdate = () => {
+    //     actions.getSingleConsole(params.theid);
+    // }
 
     return (
         <div className="jumbotron">
-            {store.consoles.find(c => c.name === params.name) ? (
+            {store.consoles[params.theid] ? (
                 <>
                     <h1 className="display-4">Name: {store.consoles[params.theid].name}</h1>
                     <h1 className="display-4">Company: {store.consoles[params.theid].company}</h1>
-                    <h1 className="display-4">Year: {store.consoles[params.theid].name}</h1>
-                    <button onClick={() => handleUpdate2(consoleData)}></button>
+                    <h1 className="display-4">Year: {store.consoles[params.theid].year}</h1>
+                    <button onClick={() => handleUpdate()}></button>
                     <hr className="my-4" />
                 </>
             ) : (
@@ -48,4 +48,3 @@ Console.propTypes = {
     company: PropTypes.string,
     year: PropTypes.number,
 };
-

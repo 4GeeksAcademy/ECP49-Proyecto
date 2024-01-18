@@ -45,7 +45,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getConsoles: async () => {
         try {
-          const url = "https://opulent-space-winner-r4g7prq6ww6r3wx64-3001.app.github.dev/api/consoles";
+          const url = process.env.BACKEND_URL + "/api/consoles/";
           const options = {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -58,21 +58,21 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      getSingleConsole: async (consoleName) => {
-        try {
-            const url = `https://opulent-space-winner-r4g7prq6ww6r3wx64-3001.app.github.dev/api/consoles/${consoleName}`;
-            const options = {
-                method: "GET",
-                headers: { "Content-Type": "application/json" },
-            };
-            const response = await fetch(url, options);
-            const data = await response.json();
+    //   getSingleConsole: async (consoleId) => {
+    //     try {
+    //         const url = `https://opulent-space-winner-r4g7prq6ww6r3wx64-3001.app.github.dev/api/consoles/${consoleId}`;
+    //         const options = {
+    //             method: "GET",
+    //             headers: { "Content-Type": "application/json" },
+    //         };
+    //         const response = await fetch(url, options);
+    //         const data = await response.json();
     
-            setStore({ singleConsole: data });
-        } catch (error) {
-            console.error("Error loading single console from backend", error);
-        }
-    },
+    //         setStore({ singleConsole: data });
+    //     } catch (error) {
+    //         console.error("Error loading single console from backend", error);
+    //     }
+    // },
 
 
 

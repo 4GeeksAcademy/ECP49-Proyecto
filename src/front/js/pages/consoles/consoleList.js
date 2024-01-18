@@ -20,7 +20,7 @@ export const ConsoleList = () => {
                 key={index}
                 className="list-group-item d-flex justify-content-between"
               >
-                <Link to={`/consoles/${index}`} className="text-decoration-none">
+                <Link to={"/consoles/" + index} className="text-decoration-none">
                   <span>{console.name}</span>
                   <span>{console.company}</span>
                   <span>{console.year}</span>
@@ -28,7 +28,7 @@ export const ConsoleList = () => {
 
                 <Link
                   className="btn btn-success"
-                  to={`/consoles/${index}`}
+                  to={"/consoles/" + index}
                 >
                   Learn More...
                 </Link>
