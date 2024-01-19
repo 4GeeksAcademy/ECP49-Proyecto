@@ -1,18 +1,22 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 export const FormGenres = () => {
+
   const { actions } = useContext(Context);
   const [genre, setGenre] = useState("");
   const handleInputChange = (e) => {
+    
     const { name, value } = e.target;
     if (name === "genre") {
       setGenre(value);
     }
   };
+
   const addGenres = async () => {
     const newGenre = {
       type: genre,
     };
+
     await actions.addGenres(newGenre);
     deleteHandleInputChange();
     console.log("Nuevo genero JSON:", newGenre);
@@ -27,6 +31,7 @@ export const FormGenres = () => {
       addGenres();
     }
   };
+  
   return (
     <div>
       <h2>Add Genre</h2>

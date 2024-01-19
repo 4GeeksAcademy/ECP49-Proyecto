@@ -6,6 +6,10 @@ import { Context } from "../store/appContext";
 export const Genres_list = () => {
 	const { store, actions } = useContext(Context);
 
+	const handleDeleteGenre = (genre_id) => {
+		actions.deleteGenre(genre_id);
+	  };
+
 	return (
 		<div className="container">
 			<ul className="list-group">
@@ -18,10 +22,13 @@ export const Genres_list = () => {
 							<Link to={"/genresList/" + index}>
 								<span>{item.type}</span>
 							</Link>
+							<button
+                  				className="btn btn-danger"
+                  				onClick={() => handleDeleteGenre(genre.id)}
+                			>
+                  			Delete Genre
+                			</button>
 							
-							<button className="btn btn-success" onClick={() => actions.changeColor(index, "orange")}>
-								Change Color
-							</button>
 
 						</li>
 					);
