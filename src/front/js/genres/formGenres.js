@@ -31,7 +31,7 @@ export const FormGenres = () => {
       addGenres();
     }
   };
-  
+
   return (
     <div>
       <h2>Add Genre</h2>
@@ -49,13 +49,7 @@ export const FormGenres = () => {
         <button type="button" onClick={addGenres} className="btn btn-primary">
           add
         </button>
-        <button
-          type="button"
-          onClick={deleteHandleInputChange}
-          className="btn btn-primary"
-        >
-          Delete Genre
-        </button>
+        
       </form>
     </div>
   );

@@ -20,6 +20,11 @@ export const Genres = props => {
 					Back home
 				</span>
 			</Link>
+			<Link to="/formEditGenres">
+				<span className="btn btn-primary btn-lg" href="#" role="button">
+					Edit
+				</span>
+			</Link>
 
 		</div>
 	);
