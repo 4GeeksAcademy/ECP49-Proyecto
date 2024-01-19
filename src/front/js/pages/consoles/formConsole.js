@@ -1,52 +1,51 @@
 import React, { useContext, useState } from "react";
-import { Context } from "../store/appContext";
+import { Context } from "../../store/appContext";
 import PropTypes from "prop-types";
 
-export const FormVideogame = () => {
+export const FormConsole = () => {
   const { actions } = useContext(Context);
   const [name, setName] = useState("");
-  const [pegi, setPegi] = useState("");
+  const [company, setCompany] = useState("");
   const [year, setYear] = useState("");
-  const [contactLink, setcontactLink] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "name") {
       setName(value);
-    } else if (name === "pegi") {
-      setPegi(value);
+    } else if (name === "company") {
+      setCompany(value);
     } else if (name === "year") {
       setYear(value);
     }
   };
 
-  const addVideogames = () => {
-    const newContact = {
+  const addConsole = () => {
+    const newConsole = {
       name: name,
-      pegi: pegi,
+      company: company,
       year: year,
     };
-    setcontactLink(newContact);
-    actions.addVideogame(newContact);
+    actions.addConsole(newConsole);
     deleteHandleInputChange();
-    console.log("Nuevo contacto JSON:", newContact);
-  };
-
-  const deleteHandleInputChange = () => {
-    setName("");
-    setPegi("");
-    setYear("");
+    console.log("Nueva consola JSON:", newConsole);
   };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      addVideogames();
+      addConsole();
     }
   };
+
+  const deleteHandleInputChange = () => {
+    setName("");
+    setCompany("");
+    setYear("");
+  };
+
   return (
     <div>
-      <h2>Edit Videogame</h2>
+      <h2>Add Console</h2>
       <form>
         <label htmlFor="name">Name:</label>
         <input
@@ -59,11 +58,11 @@ export const FormVideogame = () => {
         />
         <br />
 
-        <label htmlFor="pegi">PEGI:</label>
+        <label htmlFor="company">Company:</label>
         <input
-          type="number"
-          name="pegi"
-          value={pegi}
+          type="text"
+          name="company"
+          value={company}
           onChange={handleInputChange}
           className="form-control"
           onKeyDown={handleKeyPress}
@@ -81,27 +80,19 @@ export const FormVideogame = () => {
         />
         <br />
 
-        <button
-          type="button"
-          onClick={addVideogames}
-          className="btn btn-primary"
-        >
-          Submit
+        <button type="button" onClick={addConsole} className="btn btn-primary">
+          Add Console
         </button>
-        <button
-          type="button"
-          onClick={deleteHandleInputChange}
-          className="btn btn-primary"
-        >
-          Delete Videogame
+        <button type="button" className="btn btn-danger">
+          Delete Console
         </button>
       </form>
     </div>
   );
 };
 
-FormVideogame.propTypes = {
+FormConsole.propTypes = {
   name: PropTypes.string,
-  pegi: PropTypes.number,
+  company: PropTypes.string,
   year: PropTypes.number,
 };
