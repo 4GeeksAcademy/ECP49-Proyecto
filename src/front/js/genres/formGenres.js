@@ -1,32 +1,26 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
-
 export const FormGenres = () => {
-  const { store, actions } = useContext(Context);
+  const { actions } = useContext(Context);
   const [genre, setGenre] = useState("");
-  const [contactLink, setcontactLink] = useState(null);
-
   const handleInputChange = (e) => {
-    const { genre, value } = e.target;
-    if (genre === "genre") {
+    const { name, value } = e.target;
+    if (name === "genre") {
       setGenre(value);
-    } 
+    }
   };
-
-  const addGenres = () => {
+  const addGenres = async () => {
     const newGenre = {
-      genre: genre
+      type: genre,
     };
-    setcontactLink(newGenre);
-    actions.addGenres(newGenre);
+    await actions.addGenres(newGenre);
     deleteHandleInputChange();
     console.log("Nuevo genero JSON:", newGenre);
+    await actions.getGenres();
   };
-
   const deleteHandleInputChange = () => {
     setGenre("");
   };
-
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -37,23 +31,24 @@ export const FormGenres = () => {
     <div>
       <h2>Add Genre</h2>
       <form>
-        <label htmlFor="genre" >Type:</label>
+        <label htmlFor="genre">Type:</label>
         <input
           type="text"
-          genre="genre"
+          name="genre"
           value={genre}
           onChange={handleInputChange}
           className="form-control"
           onKeyDown={handleKeyPress}
         />
         <br />
-
-        
-
         <button type="button" onClick={addGenres} className="btn btn-primary">
           add
         </button>
-        <button type="button" onClick={deleteHandleInputChange} className="btn btn-primary">
+        <button
+          type="button"
+          onClick={deleteHandleInputChange}
+          className="btn btn-primary"
+        >
           Delete Genre
         </button>
       </form>
