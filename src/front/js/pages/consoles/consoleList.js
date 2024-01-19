@@ -41,6 +41,9 @@ export const ConsoleList = () => {
                 >
                   Delete
                 </button>
+                <Link to={`/consoles/edit/${console.id}`}>
+            <button className="btn btn-primary">Editar</button>
+          </Link>
               </li>
             );
           })}

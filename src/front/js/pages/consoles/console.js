@@ -7,14 +7,7 @@ export const Console = () => {
     const { store, actions } = useContext(Context);
     const params = useParams();
 
-    // useEffect(() => {
-    //     actions.getSingleConsole(params.theid);  
-    // }, [params.theid]);
-
-    // const handleUpdate = () => {
-    //     actions.getSingleConsole(params.theid);
-    // }
-
+ 
     return (
         <div className="jumbotron">
             {store.consoles[params.theid] ? (

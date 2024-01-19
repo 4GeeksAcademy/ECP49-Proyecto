@@ -18,6 +18,7 @@ import { FormVideogame } from "./videogames/formVideogame";
 import { ConsoleList } from "./pages/consoles/consoleList";
 import { Console } from "./pages/consoles/console";
 import { FormConsole } from "./pages/consoles/formConsole";
+import { ConsoleEdit } from "./pages/consoles/consoleEdit";
 
 //create your first component
 const Layout = () => {
@@ -25,7 +26,7 @@ const Layout = () => {
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
 
-    if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
         <div>
@@ -44,6 +45,8 @@ const Layout = () => {
                         <Route element={<ConsoleList />} path="/consoles" />
                         <Route element={<Console />} path="/consoles/:theid/" />
                         <Route element={<FormConsole />} path="consoles/edit" />
+                        <Route element={<ConsoleList />} path="/consoles" />
+                        <Route element={<ConsoleEdit />} path="/consoles/edit/:consoleId" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
