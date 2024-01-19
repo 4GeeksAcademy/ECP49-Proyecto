@@ -15,6 +15,9 @@ import { Footer } from "./component/footer";
 import { VideogamesList } from "./videogames/videogameList";
 import { Videogame } from "./videogames/videogame";
 import { FormVideogame } from "./videogames/formVideogame";
+import { ConsoleList } from "./pages/consoles/consoleList";
+import { Console } from "./pages/consoles/console";
+import { FormConsole } from "./pages/consoles/formConsole";
 
 //create your first component
 const Layout = () => {
@@ -38,6 +41,9 @@ const Layout = () => {
                         <Route element={<Videogame />} path="/videogames/:theid/" />
                         <Route element={<FormVideogame />} path="videogames/edit" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<ConsoleList />} path="/consoles" />
+                        <Route element={<Console />} path="/consoles/:theid/" />
+                        <Route element={<FormConsole />} path="consoles/edit" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
