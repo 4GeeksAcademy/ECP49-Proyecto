@@ -1,11 +1,13 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
-import { Context } from '../store/appContext';
+import { Context } from '../../store/appContext';
+import { useNavigate } from "react-router-dom";
 
 export const Videogame = () => {
   const { store, actions } = useContext(Context);
   const params = useParams();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [pegi, setPegi] = useState("");
   const [year, setYear] = useState("");
@@ -24,12 +26,28 @@ export const Videogame = () => {
     setShowForm2(!showForm2);
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChangeName = (e) => {
     const { name, value } = e.target;
     if (name === "name") {
       setName(value);
     } else if (name === "pegi") {
       setPegi(value);
+    } else if (name === "year") {
+      setYear(value);
+    }
+  };
+  const handleInputChangePegi = (e) => {
+    const { name, value } = e.target;
+    if (name === "name") {
+      setName(value);
+    } else if (name === "pegi") {
+      setPegi(value);
+    }
+  };
+  const handleInputChangeYear = (e) => {
+    const { name, value } = e.target;
+    if (name === "name") {
+      setName(value);
     } else if (name === "year") {
       setYear(value);
     }
@@ -70,7 +88,7 @@ export const Videogame = () => {
   const videogame = store.videogames[params.theid];
 
   return (
-    <div className="jumbotron">
+    <><div className="jumbotron">
       {store.videogames[params.theid] ? (
         <>
           <h1 className="display-4">Name: {store.videogames[params.theid].name}<button
@@ -86,10 +104,9 @@ export const Videogame = () => {
                 type="text"
                 name="name"
                 value={name}
-                onChange={handleInputChange}
+                onChange={handleInputChangeName}
                 className="form-control"
-                onKeyDown={handleKeyPress}
-              />
+                onKeyDown={handleKeyPress} />
             </>
           ) : null}
 
@@ -106,10 +123,9 @@ export const Videogame = () => {
                 type="text"
                 name="name"
                 value={name}
-                onChange={handleInputChange}
+                onChange={handleInputChangePegi}
                 className="form-control"
-                onKeyDown={handleKeyPress}
-              />
+                onKeyDown={handleKeyPress} />
             </>
           ) : null}
           <h1 className="display-4">Year: {store.videogames[params.theid].year}<button
@@ -125,10 +141,9 @@ export const Videogame = () => {
                 type="text"
                 name="name"
                 value={name}
-                onChange={handleInputChange}
+                onChange={handleInputChangeYear}
                 className="form-control"
-                onKeyDown={handleKeyPress}
-              />
+                onKeyDown={handleKeyPress} />
             </>
           ) : null}
           <hr className="my-4" />
@@ -138,7 +153,11 @@ export const Videogame = () => {
       )}
 
       {/* <button onClick={() => handleUpdate(videogame)}>Edit</button> */}
-
+      <button
+        className='btn btn-info'
+        onClick={() => navigate(`/editVideogame/${videogame.id}`)}>
+        Edit
+      </button>
       <button
         onClick={() => {
           handleDeleteVideogame(videogame.id);
@@ -146,21 +165,17 @@ export const Videogame = () => {
         className="btn btn-danger"
       >
         Delete
-      </button>
-
-      <hr className="my-4" />
-
-      <Link to="/">
+      </button><hr className="my-4" /><Link to="/">
         <span className="btn btn-primary btn-lg" href="#" role="button">
           Back home
         </span>
-      </Link>
-      <Link to="/videogames">
+      </Link><Link to="/videogames">
         <span className="btn btn-primary btn-lg" href="#" role="button">
           Back to the list
         </span>
       </Link>
-    </div>
+    </div >
+    </>
   );
 };
 

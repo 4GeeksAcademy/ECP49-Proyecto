@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Context } from "../store/appContext";
+import { Context } from "../../store/appContext";
 import PropTypes from "prop-types";
 
 export const FormVideogame = () => {
@@ -29,6 +29,7 @@ export const FormVideogame = () => {
     setcontactLink(newContact);
     actions.addVideogame(newContact);
     deleteHandleInputChange();
+    window.location.reload()
     console.log("Nuevo contacto JSON:", newContact);
   };
 
@@ -46,7 +47,7 @@ export const FormVideogame = () => {
   };
   return (
     <div>
-      <h2>Edit Videogame</h2>
+      <h2>Add New Videogame</h2>
       <form>
         <label htmlFor="name">Name:</label>
         <input

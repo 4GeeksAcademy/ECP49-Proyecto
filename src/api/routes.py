@@ -2,13 +2,52 @@ from flask import request, jsonify, url_for, Blueprint, abort, redirect, Respons
 from api.models import db, User, Videogame, Consoles, Genres
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS, cross_origin
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
-#get all videogames
+
+
+#########   Auth    ############
+@api.route('/signup', methods=['POST'])
+def handle_signup():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    user = User.query.filter_by(email = email).first()
+    if user:
+        return jsonify({"msg": "User account already exists"})
+    newUser = User(email = email, password = password)
+    db.session.add(newUser)
+    db.session.commit()
+    return jsonify("Added User"), 200
+
+@api.route('/login', methods=['POST'])
+def handle_login():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    user = User.query.filter_by(email=email, password=password).first()
+    if user is None:
+        return jsonify({"msg" : "Bad username or password"}), 401
+    access_token = create_access_token(identity=user.id)
+    return jsonify({"token": access_token, "user_id": user.id}), 200
+
+@api.route('/private', methods=['GET'])
+@jwt_required()
+def handle_private():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+
+    if user is None:
+        return jsonify({"msg": "Please login"})
+    else:
+        return jsonify({"user_id": user.id, "email":user.email}), 200
+
+
+
+#######get all videogames   ############
 @api.route('/videogames', methods=['GET'])
 @cross_origin(methods=["GET"], headers=["Content-Type", "Authorization"])
 def getVideogames():
