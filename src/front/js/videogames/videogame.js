@@ -1,22 +1,153 @@
-import React, { useState, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
-import { Context } from "../store/appContext";
+import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
+import { Link, useParams } from 'react-router-dom';
+import { Context } from '../store/appContext';
 
 export const Videogame = () => {
   const { store, actions } = useContext(Context);
   const params = useParams();
+  const [name, setName] = useState("");
+  const [pegi, setPegi] = useState("");
+  const [year, setYear] = useState("");
+  const [videogameLink, setVideogameLink] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [showForm1, setShowForm1] = useState(false);
+  const [showForm2, setShowForm2] = useState(false);
 
-  const handleUpdate = () => {
-	    actions.getSingleVideogame(videogameData.id);
-	  }
+  const handleToggleForm = () => {
+    setShowForm(!showForm);
+  };
+  const handleToggleForm1 = () => {
+    setShowForm1(!showForm1);
+  };
+  const handleToggleForm2 = () => {
+    setShowForm2(!showForm2);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "name") {
+      setName(value);
+    } else if (name === "pegi") {
+      setPegi(value);
+    } else if (name === "year") {
+      setYear(value);
+    }
+  };
+  const editVideogame = () => {
+    const editVideogame = {
+      name: name,
+      pegi: pegi,
+      year: year,
+    };
+    setVideogameLink(editVideogame);
+    actions.editVideogame(editVideogame);
+    // deleteHandleInputChange();
+    console.log("edited:", editVideogame);
+    setShowForm(false);
+    setShowForm1(false);
+    setShowForm2(false);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      editVideogame();
+    }
+  };
+
+  // const handleDeleteVideogame = async (id) => {
+  //   try {
+  //     await actions.deleteVideogame(id);
+
+  //     // Redirect to the videogames list
+  //     // window.location.href = '/videogames';
+  //   } catch (error) {
+  //     videogame.error('Error deleting videogame from backend', error);
+  //   }
+  // };
+
+  const videogame = store.videogames[params.theid];
 
   return (
     <div className="jumbotron">
-      <h1 className="display-4">Name: {store.videogames[params.theid].name}</h1>
-      <h1 className="display-4">Pegi: {store.videogames[params.theid].pegi}</h1>
-      <h1 className="display-4">Year: {store.videogames[params.theid].year}</h1>
-	  <button onClick={() => handleUpdate(videogame)}></button>
+      {store.videogames[params.theid] ? (
+        <>
+          <h1 className="display-4">Name: {store.videogames[params.theid].name}<button
+            onClick={handleToggleForm}
+            className="btn btn-primary"
+          >
+            Edit
+          </button></h1>
+          {showForm ? (
+            <>
+              <label htmlFor="name">Name:</label>
+              <input
+                type="text"
+                name="name"
+                value={name}
+                onChange={handleInputChange}
+                className="form-control"
+                onKeyDown={handleKeyPress}
+              />
+            </>
+          ) : null}
+
+          <h1 className="display-4">Pegi: {store.videogames[params.theid].pegi}<button
+            onClick={handleToggleForm1}
+            className="btn btn-primary"
+          >
+            Edit
+          </button></h1>
+          {showForm1 ? (
+            <>
+              <label htmlFor="name">Pegi:</label>
+              <input
+                type="text"
+                name="name"
+                value={name}
+                onChange={handleInputChange}
+                className="form-control"
+                onKeyDown={handleKeyPress}
+              />
+            </>
+          ) : null}
+          <h1 className="display-4">Year: {store.videogames[params.theid].year}<button
+            onClick={handleToggleForm2}
+            className="btn btn-primary"
+          >
+            Edit
+          </button></h1>
+          {showForm2 ? (
+            <>
+              <label htmlFor="name">Year:</label>
+              <input
+                type="text"
+                name="name"
+                value={name}
+                onChange={handleInputChange}
+                className="form-control"
+                onKeyDown={handleKeyPress}
+              />
+            </>
+          ) : null}
+          <hr className="my-4" />
+        </>
+      ) : (
+        <p>videogame not found</p>
+      )}
+
+      {/* <button onClick={() => handleUpdate(videogame)}>Edit</button> */}
+
+      <button
+        onClick={() => {
+          handleDeleteVideogame(videogame.id);
+        }}
+        className="btn btn-danger"
+      >
+        Delete
+      </button>
+
       <hr className="my-4" />
 
       <Link to="/">
@@ -34,7 +165,6 @@ export const Videogame = () => {
 };
 
 Videogame.propTypes = {
-  match: PropTypes.object,
   id: PropTypes.number,
   name: PropTypes.string,
   pegi: PropTypes.number,
@@ -42,46 +172,5 @@ Videogame.propTypes = {
 };
 
 
-//  import React, { useContext, useEffect, useState } from "react";
-//  import PropTypes from "prop-types";
-//  import { Context } from "../store/appContext";
-
-//  export const Videogame = ({ id }) => {
-//    const { store, actions } = useContext(Context);
-//    const [videogame, setVideogame] = useState(null);
-
-//     const fetchVideogame = async () => {
-//      //  const response = await fetch(`https://stunning-xylophone-g7rqpr794wxhv479-3001.app.github.dev/api/videogames/2`);
-//       const response = await fetch(`https://stunning-xylophone-g7rqpr794wxhv479-3001.app.github.dev/api/videogames/${id}`);
-//       const videogameData = await response.json();
-//       setVideogame(videogameData);
-//     };
-//    useEffect(() => {
-//      fetchVideogame();
-//    }, [id]);
-
-//      if (!videogame) {
-//        return <p>Error to show videogames</p>;
-//      }
-//    //  const handleUpdate = () => {
-//    //    actions.getSingleVideogame(videogameData.id);
-//    //  }
-//    //  const handleDelete = () => {
-//    //    alert("Delete button clicked");
-//    //  };
-//    //  useEffect(() => {
-//    //    // actions.getVideogames();
-//    //    actions.getSingleVideogame();
-//    //  }, []);
-//      return (
-//        <>
-//          <div key={videogame.id}>
-//            <h2>{videogame.name}</h2>
-//            <p>Pegi: {videogame.pegi}</p>
-//            <p>Year: {videogame.year}</p>
-//          </div>
-//          {/* <button onClick={() => handleUpdate(videogame)}>Update</button>  */}
-//          {/* <button onClick={() => handleCancel()}>Cancel</button> */}
-//        </>
-//      );
-//    };
+// window.location.href = `/videogames/edit/${videogame.id}`;
+// window.location.reload() = `/videogames/edit/${videogame.id}`;

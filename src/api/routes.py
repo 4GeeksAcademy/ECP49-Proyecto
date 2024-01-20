@@ -1,4 +1,4 @@
-from flask import request, jsonify, url_for, Blueprint, abort, redirect
+from flask import request, jsonify, url_for, Blueprint, abort, redirect, Response
 from api.models import db, User, Videogame, Consoles, Genres
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS, cross_origin
@@ -34,22 +34,6 @@ def get_single_videogame(id):
 #     videogame = Videogame.query.all()
 
 ### VIDEOGAME METHODS ###
-@api.route('/videogames', methods=['GET'])
-def get_videogames():
-    all_videogames = Videogame.query.all()
-    result = list(map(lambda item: item.serialize(), all_videogames))
-    return jsonify(result), 200
-
-# @api.route('/videogames', methods=['GET'])
-# def index():
-#     videogame = Videogame.query.all()
-
-
-# #check that there is any videogame, if yes, show
-#     if len(videogame) < 1:
-#         return jsonify({"msg": "not found"}), 404
-#     serialized_videogame = list(map(lambda x: x.serialize(), videogame))
-#     return jsonify (serialized_videogame), 200 
 
 #add new videogame
 @api.route("/videogames/new", methods=["GET", "POST"])
@@ -93,18 +77,24 @@ def update_videogame(id):
         return redirect("/videogame/{}".format(videogame.id))
 
 #delete videogame
-@api.route("/videogames/<int:id>/delete", methods=["DELETE" ])
-def delete_videogame(id):
-    videogame = Videogame.query.get(id)
+@api.route("/videogames/<int:videogame_id>", methods=["DELETE" ])
+def delete_videogame(videogame_id):
+    videogame = Videogame.query.get(videogame_id)
 
     if not videogame:
-        abort(404)
+        return jsonify({"msg": "Videogame Not Found"}), 404
 
     db.session.delete(videogame)
     db.session.commit()
 
-    return redirect("/")
+    response = Response()
+    response.headers['Content-Type'] = 'application/json'
+    response.status_code = 204
+    response.headers['Access-Control-Allow-Methods'] = 'DELETE'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, HEAD, DELETE'
 
+    return response
 
 ### CONSOLE METHODS ###
 # Ruta para obtener todas las consolas

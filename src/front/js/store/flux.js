@@ -3,7 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       videogames: [],
       consoles: [],
-      
+      videogameEdit:[],
     },
     actions: {
       // Use getActions to call a function within a function
@@ -43,6 +43,48 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      deleteVideogame: async (videogame_id) => {
+        try {
+            const url = `${process.env.BACKEND_URL}/api/videogames/${videogame_id}`;
+            const options = {
+                mode: "no-cors",
+                method: "DELETE",
+                origin: process.env.BACKEND_URL,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+                },
+            };
+            await fetch(url, options)
+                .then((res) => res.json())
+                .then((response) => {
+                    console.log("Success: ", JSON.stringify(response));
+                });
+        } catch (error) {
+            console.error("Error deleting videogame from backend", error);
+        }
+    },
+    editVideogame: async(id)=>{
+      let {videogameEdit} = getStore()
+      const url = `${process.env.BACKEND_URL}/api/videogames/${id}`;
+      const options = {
+        method: 'PUT',
+        body: JSON.stringify(videogameEdit),
+        headers: { 'Content-Type': 'application/json' } 
+      }
+      await fetch(url, options)
+      .then(res => res.json()) 
+      .then(response => {
+        console.log('Success: ', JSON.stringify(response));
+        
+      })
+      .catch(error => console.log('Error: ', error));
+      },
+      setVideogameEdit: (editVideogame)=>{
+				setStore({videogameEdit: editVideogame })
+			  },
+        
       getConsoles: async () => {
         try {
           const url = process.env.BACKEND_URL + "/api/consoles/";

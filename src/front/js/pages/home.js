@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 
+import { VideogameListContainer } from "../videogames/videogameListContainer";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -9,8 +10,7 @@ export const Home = () => {
 	return (
 		<>
 		<div className="text-center mt-5">
-			Hello Grupo 49
-			
+			<VideogameListContainer />			
 		</div>
 		</>
 	);
