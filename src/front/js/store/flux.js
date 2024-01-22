@@ -80,14 +80,20 @@ const getState = ({ getStore, getActions, setStore }) => {
       deleteGenre: async (genre_id) => {
         try {
           const url = `${process.env.BACKEND_URL}/api/genresList/${genre_id}`;
+          const options = {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+          };
+          await fetch(url, options)
             .then((res) => res.json())
             .then((response) => {
               console.log("Success: ", JSON.stringify(response));
             });
         } catch (error) {
-          console.error("Error to add a videogame from backend", error);
+          console.error("Error deleting genre from backend", error);
         }
       },
+      
 
       getConsoles: async () => {
         try {
