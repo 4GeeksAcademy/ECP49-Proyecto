@@ -1,8 +1,13 @@
+from api.models import db, User, Videogame, Consoles, Genres, Administrador
 from flask import request, jsonify, url_for, Blueprint, abort, redirect, Response
-from api.models import db, User, Videogame, Consoles, Genres
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS, cross_origin
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
 
 
 api = Blueprint('api', __name__)
@@ -292,6 +297,22 @@ def delete_genre(genre_id):
     db.session.commit()
 
     return jsonify({"msg": f"Console with ID {genre_id} successfully deleted"}), 200
+
+######## LOGIN ADMINISTRADOR ########
+@api.route("/loginadministrador", methods=["POST"])
+def loginadministrador():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+
+    user2 = Administrador.query.filter_by(email=email).first()
+
+    if user2 is None:
+        return jsonify({"msg" : "Incorrect email "}), 401
+    if user2.password != password:
+        return jsonify({"msg": "Incorrect password"}), 401
+
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token)
 
 
 

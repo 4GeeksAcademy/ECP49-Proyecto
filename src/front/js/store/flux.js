@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       consoles: [],
 
+      auth:false,
       user: [null],
       token: null,
 
@@ -86,14 +87,20 @@ const getState = ({ getStore, getActions, setStore }) => {
       deleteGenre: async (genre_id) => {
         try {
           const url = `${process.env.BACKEND_URL}/api/genresList/${genre_id}`;
+          const options = {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+          };
+          await fetch(url, options)
             .then((res) => res.json())
             .then((response) => {
               console.log("Success: ", JSON.stringify(response));
             });
         } catch (error) {
-          console.error("Error to add a videogame from backend", error);
+          console.error("Error deleting genre from backend", error);
         }
       },
+      
 
       deleteVideogame: async (videogame_id) => {
         try {
@@ -371,6 +378,36 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error updating console from backend", error);
         }
       },
+
+      loginadmin: (email, password) => {
+				
+				const requestOptions = {
+				  method: 'POST',
+				  headers: { "Content-Type": "application/json" },
+				  body: JSON.stringify({
+					"email": email,
+					"password": password
+				  })
+				};
+			
+				fetch(process.env.BACKEND_URL + "/api/loginadministrador", requestOptions)
+				  .then(response => {
+					
+					if(response.status ==200) {
+						setStore({ auth: true});
+					}
+					return response.json()})
+					
+				  .then(data => {
+					localStorage.setItem("token", data.access_token);
+					console.log(data);
+				  })
+				  .catch(error => console.log('error', error));
+			  },
+
+
+
+
     },
 
   };
