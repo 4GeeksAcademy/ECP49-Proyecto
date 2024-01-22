@@ -20,6 +20,12 @@ import { EditVideogame } from "./pages/videogames/editVideogame";
 import { ConsoleList } from "./pages/consoles/consoleList";
 import { Console } from "./pages/consoles/console";
 import { FormConsole } from "./pages/consoles/formConsole";
+import { ConsoleEdit } from "./pages/consoles/consoleEdit";
+
+import { Genres_list } from "./genres/genresList";
+import { Genres } from "./genres/genres";
+import { FormGenres } from "./genres/formGenres";
+import { FormEditGenres } from "./genres/formEditGenres";
 
 //create your first component
 const Layout = () => {
@@ -38,8 +44,12 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
 
                         {/* <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" /> */}
+                        // <Route element={<Single />} path="/single/:theid" /> */}
                         <Route element={<VideogamesList />} path="/videogames" />
+                        <Route element={<Genres_list />} path="/genresList" />
+                        <Route element={<Genres />} path="/genresList/:theid" />
+                        <Route element={<FormGenres />} path="formGenres/" />
+                        <Route element={<FormEditGenres />} path="genres/:theid" /> 
                         <Route element={<Videogame />} path="/videogames/:theid/" />
                         <Route element={<EditVideogame />} path="/editVideogame/:theid/" />
 
@@ -47,12 +57,17 @@ const Layout = () => {
                         <Route element={<Console />} path="/consoles/:theid/" />
                         <Route element={<FormConsole />} path="consoles/edit" />
 
+
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Private />} path="/private" />
 
 
                         <Route element={<h1>Not found!</h1>} />
+
+
+                        <Route element={<ConsoleList />} path="/consoles" />
+                        <Route element={<ConsoleEdit />} path="/consoles/edit/:consoleId" />
 
                     </Routes>
                     <Footer />

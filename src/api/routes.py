@@ -279,18 +279,20 @@ def update_genre(genre_id):
 
 #DELETE ONE GENRE#
 
-@api.route('/genres/<int:genre_id>', methods=['DELETE'])
+@api.route('/genresList/<int:genre_id>', methods=['DELETE'])
 
 def delete_genre(genre_id):
+
     genre = Genres.query.get(genre_id)
 
     if not genre:
-        return jsonify({"msg": "Genre Not Found"}), 404
+        return jsonify({"msg": "Genre not found"}), 404
     
     db.session.delete(genre)
     db.session.commit()
 
-    return jsonify({"msg": "Genre Deleted"}), 200
+    return jsonify({"msg": f"Console with ID {genre_id} successfully deleted"}), 200
+
 
 
 

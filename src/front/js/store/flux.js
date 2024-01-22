@@ -2,9 +2,17 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       videogames: [],
+
+      genres: [],
+
       consoles: [],
+
       user: [null],
       token: null,
+
+      
+
+
     },
     actions: {
       
@@ -36,6 +44,48 @@ const getState = ({ getStore, getActions, setStore }) => {
             headers: { "Content-Type": "application/json" },
           };
           await fetch(url, options)
+          .then(res => res.json()) 
+				  .then(response => {
+					console.log('Success: ', JSON.stringify(response));
+				  })           
+        } catch(error) {console.error("Error to add a videogame from backend", error)}
+      },
+
+      getGenres: async () => {
+        try {const resp = process.env.BACKEND_URL + "/api/genres/";
+        const options = {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        };
+        await fetch(resp, options)
+        .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              setStore({ genres: data });
+            });
+        }catch (err){console.error("Error loading list of videogames from backend", err);}
+      }, 
+
+      addGenres: async(addGenres) => {
+        try {
+          const url = process.env.BACKEND_URL + "/api/genres/";
+          const options = {
+            method: 'POST',
+            body: JSON.stringify(addGenres),
+            headers: { 'Content-Type': 'application/json' } 
+          };
+          await fetch(url, options)
+          .then(res => res.json()) 
+				  .then(response => {
+					console.log('Success: ', JSON.stringify(response));
+				  })
+            
+        } catch(error) {console.error("Error to add a gender from backend", error)}
+      },
+
+      deleteGenre: async (genre_id) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/genresList/${genre_id}`;
             .then((res) => res.json())
             .then((response) => {
               console.log("Success: ", JSON.stringify(response));
@@ -125,7 +175,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               console.log("Success: ", JSON.stringify(response));
             });
         } catch (error) {
-          console.error("Error deleting console from backend", error);
+          console.error("Error deleting genre from backend", error);
         }
       },
       
@@ -242,6 +292,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
   
 
+
       //   getSingleConsole: async (consoleId) => {
       //     try {
       //         const url = `https://opulent-space-winner-r4g7prq6ww6r3wx64-3001.app.github.dev/api/consoles/${consoleId}`;
@@ -280,17 +331,48 @@ const getState = ({ getStore, getActions, setStore }) => {
       // 	//get the store
       // 	const store = getStore();
 
-      // 	//we have to loop the entire demo array to look for the respective index
-      // 	//and change its color
-      // 	const demo = store.demo.map((elm, i) => {
-      // 		if (i === index) elm.background = color;
-      // 		return elm;
-      // 	});
+
+
+      getSingleConsole: async (consoleId) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/consoles/${consoleId}`;
+          const options = {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          };
+          const response = await fetch(url, options);
+          const data = await response.json();
+          return data; 
+        } catch (error) {
+          console.error("Error loading single console from backend", error);
+        }
+      },
+
 
       // 	//reset the global store
       // 	setStore({ demo: demo });
       // }
     
+
+      updateConsole: async (consoleId, updatedConsoleData) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/consoles/${consoleId}`;
+          const options = {
+            method: "PUT",
+            body: JSON.stringify(updatedConsoleData),
+            headers: { "Content-Type": "application/json" },
+          };
+          await fetch(url, options)
+            .then((res) => res.json())
+            .then((response) => {
+              console.log("Success: ", JSON.stringify(response));
+            });
+        } catch (error) {
+          console.error("Error updating console from backend", error);
+        }
+      },
+    },
+
   };
 };
 

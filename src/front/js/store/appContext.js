@@ -22,9 +22,17 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
+
 			state.actions.getVideogames();
 			state.actions.getConsoles();
 			state.actions.editVideogame();
+
+
+			
+			state.actions.getGenres()
+      state.actions.getConsoles();
+
+
 
 			/**
 			 * EDIT THIS!
