@@ -35,15 +35,28 @@ export const ConsoleList = () => {
                   Learn More...
                 </Link>
 
-                <button
+                
+
+                {store.auth === true ? <button
                   className="btn btn-danger"
                   onClick={() => handleDeleteConsole(console.id)}
                 >
                   Delete
-                </button>
+                </button> : null}
+
+
+
+
                 <Link to={`/consoles/edit/${console.id}`}>
-            <button className="btn btn-primary">Editar</button>
+                  
+            
+
+
+            {store.auth === true ? <button className="btn btn-primary">Editar</button> : null}
           </Link>
+
+
+
               </li>
             );
           })}
@@ -61,3 +74,5 @@ ConsoleList.propTypes = {
   company: PropTypes.string,
   year: PropTypes.number,
 };
+
+
