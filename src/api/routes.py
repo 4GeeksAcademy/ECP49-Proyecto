@@ -1,5 +1,5 @@
 from flask import request, jsonify, url_for, Blueprint, abort, redirect
-from api.models import db, User, Videogame, Consoles, Genres
+from api.models import db, User, Videogame, Consoles, Genres, Genre_fav
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS, cross_origin
 
@@ -264,7 +264,42 @@ def delete_genre(genre_id):
 
     return jsonify({"msg": f"Console with ID {genre_id} successfully deleted"}), 200
 
+##### POST GENEROS FAVORITOS ####
 
+@api.route('admin/genre_fav', methods=['POST'])
+def add_new_genre_fav():
+    request_body_fav_genre = request.get_json()
+
+    if (
+        "genres_id" not in request_body_fav_genre
+        or "user_id" not in request_body_fav_genre
+    ):
+        return jsonify({"error": "Datos incompletos"}), 400
+
+    
+    new_fav_genre = Genre_fav(
+        genres_id=request_body_fav_genre["genres_id"],
+        user_id=request_body_fav_genre["user_id"]
+    )
+    
+    db.session.add(new_fav_genre)
+    db.session.commit()
+
+    response_body = {
+        "msg": "Nuevo genero favorito añadido exitosamente"
+    }
+
+    return jsonify(response_body), 200
+
+##### GET GENEROS FAVORITOS BY ID ####
+
+@api.route('/user/<int:user_id>/genre_fav', methods=['GET'])
+def get_user_favorites_genres(user_id):
+    user_favorites_genres = Genre_fav.query.filter_by(user_id=user_id).all()
+
+    results = map(lambda favorites: favorites.serialize(), user_favorites_genres)
+    favorites_list = list(results)
+    return jsonify(favorites_list), 200
 
 
 

@@ -6,6 +6,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       genres: [],
 
       consoles: [],
+
+      favorites: [],
       
 
     },
@@ -45,6 +47,34 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch(error) {console.error("Error to add a videogame from backend", error)}
       },
 
+/////////////////////// START GENRES /////////////////////////
+
+          
+      addFavoriteGenre: (typeGenre) => {
+				//console.log("add favorite")
+        const store = getStore();
+        if(store.favorites.includes(typeGenre)) {
+          setStore({ favorites: store.favorites.filter((repeated)=> repeated != typeGenre) });
+        }else{
+          setStore({ favorites: [...store.favorites , typeGenre]});
+        }
+			},
+
+      getFavGenres: async () => {
+        try {const resp = process.env.BACKEND_URL + "/api/genre_fav/";
+        const options = {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        };
+        await fetch(resp, options)
+        .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              setStore({ favorites: data });
+            });
+        }catch (err){console.error("Error loading list of favorites from backend", err);}
+      }, 
+
       getGenres: async () => {
         try {const resp = process.env.BACKEND_URL + "/api/genres/";
         const options = {
@@ -77,17 +107,36 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch(error) {console.error("Error to add a gender from backend", error)}
       },
 
-      deleteGenre: async (genre_id) => {
+      deleteGenre: async (genres_id) => {
         try {
-          const url = `${process.env.BACKEND_URL}/api/genresList/${genre_id}`;
+          const url = `${process.env.BACKEND_URL}/api/genres/${genres_id}`;
+          const options = {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+          };
+          await fetch(url, options)
             .then((res) => res.json())
             .then((response) => {
               console.log("Success: ", JSON.stringify(response));
             });
         } catch (error) {
-          console.error("Error to add a videogame from backend", error);
+          console.error("Error deleting genre from backend", error);
         }
       },
+
+      //deleteGenre: async (genre_id) => {
+      //  try {
+      //    const url = `${process.env.BACKEND_URL}/api/genresList/${genre_id}`;
+      //      .then((res) => res.json())
+      //      .then((response) => {
+      //        console.log("Success: ", JSON.stringify(response));
+      //      });
+      //  } catch (error) {
+      //    console.error("Error to add a videogame from backend", error);
+      //  }
+      //},
+
+/////////////////////// END GENRES /////////////////////////
 
       getConsoles: async () => {
         try {

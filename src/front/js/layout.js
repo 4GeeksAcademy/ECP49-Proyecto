@@ -24,6 +24,9 @@ import { Genres_list } from "./genres/genresList";
 import { Genres } from "./genres/genres";
 import { FormGenres } from "./genres/formGenres";
 import { FormEditGenres } from "./genres/formEditGenres";
+import { Genres_favorites } from "./genres/viewFavGenres";
+
+
 
 //create your first component
 const Layout = () => {
@@ -46,6 +49,7 @@ const Layout = () => {
                         <Route element={<VideogamesList />} path="/videogames" />
                         <Route element={<Genres_list />} path="/genresList" />
                         <Route element={<Genres />} path="/genresList/:theid" />
+                        <Route element={<Genres_favorites />} path="/viewFavGenres" />
                         <Route element={<FormGenres />} path="formGenres/" />
                         <Route element={<FormEditGenres />} path="genres/:theid" /> 
                         <Route element={<Videogame />} path="/videogames/:theid/" />
