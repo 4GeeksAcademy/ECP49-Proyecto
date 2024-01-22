@@ -6,6 +6,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       genres: [],
 
       consoles: [],
+
+      auth:false,
       
 
     },
@@ -179,6 +181,36 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error updating console from backend", error);
         }
       },
+
+      loginadmin: (email, password) => {
+				
+				const requestOptions = {
+				  method: 'POST',
+				  headers: { "Content-Type": "application/json" },
+				  body: JSON.stringify({
+					"email": email,
+					"password": password
+				  })
+				};
+			
+				fetch(process.env.BACKEND_URL + "/api/loginadministrador", requestOptions)
+				  .then(response => {
+					
+					if(response.status ==200) {
+						setStore({ auth: true});
+					}
+					return response.json()})
+					
+				  .then(data => {
+					localStorage.setItem("token", data.access_token);
+					console.log(data);
+				  })
+				  .catch(error => console.log('error', error));
+			  },
+
+
+
+
     },
   };
 };

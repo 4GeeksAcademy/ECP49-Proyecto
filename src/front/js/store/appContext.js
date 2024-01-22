@@ -25,7 +25,7 @@ const injectContext = PassedComponent => {
 
 			state.actions.getVideogames()
 			state.actions.getGenres()
-      state.actions.getConsoles();
+      		state.actions.getConsoles();
 
 
 			/**
