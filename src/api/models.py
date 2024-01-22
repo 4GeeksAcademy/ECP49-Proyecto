@@ -6,7 +6,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    is_active = db.Column(db.Boolean(), unique=False)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -46,8 +46,8 @@ class Videogame(db.Model):
             "pegi": self.pegi,
             "year": self.year
         }
-    def to_json(self):
-        return self.serialize()
+    # def to_json(self):
+    #     return self.serialize()
 # def __repr__(self):
 #         return '<Videogame %r>' % self.id
 

@@ -1,7 +1,8 @@
-from flask import request, jsonify, url_for, Blueprint, abort, redirect
 from api.models import db, User, Videogame, Consoles, Genres, Administrador
+from flask import request, jsonify, url_for, Blueprint, abort, redirect, Response
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS, cross_origin
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -13,7 +14,45 @@ api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
-#get all videogames
+
+
+#########   Auth    ############
+@api.route('/signup', methods=['POST'])
+def handle_signup():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    user = User.query.filter_by(email = email).first()
+    if user:
+        return jsonify({"msg": "User account already exists"})
+    newUser = User(email = email, password = password)
+    db.session.add(newUser)
+    db.session.commit()
+    return jsonify("Added User"), 200
+
+@api.route('/login', methods=['POST'])
+def handle_login():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    user = User.query.filter_by(email=email, password=password).first()
+    if user is None:
+        return jsonify({"msg" : "Bad username or password"}), 401
+    access_token = create_access_token(identity=user.id)
+    return jsonify({"token": access_token, "user_id": user.id}), 200
+
+@api.route('/private', methods=['GET'])
+@jwt_required()
+def handle_private():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+
+    if user is None:
+        return jsonify({"msg": "Please login"})
+    else:
+        return jsonify({"user_id": user.id, "email":user.email}), 200
+
+
+
+#######get all videogames   ############
 @api.route('/videogames', methods=['GET'])
 @cross_origin(methods=["GET"], headers=["Content-Type", "Authorization"])
 def getVideogames():
@@ -39,22 +78,6 @@ def get_single_videogame(id):
 #     videogame = Videogame.query.all()
 
 ### VIDEOGAME METHODS ###
-@api.route('/videogames', methods=['GET'])
-def get_videogames():
-    all_videogames = Videogame.query.all()
-    result = list(map(lambda item: item.serialize(), all_videogames))
-    return jsonify(result), 200
-
-# @api.route('/videogames', methods=['GET'])
-# def index():
-#     videogame = Videogame.query.all()
-
-
-# #check that there is any videogame, if yes, show
-#     if len(videogame) < 1:
-#         return jsonify({"msg": "not found"}), 404
-#     serialized_videogame = list(map(lambda x: x.serialize(), videogame))
-#     return jsonify (serialized_videogame), 200 
 
 #add new videogame
 @api.route("/videogames/new", methods=["GET", "POST"])
@@ -98,18 +121,24 @@ def update_videogame(id):
         return redirect("/videogame/{}".format(videogame.id))
 
 #delete videogame
-@api.route("/videogames/<int:id>/delete", methods=["DELETE" ])
-def delete_videogame(id):
-    videogame = Videogame.query.get(id)
+@api.route("/videogames/<int:videogame_id>", methods=["DELETE" ])
+def delete_videogame(videogame_id):
+    videogame = Videogame.query.get(videogame_id)
 
     if not videogame:
-        abort(404)
+        return jsonify({"msg": "Videogame Not Found"}), 404
 
     db.session.delete(videogame)
     db.session.commit()
 
-    return redirect("/")
+    response = Response()
+    response.headers['Content-Type'] = 'application/json'
+    response.status_code = 204
+    response.headers['Access-Control-Allow-Methods'] = 'DELETE'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, HEAD, DELETE'
 
+    return response
 
 ### CONSOLE METHODS ###
 # Ruta para obtener todas las consolas

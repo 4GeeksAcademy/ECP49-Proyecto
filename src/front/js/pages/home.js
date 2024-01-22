@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
 
+import { VideogameListContainer } from "../pages/videogames/videogameListContainer";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -19,6 +20,10 @@ export const Home = () => {
 
 			
 		</div>
+
+			<div className="text-center mt-5">
+				<VideogameListContainer />
+			</div>
 		</>
 	);
 };
