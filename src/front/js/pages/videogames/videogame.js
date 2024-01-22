@@ -74,16 +74,16 @@ export const Videogame = () => {
     }
   };
 
-  // const handleDeleteVideogame = async (id) => {
-  //   try {
-  //     await actions.deleteVideogame(id);
+  const handleDeleteVideogame = async (id) => {
+    try {
+      await actions.deleteVideogame(id);
 
   //     // Redirect to the videogames list
   //     // window.location.href = '/videogames';
-  //   } catch (error) {
-  //     videogame.error('Error deleting videogame from backend', error);
-  //   }
-  // };
+    } catch (error) {
+      videogame.error('Error deleting videogame from backend', error);
+    }
+  };
 
   const videogame = store.videogames[params.theid];
 
