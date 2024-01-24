@@ -219,7 +219,8 @@ def delete_console(console_id):
 
 
 
-### GENRES METHODS ###
+###################### START GENRES #######################
+
 #GET ALL GENRES#
 
 @api.route('/genres', methods=['GET'])
@@ -298,6 +299,45 @@ def delete_genre(genre_id):
 
     return jsonify({"msg": f"Console with ID {genre_id} successfully deleted"}), 200
 
+##### POST FAVORITES GENRES ####
+
+@api.route('admin/genre_fav', methods=['POST'])
+def add_new_genre_fav():
+    request_body_fav_genre = request.get_json()
+
+    if (
+        "genres_id" not in request_body_fav_genre
+        or "user_id" not in request_body_fav_genre
+    ):
+        return jsonify({"error": "Datos incompletos"}), 400
+
+    
+    new_fav_genre = Genre_fav(
+        genres_id=request_body_fav_genre["genres_id"],
+        user_id=request_body_fav_genre["user_id"]
+    )
+    
+    db.session.add(new_fav_genre)
+    db.session.commit()
+
+    response_body = {
+        "msg": "Nuevo genero favorito añadido exitosamente"
+    }
+
+    return jsonify(response_body), 200
+
+##### GET FAVORITES GENRES BY USER ID ####
+
+@api.route('/user/<int:user_id>/genre_fav', methods=['GET'])
+def get_user_favorites_genres(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+    user_favorites_genres = user.genres_fav
+    results = [fav.serialize() for fav in user_favorites_genres]
+    return jsonify(results), 200
+
+###################### END GENRES #######################
 ######## LOGIN ADMINISTRADOR ########
 @api.route("/loginadministrador", methods=["POST"])
 def loginadministrador():

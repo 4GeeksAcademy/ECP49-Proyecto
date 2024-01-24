@@ -3,28 +3,37 @@ import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-
-export const Genres = props => {
+export const Genres = () => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
 
+	const handleDeleteGenre = (genre_id) => {
+		actions.deleteGenre(genre_id);
+	  };
+
 	return (
 		<div className="jumbotron">
-            
-			<h1 className="display-4">This will show the demo element: {store.genres[params.theid].type}</h1>
-			
-			<hr className="my-4" />
+            {store.genres[params.theid] ? (
+                <>
+                    <h1 className="display-4">Type: {store.genres[params.theid].type}</h1> 
+                    <hr className="my-4" />
+					<button className="btn btn-success" onClick={()=>actions.addFavoriteGenre(store.genres[params.theid].type)}>Like!</button>
 
-			<Link to="/">
-				<span className="btn btn-primary btn-lg" href="#" role="button">
-					Back home
+                </>
+            ) : (
+                <p>Console not found</p>
+            )}
+			<Link to="/genresList">
+				<span className="btn btn-primary" href="#" role="button">
+					Back Genres List
 				</span>
 			</Link>
 			<Link to="/formEditGenres">
-				<span className="btn btn-primary btn-lg" href="#" role="button">
-					Edit
+				<span className="btn btn-secondary" href="#" role="button">
+					Edit Genre
 				</span>
 			</Link>
+			<button className="btn btn-danger" onClick={() => handleDeleteGenre(item.id)}>Delete Genre</button>
 
 		</div>
 	);

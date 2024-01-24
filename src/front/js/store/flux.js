@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       consoles: [],
 
+      favorites: [],
       user: [null],
       token: null,
 
@@ -79,6 +80,34 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch(error) {console.error("Error to add a videogame from backend", error)}
       },
 
+/////////////////////// START GENRES /////////////////////////
+
+          
+      addFavoriteGenre: (typeGenre) => {
+				//console.log("add favorite")
+        const store = getStore();
+        if(store.favorites.includes(typeGenre)) {
+          setStore({ favorites: store.favorites.filter((repeated)=> repeated != typeGenre) });
+        }else{
+          setStore({ favorites: [...store.favorites , typeGenre]});
+        }
+			},
+
+      getFavGenres: async () => {
+        try {const resp = process.env.BACKEND_URL + "/api/genre_fav/";
+        const options = {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        };
+        await fetch(resp, options)
+        .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              setStore({ favorites: data });
+            });
+        }catch (err){console.error("Error loading list of favorites from backend", err);}
+      }, 
+
       getGenres: async () => {
         try {const resp = process.env.BACKEND_URL + "/api/genres/";
         const options = {
@@ -92,7 +121,22 @@ const getState = ({ getStore, getActions, setStore }) => {
               setStore({ genres: data });
             });
         }catch (err){console.error("Error loading list of videogames from backend", err);}
-      }, 
+      },
+      
+      getSingleGenre: async (genres_id) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/genresList/${genres_id}`;
+          const options = {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          };
+          const response = await fetch(url, options);
+          const data = await response.json();
+          return data; 
+        } catch (error) {
+          console.error("Error loading single genre from backend", error);
+        }
+      },
 
       addGenres: async(addGenres) => {
         try {
@@ -114,7 +158,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       deleteGenre: async (genres_id) => {
         try {
           const url = `${process.env.BACKEND_URL}/api/genresList/${genres_id}`;
-
           const options = {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
@@ -157,6 +200,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error)
         }
       },
+
+/////////////////////// END GENRES /////////////////////////
 
       getConsoles: async () => {
         try {
