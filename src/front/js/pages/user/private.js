@@ -1,32 +1,28 @@
-import React, {useEffect, useContext} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext";
-import { useNavigate } from "react-router-dom";
 
+export const Private = () => {
+  const { actions } = useContext(Context);
+  const [user, setUser] = useState({});
 
-const Private = () => {
-    const {store, actions} = useContext(Context);
-    const navigate = useNavigate();
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await actions.getToken();
+        setUser(userData);
+      } catch (error) {
+        console.error("Error fetching user data:", error.message);
+      }
+    };
 
-    useEffect(() => {
-        function authenticate() {
-            actions.authenticateUser(navigate);
-        }
-        setTimeout(() => {
-            authenticate() }, 500)        
-    }, [])
+    fetchUserData();
+  }, []);
 
-    return (
-        <div className="container text-center">
-            <h1>Hello!</h1>
-            {store.user!= null ?
-                <div >
-                    <h2>Email: {store.user.email}</h2>
-                </div>
-                :
-                navigate("/login")
-            }
-        </div>
-    );
-}
-
-export default Private;
+  return (
+    <div>
+      <h2>Welcome, {user.email}</h2>
+      {/* <p>User Id: {user.email}</p> */}
+      {/* <p>User Username: {user.email}</p> */}
+    </div>
+  );
+};

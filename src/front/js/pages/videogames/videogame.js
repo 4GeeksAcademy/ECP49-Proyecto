@@ -74,16 +74,17 @@ export const Videogame = () => {
     }
   };
 
-  const handleDeleteVideogame = async (id) => {
-    try {
-      await actions.deleteVideogame(id);
+  // const handleDeleteVideogame = async (id) => {
+  //   try {
+  //     await actions.deleteVideogame(id);
 
   //     // Redirect to the videogames list
   //     // window.location.href = '/videogames';
-    } catch (error) {
-      videogame.error('Error deleting videogame from backend', error);
-    }
-  };
+  //   } catch (error) {
+  //     videogame.error('Error deleting videogame from backend', error);
+  //   }
+  // };
+  const isUserLoggedIn = sessionStorage.getItem("token") !== null;
 
   const videogame = store.videogames[params.theid];
 
@@ -153,19 +154,24 @@ export const Videogame = () => {
       )}
 
       {/* <button onClick={() => handleUpdate(videogame)}>Edit</button> */}
-      <button
-        className='btn btn-info'
-        onClick={() => navigate(`/editVideogame/${videogame.id}`)}>
-        Edit
-      </button>
-      <button
-        onClick={() => {
-          handleDeleteVideogame(videogame.id);
-        }}
-        className="btn btn-danger"
-      >
-        Delete
-      </button><hr className="my-4" /><Link to="/">
+      {isUserLoggedIn && (
+        <>
+          <button
+            className='btn btn-info'
+            onClick={() => navigate(`/editVideogame/${videogame.id}`)}>
+            Edit
+          </button>
+          <button
+            onClick={() => {
+              handleDeleteVideogame(videogame.id);
+            }}
+            className="btn btn-danger"
+          >
+            Delete
+          </button><hr className="my-4" />
+        </>
+      )}
+      <Link to="/">
         <span className="btn btn-primary btn-lg" href="#" role="button">
           Back home
         </span>

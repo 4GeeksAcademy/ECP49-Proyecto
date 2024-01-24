@@ -1,36 +1,37 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../../store/appContext";
-import {useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const Signup = () => {    
+export const SignUp = () => {
     const { store, actions } = useContext(Context);
-    const [formValue, setFormValue] = useState({email: "", password: ""});
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const navigate = useNavigate();
 
-    function onChange(e)  {				
-        const id = e.target.id;
-        const value = e.target.value;
-        setFormValue({...formValue, [id]:value});
-                            
+    const handleSignUp = (event) => {
+        event.preventDefault()
+        actions.createUser(email, password) // Add USER to database.
+        //actions.getToken(email, password) // Get token from backend if user is in database.
+        navigate("/login")
     }
-    return(
-        <div className="container mt-5">
-                <form className="row g-3 border border-lightgray">
-                    <div className="py-2 bg-light border-bottom border-lightgray mt-0 text-center">
-                        <h2 >Signup</h2>
-                    </div>                    
-                    <div className="col-md-12">
-                        <label htmlFor="email" className="form-label">Email</label>
-                        <input onChange={onChange} value={formValue.email} type="email" className="form-control" placeholder="Enter email" id="email" />
-                    </div>
-                    <div className="col-md-12">
-                        <label htmlFor="password" className="form-label">Password</label>
-                        <input onChange={onChange} value={formValue.password} type="password" className="form-control" placeholder="Enter password" id="password" />
-                    </div>
-                    <button type="button" onClick={() => actions.signUp(formValue, navigate)} className="btn btn-primary">Signup</button>                      
-                </form>
-            </div>
-    );
-}
 
-export default Signup
+    return (
+        <div className="container mt-5">
+            <form>
+
+                <div className="mb-3">
+                    <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+                    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={email} placeholder="Enter your email." onChange={ (event) => setEmail(event.target.value) }/>
+                </div>
+
+                <div className="mb-3">
+                    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                    <input type="password" className="form-control" id="exampleInputPassword1" value={password} placeholder="Enter your password." onChange={ (event) => setPassword(event.target.value) }/>
+                </div>
+
+                <button type="submit" className="btn mx-auto btn-primary" onClick={event => handleSignUp(event)}>Sign Up</button>
+            </form>
+
+        </div>
+    );
+};

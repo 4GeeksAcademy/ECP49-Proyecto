@@ -17,39 +17,58 @@ CORS(api)
 
 
 #########   Auth    ############
+@api.route('/', methods=['GET'])
+def home():
+    response_body = {
+        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+    }
+    return jsonify(response_body), 200
+
 @api.route('/signup', methods=['POST'])
-def handle_signup():
-    email = request.json.get("email", None)
-    password = request.json.get("password", None)
-    user = User.query.filter_by(email = email).first()
-    if user:
-        return jsonify({"msg": "User account already exists"})
-    newUser = User(email = email, password = password)
-    db.session.add(newUser)
+def sign_up():
+    user_data = request.get_json()
+    user_exists = User.query.filter_by(email=user_data["email"]).first()
+
+    if user_exists:
+        return jsonify({"message": "The user already exists in the database."}), 403
+    
+    user = User(email=user_data["email"], password=user_data["password"])
+
+    db.session.add(user)
     db.session.commit()
-    return jsonify("Added User"), 200
 
-@api.route('/login', methods=['POST'])
-def handle_login():
+    return jsonify({"message": "The user has been created successfully"}), 200
+
+@api.route("/token", methods=["POST"])
+def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    user = User.query.filter_by(email=email, password=password).first()
-    if user is None:
-        return jsonify({"msg" : "Bad username or password"}), 401
-    access_token = create_access_token(identity=user.id)
-    return jsonify({"token": access_token, "user_id": user.id}), 200
 
-@api.route('/private', methods=['GET'])
+    user3 = User.query.filter_by(email=email).first()
+
+    if user3 is None:
+        return jsonify({"msg": "Bad username or password"}), 401
+    
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token)
+
+@api.route("/private", methods=["GET"])
 @jwt_required()
-def handle_private():
+def protected():
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
+    
+    return jsonify({"email": user.email,}), 200
 
-    if user is None:
-        return jsonify({"msg": "Please login"})
-    else:
-        return jsonify({"user_id": user.id, "email":user.email}), 200
+#######get all videogames   ############
+@api.route('/videogames', methods=['GET'])
+@cross_origin(methods=["GET"], headers=["Content-Type", "Authorization"])
+def getVideogames():
+    allVideogames = Videogame.query.all()
 
+    result = list(map(lambda item: item.serialize(), allVideogames))
+
+    return jsonify(result), 200
 
 
 #######get all videogames   ############
