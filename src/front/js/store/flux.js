@@ -109,7 +109,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       deleteGenre: async (genres_id) => {
         try {
-          const url = `${process.env.BACKEND_URL}/api/genres/${genres_id}`;
+          const url = `${process.env.BACKEND_URL}/api/genresList/${genres_id}`;
           const options = {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },

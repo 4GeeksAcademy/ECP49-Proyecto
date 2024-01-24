@@ -295,11 +295,12 @@ def add_new_genre_fav():
 
 @api.route('/user/<int:user_id>/genre_fav', methods=['GET'])
 def get_user_favorites_genres(user_id):
-    user_favorites_genres = Genre_fav.query.filter_by(user_id=user_id).all()
-
-    results = map(lambda favorites: favorites.serialize(), user_favorites_genres)
-    favorites_list = list(results)
-    return jsonify(favorites_list), 200
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+    user_favorites_genres = user.genres_fav
+    results = [fav.serialize() for fav in user_favorites_genres]
+    return jsonify(results), 200
 
 
 

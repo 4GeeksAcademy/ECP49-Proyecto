@@ -30,6 +30,7 @@ export const Genres_list = () => {
                 </div>
             </div>))}
         </div>
+        
     </div>
     <br/>
     <div>
