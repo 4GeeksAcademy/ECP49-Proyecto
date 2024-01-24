@@ -5,7 +5,14 @@ import { Context } from "../store/appContext";
 export const Genres_list = () => {
 
   const { store, actions } = useContext(Context);
-
+  const handleDeleteGenre = async (genre_id) => {
+    try {
+      console.log("Deleting genre with id:", genre_id);
+      await actions.deleteGenre(genre_id);
+    } catch (error) {
+      console.error("Error deleting genre:", error);
+    }
+  };
   return (
     <>
     

@@ -8,6 +8,15 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_cors import CORS
 
+
+from flask import jsonify
+from flask import request
+
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
+
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
@@ -34,6 +43,10 @@ setup_admin(app)
 
 # add the admin
 setup_commands(app)
+
+# Setup the Flask-JWT-Extended extension
+app.config["JWT_SECRET_KEY"] = "secretkey"  # Change this!
+jwt = JWTManager(app)
 
 # Add all endpoints from the API with an "api" prefix
 app.register_blueprint(api, url_prefix='/api')

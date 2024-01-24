@@ -11,15 +11,16 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
-
-import { VideogamesList } from "./videogames/videogameList";
-import { Videogame } from "./videogames/videogame";
-import { FormVideogame } from "./videogames/formVideogame";
+import { Login } from "./pages/user/login";
+import  Signup  from "./pages/user/signup";
+import Private from "./pages/user/private"
+import { VideogamesList } from "./pages/videogames/videogameList";
+import { Videogame } from "./pages/videogames/videogame";
+import { EditVideogame } from "./pages/videogames/editVideogame";
 import { ConsoleList } from "./pages/consoles/consoleList";
 import { Console } from "./pages/consoles/console";
 import { FormConsole } from "./pages/consoles/formConsole";
 import { ConsoleEdit } from "./pages/consoles/consoleEdit";
-
 import { Genres_list } from "./genres/genresList";
 import { Genres } from "./genres/genres";
 import { FormGenres } from "./genres/formGenres";
@@ -27,6 +28,7 @@ import { FormEditGenres } from "./genres/formEditGenres";
 import { Genres_favorites } from "./genres/viewFavGenres";
 
 
+import AdminForm from "./pages/administrador/adminForm";
 
 //create your first component
 const Layout = () => {
@@ -51,15 +53,28 @@ const Layout = () => {
                         <Route element={<Genres />} path="/genres/:theid" />
                         <Route element={<Genres_favorites />} path="/viewFavGenres" />
                         <Route element={<FormGenres />} path="formGenres/" />
-                        <Route element={<FormEditGenres />} path="genres/:theid" /> 
+                        <Route element={<FormEditGenres />} path="formEditGenres" />
                         <Route element={<Videogame />} path="/videogames/:theid/" />
-                        <Route element={<FormVideogame />} path="videogames/edit" />
-                        <Route element={<h1>Not found!</h1>} />
+                        <Route element={<EditVideogame />} path="/editVideogame/:theid/" />
+
                         <Route element={<ConsoleList />} path="/consoles" />
                         <Route element={<Console />} path="/consoles/:theid/" />
                         <Route element={<FormConsole />} path="consoles/edit" />
+
+
+                        <Route element={<Signup />} path="/signup" />
+                        <Route element={<Login />} path="/login" />
+                        <Route element={<Private />} path="/private" />
+
+
+                        <Route element={<h1>Not found!</h1>} />
+
+
                         <Route element={<ConsoleList />} path="/consoles" />
                         <Route element={<ConsoleEdit />} path="/consoles/edit/:consoleId" />
+                          
+                        <Route element={<AdminForm />} path="/adminform" />
+
                     </Routes>
                     <Footer />
                 </ScrollToTop>
