@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
 	const navigate = useNavigate();
-	const {store, actions} = useContext(Context);
+	const { store, actions } = useContext(Context);
 	return (
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
@@ -14,15 +14,11 @@ export const Navbar = () => {
 				</Link>
 
 				<Link to="/adminform">
-                        
+					{store.auth === true ? null : <button className="btn btn-primary">Administrador</button>}
+				</Link>
 
-						{store.auth === true ? null: <button className="btn btn-primary">Administrador</button> }
-
-
-                    </Link>
-					
 				<div className="ml-auto">
-					{!store.user ? 
+					{store.user ?
 						<>
 							<Link to="/signup">
 								<button className="btn btn-primary">Signup</button>
