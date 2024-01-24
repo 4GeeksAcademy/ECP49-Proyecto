@@ -1,5 +1,6 @@
 import React, {useEffect, useContext} from "react";
 import { Context } from "../../store/appContext";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 
@@ -25,6 +26,7 @@ const Private = () => {
                 :
                 navigate("/login")
             }
+            <Link to="/">Go to Home</Link>
         </div>
     );
 }
