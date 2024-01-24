@@ -265,51 +265,58 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
       getToken: async (email, password) => {
-				try {
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/token",
-						{
-							method: "POST",
-							headers: {
-								"Content-Type": "application/json",
-							},
-
-							body: JSON.stringify({
-								"email": email,
-								"password": password
-							}),
-						}
-					);
-					const credentials = await resp.json()
-					localStorage.setItem('access_token', JSON.stringify(credentials.access_token))
-					getActions().syncStoreToLocalStorage()
-					return credentials;
-				}
-				catch (error) {
-					console.log("Error loading access token from backend", error)
-				}
-			},
-      getUser: async () => {
         try {
-            const resp = await fetch(process.env.BACKEND_URL + "/api/private", {
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem('access_token')
-                }
+          // fetching data from the backend
+          const resp = await fetch(process.env.BACKEND_URL + "/api/token",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+      
+              body: JSON.stringify({
+                "email": email,
+                "password": password
+              })
             });
-    
-            if (!resp.ok) {
-                throw Error("There was a problem in the login request");
-            }
-    
-            const data = await resp.json();
-            return data;  // Devolvemos la información del usuario
-        } catch (error) {
-            console.error("Error loading user data from backend", error);
-            throw error;
+      
+          const credentials = await resp.json()
+      
+          if (resp.status === 401) {
+            throw Error("Invalid credentials")
+          }
+      
+          localStorage.setItem('access_token', JSON.stringify(credentials.access_token))
+          getActions().syncStoreToLocalStorage()
+          return credentials;
         }
-			},
+        catch (error) {
+          console.log("Error loading access token from backend", error)
+        }
+      },
+      getUser: async () => {
+        const headers = {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem('access_token')
+        }
+      
+        try {
+          const resp = await fetch(process.env.BACKEND_URL + "/api/private", {
+            method: 'GET',
+            headers: headers
+          });
+      
+          if (!resp.ok) {
+            throw Error("There was a problem in the login request");
+          }
+      
+          const data = await resp.json();
+          return data; // Devolvemos la información del usuario
+        } catch (error) {
+          console.error("Error loading user data from backend", error);
+          throw error;
+        }
+      },
       syncStoreToLocalStorage: () => {
 				setStore({ 'accessToken': localStorage.getItem('access_token') })
 			},
