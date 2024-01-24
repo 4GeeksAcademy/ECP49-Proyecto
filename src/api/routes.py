@@ -60,16 +60,6 @@ def protected():
     
     return jsonify({"email": user.email,}), 200
 
-#######get all videogames   ############
-@api.route('/videogames', methods=['GET'])
-@cross_origin(methods=["GET"], headers=["Content-Type", "Authorization"])
-def getVideogames():
-    allVideogames = Videogame.query.all()
-
-    result = list(map(lambda item: item.serialize(), allVideogames))
-
-    return jsonify(result), 200
-
 
 #######get all videogames   ############
 @api.route('/videogames', methods=['GET'])

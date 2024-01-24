@@ -12,8 +12,8 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
 import { Login } from "./pages/user/login";
-import  Signup  from "./pages/user/signup";
-import Private from "./pages/user/private"
+import  {SignUp}  from "./pages/user/signup";
+import {Private} from "./pages/user/private"
 import { VideogamesList } from "./pages/videogames/videogameList";
 import { Videogame } from "./pages/videogames/videogame";
 import { EditVideogame } from "./pages/videogames/editVideogame";
@@ -58,7 +58,7 @@ const Layout = () => {
                         <Route element={<FormConsole />} path="consoles/edit" />
 
 
-                        <Route element={<Signup />} path="/signup" />
+                        <Route element={<SignUp />} path="/signup" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Private />} path="/private" />
 

@@ -241,6 +241,78 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         })
       },
+      createUser: async (email, password) => {
+				try {
+					// Add user to database in backend.
+					const resp = await fetch(process.env.BACKEND_URL + "/api/signup",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+
+							body: JSON.stringify({
+								"email": email,
+								"password": password
+							}),
+						}
+					);
+					if (resp.status == 403) { alert('USER ALREADY EXISTS, REDIRECTED TO LOGIN.') }
+					return resp;
+				}
+				catch (error) {
+					console.log("Error from backend", error)
+				}
+			},
+      getToken: async (email, password) => {
+				try {
+					// fetching data from the backend
+					const resp = await fetch(process.env.BACKEND_URL + "/api/token",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+
+							body: JSON.stringify({
+								"email": email,
+								"password": password
+							}),
+						}
+					);
+					const credentials = await resp.json()
+					localStorage.setItem('access_token', JSON.stringify(credentials.access_token))
+					getActions().syncStoreToLocalStorage()
+					return credentials;
+				}
+				catch (error) {
+					console.log("Error loading access token from backend", error)
+				}
+			},
+      getUser: async () => {
+        try {
+            const resp = await fetch(process.env.BACKEND_URL + "/api/private", {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem('access_token')
+                }
+            });
+    
+            if (!resp.ok) {
+                throw Error("There was a problem in the login request");
+            }
+    
+            const data = await resp.json();
+            return data;  // Devolvemos la información del usuario
+        } catch (error) {
+            console.error("Error loading user data from backend", error);
+            throw error;
+        }
+			},
+      syncStoreToLocalStorage: () => {
+				setStore({ 'accessToken': localStorage.getItem('access_token') })
+			},
       login: (form, navigate) => {
         const store = getStore();
         const url = process.env.BACKEND_URL + "/api/login"
@@ -316,7 +388,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({user:null});
         sessionStorage.removeItem("token");
         setStore({token: null});
-        navigate("/");
+        // navigate("/");
       }
     },
   
