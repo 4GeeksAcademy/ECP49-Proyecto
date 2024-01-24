@@ -30,7 +30,7 @@ const injectContext = PassedComponent => {
 
 			
 			state.actions.getGenres()
-      state.actions.getConsoles();
+      		state.actions.getConsoles();
 
 
 

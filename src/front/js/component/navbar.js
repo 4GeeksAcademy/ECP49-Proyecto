@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
 	const navigate = useNavigate();
@@ -12,6 +12,15 @@ export const Navbar = () => {
 				<Link to="/">
 					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
 				</Link>
+
+				<Link to="/adminform">
+                        
+
+						{store.auth === true ? null: <button className="btn btn-primary">Administrador</button> }
+
+
+                    </Link>
+					
 				<div className="ml-auto">
 					{!store.user ? 
 						<>
@@ -35,3 +44,4 @@ export const Navbar = () => {
 		</nav>
 	);
 };
+

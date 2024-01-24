@@ -21,11 +21,11 @@ import { ConsoleList } from "./pages/consoles/consoleList";
 import { Console } from "./pages/consoles/console";
 import { FormConsole } from "./pages/consoles/formConsole";
 import { ConsoleEdit } from "./pages/consoles/consoleEdit";
-
 import { Genres_list } from "./genres/genresList";
 import { Genres } from "./genres/genres";
 import { FormGenres } from "./genres/formGenres";
 import { FormEditGenres } from "./genres/formEditGenres";
+import AdminForm from "./pages/administrador/adminForm";
 
 //create your first component
 const Layout = () => {
@@ -68,6 +68,8 @@ const Layout = () => {
 
                         <Route element={<ConsoleList />} path="/consoles" />
                         <Route element={<ConsoleEdit />} path="/consoles/edit/:consoleId" />
+                          
+                        <Route element={<AdminForm />} path="/adminform" />
 
                     </Routes>
                     <Footer />
