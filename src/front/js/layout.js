@@ -49,7 +49,7 @@ const Layout = () => {
                         <Route element={<Genres_list />} path="/genresList" />
                         <Route element={<Genres />} path="/genresList/:theid" />
                         <Route element={<FormGenres />} path="formGenres/" />
-                        <Route element={<FormEditGenres />} path="genres/:theid" /> 
+                        <Route element={<FormEditGenres />} path="formEditGenres" />
                         <Route element={<Videogame />} path="/videogames/:theid/" />
                         <Route element={<EditVideogame />} path="/editVideogame/:theid/" />
 
