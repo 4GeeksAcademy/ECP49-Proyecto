@@ -185,7 +185,8 @@ def delete_console(console_id):
 
 
 
-### GENRES METHODS ###
+###################### START GENRES #######################
+
 #GET ALL GENRES#
 
 @api.route('/genres', methods=['GET'])
@@ -264,7 +265,7 @@ def delete_genre(genre_id):
 
     return jsonify({"msg": f"Console with ID {genre_id} successfully deleted"}), 200
 
-##### POST GENEROS FAVORITOS ####
+##### POST FAVORITES GENRES ####
 
 @api.route('admin/genre_fav', methods=['POST'])
 def add_new_genre_fav():
@@ -291,7 +292,7 @@ def add_new_genre_fav():
 
     return jsonify(response_body), 200
 
-##### GET GENEROS FAVORITOS BY ID ####
+##### GET FAVORITES GENRES BY USER ID ####
 
 @api.route('/user/<int:user_id>/genre_fav', methods=['GET'])
 def get_user_favorites_genres(user_id):
@@ -301,6 +302,8 @@ def get_user_favorites_genres(user_id):
     user_favorites_genres = user.genres_fav
     results = [fav.serialize() for fav in user_favorites_genres]
     return jsonify(results), 200
+
+###################### END GENRES #######################
 
 
 

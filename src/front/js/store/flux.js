@@ -88,7 +88,22 @@ const getState = ({ getStore, getActions, setStore }) => {
               setStore({ genres: data });
             });
         }catch (err){console.error("Error loading list of videogames from backend", err);}
-      }, 
+      },
+      
+      getSingleGenre: async (genres_id) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/genresList/${genres_id}`;
+          const options = {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          };
+          const response = await fetch(url, options);
+          const data = await response.json();
+          return data; 
+        } catch (error) {
+          console.error("Error loading single genre from backend", error);
+        }
+      },
 
       addGenres: async(addGenres) => {
         try {
@@ -123,18 +138,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error deleting genre from backend", error);
         }
       },
-
-      //deleteGenre: async (genre_id) => {
-      //  try {
-      //    const url = `${process.env.BACKEND_URL}/api/genresList/${genre_id}`;
-      //      .then((res) => res.json())
-      //      .then((response) => {
-      //        console.log("Success: ", JSON.stringify(response));
-      //      });
-      //  } catch (error) {
-      //    console.error("Error to add a videogame from backend", error);
-      //  }
-      //},
 
 /////////////////////// END GENRES /////////////////////////
 

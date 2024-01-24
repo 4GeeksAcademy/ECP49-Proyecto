@@ -48,7 +48,7 @@ const Layout = () => {
                         // <Route element={<Single />} path="/single/:theid" /> */}
                         <Route element={<VideogamesList />} path="/videogames" />
                         <Route element={<Genres_list />} path="/genresList" />
-                        <Route element={<Genres />} path="/genresList/:theid" />
+                        <Route element={<Genres />} path="/genres/:theid" />
                         <Route element={<Genres_favorites />} path="/viewFavGenres" />
                         <Route element={<FormGenres />} path="formGenres/" />
                         <Route element={<FormEditGenres />} path="genres/:theid" /> 

@@ -51,6 +51,8 @@ class Consoles(db.Model):
             "company": self.company,
             "year": self.year
         }
+    
+###################### START GENRES #######################
        
 class Genres(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -65,8 +67,6 @@ class Genres(db.Model):
             "id": self.id,
             "type": self.type,
         }
-    
-#### GENEROS FAVORITOS ###
     
 class Genre_fav(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -85,5 +85,7 @@ class Genre_fav(db.Model):
             "genres_id": self.genres_id,
             # do not serialize the password, its a security breach
         }
+    
+###################### END GENRES #######################
     
 

@@ -13,18 +13,16 @@ export const Genres = () => {
 
 	return (
 		<div className="jumbotron">
-			{store.genres.map((item, index) => (
-    		<div className="card" style={{width: "18rem;"}}>
-            	<img src="..." className="card-img-top" alt="..."/>
-            		<div className="card-body">
-                		<h5 className="card-title">{store.genres[params.theid].type}</h5>
-                		<p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                
-                		<button className="btn btn-success" onClick={()=>actions.addFavoriteGenre(item.type)}>Like!</button>
-                
-            		</div>
-        	</div>))}
-			
+            {store.genres[params.theid] ? (
+                <>
+                    <h1 className="display-4">Type: {store.genres[params.theid].type}</h1> 
+                    <hr className="my-4" />
+					<button className="btn btn-success" onClick={()=>actions.addFavoriteGenre(store.genres[params.theid].type)}>Like!</button>
+
+                </>
+            ) : (
+                <p>Console not found</p>
+            )}
 			<Link to="/genresList">
 				<span className="btn btn-primary" href="#" role="button">
 					Back Genres List
