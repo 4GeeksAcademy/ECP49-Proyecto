@@ -35,12 +35,22 @@ export const Console = () => {
                 </span>
             </Link>
 
+            <Link to="/consoles/add">
+                <span className="btn btn-primary btn-lg" href="#" role="button">
+                    Add console
+                </span>
+            </Link>
+
+
             <button
                 className="btn btn-danger"
                 onClick={() => handleDeleteConsole(store.consoles[params.theid].id)}
             >
                 Delete
             </button>
+
+            
+
         </div>
     );
 };

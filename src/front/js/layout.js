@@ -59,7 +59,7 @@ const Layout = () => {
 
                         <Route element={<ConsoleList />} path="/consoles" />
                         <Route element={<Console />} path="/consoles/:theid/" />
-                        <Route element={<FormConsole />} path="consoles/edit" />
+                        <Route element={<FormConsole />} path="consoles/add" />
 
 
                         <Route element={<Signup />} path="/signup" />

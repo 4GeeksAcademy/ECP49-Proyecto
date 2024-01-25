@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../store/appContext";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 export const FormConsole = () => {
   const { actions } = useContext(Context);
@@ -83,9 +84,11 @@ export const FormConsole = () => {
         <button type="button" onClick={addConsole} className="btn btn-primary">
           Add Console
         </button>
-        <button type="button" className="btn btn-danger">
-          Delete Console
-        </button>
+        <Link to="/">
+                <span className="btn btn-primary btn-lg" href="#" role="button">
+                    Back home
+                </span>
+            </Link>
       </form>
     </div>
   );
