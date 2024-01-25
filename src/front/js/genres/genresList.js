@@ -29,7 +29,7 @@ export const Genres_list = () => {
               >
                 <Link to={"/genres/" + index} className="text-decoration-none">
                   <span>{genre.type}</span>
-                 </Link>
+                </Link>
 
                 <Link
                   className="btn btn-success"
@@ -38,35 +38,40 @@ export const Genres_list = () => {
                   Learn More...
                 </Link>
 
-                <button className="btn btn-success" onClick={()=>actions.addFavoriteGenre(genre.type)}>Like!</button>
-                <button 
-                  className="btn btn-danger"
-                  onClick={() => handleDeleteGenre(genre.id)}>
-                  Delete
-                </button>
+                <button className="btn btn-success" onClick={() => actions.addFavoriteGenre(genre.type)}>Like!</button>
 
-                <Link to={`/genres/edit/${genre.id}`}>
-                 
-                  <button className="btn btn-primary">Edit</button>
-                  
+                {store.auth === true ?
+                  <Link to={`/genres/edit/${genre.id}`}>
+                    <button className="btn btn-primary">Edit</button>
+                  </Link>
+                  : null}
 
-                </Link>
+                {store.auth === true ?
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDeleteGenre(genre.id)}>
+                    Delete
+                  </button>
+                  : null}
 
 
-
-          </li>
+              </li>
             );
           })}
       </ul>
       <br />
 
-  <Link to="/">
+      <Link to="/">
         <button className="btn btn-primary">Back Home</button>
       </Link>
-      <Link to="/formGenres/">
-        <button className="btn btn-success">Add Genre</button>
-      </Link>
- <Link to="/viewFavGenres/">
+
+      {store.auth === true ?
+        <Link to="/formGenres/">
+          <button className="btn btn-success">Add genre</button>
+        </Link>
+        : null}
+
+      <Link to="/viewFavGenres/">
         <button className="btn btn-warning">Favorites</button>
       </Link>
     </div>
@@ -75,5 +80,5 @@ export const Genres_list = () => {
 
 Genres_list.propTypes = {
   type: PropTypes.string,
- 
+
 };

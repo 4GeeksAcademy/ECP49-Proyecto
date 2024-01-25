@@ -36,21 +36,19 @@ export const ConsoleList = () => {
                 </Link>
 
 
-
-                <Link to={`/consoles/edit/${console.id}`}>
-                  {store.auth === true ?
-                  <button className="btn btn-primary">Edit</button>
+                {store.auth === true ?
+                  <Link to={`/consoles/edit/${console.id}`}>
+                    <button className="btn btn-primary">Edit</button>
+                  </Link>
                   : null}
 
-                </Link>
-
-                {store.auth === true ? 
-                <button
-                  className="btn btn-danger"
-                  onClick={() => handleDeleteConsole(console.id)}>
-                  Delete
-                </button>
-                : null} 
+                {store.auth === true ?
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDeleteConsole(console.id)}>
+                    Delete
+                  </button>
+                  : null}
 
 
               </li>
@@ -64,12 +62,12 @@ export const ConsoleList = () => {
       </Link>
 
       {store.auth === true ?
-      <Link to="/consoles/add">
-        <span className="btn btn-primary" href="#" role="button">
-          Add console
-        </span>
-      </Link>
-      : null}
+        <Link to="/consoles/add">
+          <span className="btn btn-primary" href="#" role="button">
+            Add console
+          </span>
+        </Link>
+        : null}
 
     </div>
   );
@@ -80,5 +78,4 @@ ConsoleList.propTypes = {
   company: PropTypes.string,
   year: PropTypes.number,
 };
-
 
