@@ -7,34 +7,29 @@ export const Genres = () => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
 
-	const handleDeleteGenre = (genre_id) => {
-		actions.deleteGenre(genre_id);
-	  };
 
 	return (
 		<div className="jumbotron">
-            {store.genres[params.theid] ? (
-                <>
-                    <h1 className="display-4">Type: {store.genres[params.theid].type}</h1> 
-                    <hr className="my-4" />
-					<button className="btn btn-success" onClick={()=>actions.addFavoriteGenre(store.genres[params.theid].type)}>Like!</button>
+			{store.genres[params.theid] ? (
+				<>
+					<h1 className="display-4">Type: {store.genres[params.theid].type}</h1>
+					<hr className="my-4" />
+					<button className="btn btn-success" onClick={() => actions.addFavoriteGenre(store.genres[params.theid].type)}>Like!</button>
 
-                </>
-            ) : (
-                <p>Console not found</p>
-            )}
+				</>
+			) : (
+				<p>Genrenot found</p>
+			)}
+			<Link to="/">
+				<span className="btn btn-primary btn-lg" href="#" role="button">
+					Back home
+				</span>
+			</Link>
 			<Link to="/genresList">
 				<span className="btn btn-primary" href="#" role="button">
-					Back Genres List
+					BackList
 				</span>
 			</Link>
-			<Link to="/formEditGenres">
-				<span className="btn btn-secondary" href="#" role="button">
-					Edit Genre
-				</span>
-			</Link>
-			<button className="btn btn-danger" onClick={() => handleDeleteGenre(item.id)}>Delete Genre</button>
-
 		</div>
 	);
 };
@@ -42,5 +37,5 @@ export const Genres = () => {
 Genres.propTypes = {
 	match: PropTypes.object,
 	id: PropTypes.number,
-  	type: PropTypes.string
+	type: PropTypes.string
 };
