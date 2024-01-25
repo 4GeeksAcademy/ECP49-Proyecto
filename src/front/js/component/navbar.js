@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+import { SearchBar } from "./searchBar.js"
 
 export const Navbar = () => {
 	const navigate = useNavigate();
@@ -10,13 +11,15 @@ export const Navbar = () => {
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
 				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
+					<button className="btn btn-danger mb-0 h1">Inicio</button>
 				</Link>
 
 				<Link to="/adminform">
 					{store.auth === true ? null : <button className="btn btn-primary">Administrador</button>}
 				</Link>
 
+			{/* ++ SEARCH BUTTON ++ */}
+				<SearchBar />
 				<div className="ml-auto">
 					{store.user ?
 						<>
