@@ -99,26 +99,26 @@ def new_videogame():
         return jsonify({"message": "Error creating videogame"}), 500
 
 #update info videogame
-@api.route("/videogames/<int:id>", methods=["PUT" ])
-def update_videogame(id):
-    videogame = Videogame.query.get(id)
+# @api.route("/videogames/<int:id>", methods=["PUT" ])
+# def update_videogame(id):
+#     videogame = Videogame.query.get(id)
 
-    if not videogame:
-        abort(404)
+#     if not videogame:
+#         abort(404)
 
-    if request.method == "PUT":
-        data = request.get_json()
+#     if request.method == "PUT":
+#         data = request.get_json()
 
-        if not data.get("id"):
-            abort(400, description="Id field is mandatory.")
+#         if not data.get("id"):
+#             abort(400, description="Id field is mandatory.")
     
-        videogame.name = data.get("name", videogame.name)
-        videogame.pegi = int(data.get("pegi", videogame.pegi))
-        videogame.year = int(data.get("year", videogame.year))
+#         videogame.name = data.get("name", videogame.name)
+#         videogame.pegi = int(data.get("pegi", videogame.pegi))
+#         videogame.year = int(data.get("year", videogame.year))
 
-        db.session.commit()
+#         db.session.commit()
 
-        return redirect("/videogame/{}".format(videogame.id))
+#         return redirect("/videogame/{}".format(videogame.id))
 
 #delete videogame
 @api.route("/videogames/<int:videogame_id>", methods=["DELETE" ])
@@ -139,6 +139,40 @@ def delete_videogame(videogame_id):
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, HEAD, DELETE'
 
     return response
+
+# Ruta para obtener un videojuego por su ID
+@api.route('/videogames/<int:videogame_id>', methods=['GET'])
+def get_videogame_by_id(videogame_id):
+    videogame = Videogame.query.get(videogame_id)
+
+    if not videogame:
+        return jsonify({"msg": "Videogame not found"}), 404
+
+    serialized_videogame = videogame.serialize()
+    return jsonify(serialized_videogame), 200
+
+# Ruta para actualizar un videojuego por su ID
+@api.route('/videogames/<int:videogame_id>', methods=['PUT'])
+def update_videogame(videogame_id):
+    videogame = Videogame.query.get(videogame_id)
+
+    if not videogame:
+        return jsonify({"msg": "Videogame not found"}), 404
+
+    request_body = request.get_json()
+
+    # Actualizar los campos proporcionados en el cuerpo de la solicitud
+    if "name" in request_body:
+        videogame.name = request_body["name"]
+    if "pegi" in request_body:
+        videogame.pegi = request_body["pegi"]
+    if "year" in request_body:
+        videogame.year = request_body["year"]
+
+    db.session.commit()
+
+    return jsonify({"msg": f"Videogame with ID {videogame_id} updated successfully"}), 200
+
 
 ### CONSOLE METHODS ###
 # Ruta para obtener todas las consolas
@@ -353,19 +387,4 @@ def loginadministrador():
 
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

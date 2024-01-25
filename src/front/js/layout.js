@@ -27,7 +27,10 @@ import { FormGenres } from "./genres/formGenres";
 import { FormEditGenres } from "./genres/formEditGenres";
 import { Genres_favorites } from "./genres/viewFavGenres";
 
+import { FormVideogame } from "./pages/videogames/formVideogame";
+
 import GenreEdit from "./genres/genreEdit";
+import VideogameEdit from "./pages/videogames/videogameEdit";
 
 
 
@@ -65,6 +68,7 @@ const Layout = () => {
                         <Route element={<ConsoleList />} path="/consoles" />
                         <Route element={<Console />} path="/consoles/:theid/" />
                         <Route element={<FormConsole />} path="consoles/add" />
+                        <Route element={<FormVideogame />} path="videogames/add" />
 
 
                         <Route element={<Signup />} path="/signup" />
@@ -78,6 +82,7 @@ const Layout = () => {
                         <Route element={<ConsoleList />} path="/consoles" />
                         <Route element={<ConsoleEdit />} path="/consoles/edit/:theid"  />
                         <Route element={<GenreEdit />} path="/genres/edit/:theid"  />
+                        <Route element={<VideogameEdit />} path="/videogames/edit/:theid"  />
                           
                         <Route element={<AdminForm />} path="/adminform" />
 

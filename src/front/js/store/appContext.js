@@ -25,7 +25,7 @@ const injectContext = PassedComponent => {
 
 			state.actions.getVideogames();
 			state.actions.getConsoles();
-			state.actions.editVideogame();
+			// state.actions.editVideogame();
 
 
 			

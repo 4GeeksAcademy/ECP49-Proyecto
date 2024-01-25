@@ -241,17 +241,56 @@ const getState = ({ getStore, getActions, setStore }) => {
       }
     },
       
-      editVideogame: async (id, videogame) => {
-        let store = getStore();
-        try {
-          await fetch(`${process.env.BACKEND_URL}/editVideogames/${id}`, {
-            method: "PUT",
-            body: videogame
-          })
-        } catch (error) {
-          console.log(error)
-        }
-      },
+    // editVideogame: async (id, videogame) => {
+    //   let store = getStore();
+    //   try {
+    //     if (!id) {
+    //       console.error("ID is undefined");
+    //       return;
+    //     }
+    
+    //     await fetch(`${process.env.BACKEND_URL}/api/videogames/${id}`, {
+    //       method: "PUT",
+    //       body: JSON.stringify(videogame),
+    //       headers: { "Content-Type": "application/json" },
+    //     });
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
+
+    getSingleVideogame: async (videogameId) => {
+      try {
+        const url = `${process.env.BACKEND_URL}/api/videogames/${videogameId}`;
+        const options = {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        };
+        const response = await fetch(url, options);
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error loading single videogame from backend", error);
+      }
+    },
+    
+    updateVideogame: async (videogameId, updatedVideogameData) => {
+      try {
+        const url = `${process.env.BACKEND_URL}/api/videogames/${videogameId}`;
+        const options = {
+          method: "PUT",
+          body: JSON.stringify(updatedVideogameData),
+          headers: { "Content-Type": "application/json" },
+        };
+        await fetch(url, options)
+          .then((res) => res.json())
+          .then((response) => {
+            console.log("Success: ", JSON.stringify(response));
+          });
+      } catch (error) {
+        console.error("Error updating videogame from backend", error);
+      }
+    },
 
 /////////////////////// END GENRES /////////////////////////
 

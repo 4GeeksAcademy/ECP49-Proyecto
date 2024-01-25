@@ -15,9 +15,6 @@ export const Home = () => {
 		<div className="text-center mt-5">
 			
 
-			<Link to="/consoles">
-						<button className="btn btn-warning">Consolas</button>
-					</Link>
 
 
 			

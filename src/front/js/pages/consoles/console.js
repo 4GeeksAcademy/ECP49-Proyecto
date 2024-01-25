@@ -34,7 +34,6 @@ export const Console = () => {
                     Back to the list
                 </span>
             </Link>
-            
         </div>
     );
 };
