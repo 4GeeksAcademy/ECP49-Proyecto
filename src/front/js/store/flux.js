@@ -18,6 +18,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 
     },
     actions: {
+
+      getSingleConsole: async (consoleId) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/consoles/${consoleId}`;
+          const options = {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          };
+          const response = await fetch(url, options);
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error("Error loading single console from backend", error);
+        }
+      },
+
+      updateConsole: async (consoleId, updatedConsoleData) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/consoles/${consoleId}`;
+          const options = {
+            method: "PUT",
+            body: JSON.stringify(updatedConsoleData),
+            headers: { "Content-Type": "application/json" },
+          };
+          await fetch(url, options)
+            .then((res) => res.json())
+            .then((response) => {
+              console.log("Success: ", JSON.stringify(response));
+            });
+        } catch (error) {
+          console.error("Error updating console from backend", error);
+        }
+      },
       
       loginadmin: (email, password) => {
 				
@@ -407,47 +440,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-      
-
-
-      getSingleConsole: async (consoleId) => {
-        try {
-          const url = `${process.env.BACKEND_URL}/api/consoles/${consoleId}`;
-          const options = {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          };
-          const response = await fetch(url, options);
-          const data = await response.json();
-          return data; 
-        } catch (error) {
-          console.error("Error loading single console from backend", error);
-        }
-      },
-
-
       //  //reset the global store
       //  setStore({ demo: demo });
       // }
-    
 
-      updateConsole: async (consoleId, updatedConsoleData) => {
-        try {
-          const url = `${process.env.BACKEND_URL}/api/consoles/${consoleId}`;
-          const options = {
-            method: "PUT",
-            body: JSON.stringify(updatedConsoleData),
-            headers: { "Content-Type": "application/json" },
-          };
-          await fetch(url, options)
-            .then((res) => res.json())
-            .then((response) => {
-              console.log("Success: ", JSON.stringify(response));
-            });
-        } catch (error) {
-          console.error("Error updating console from backend", error);
-        }
-      },
+
+      
     };
   };
 

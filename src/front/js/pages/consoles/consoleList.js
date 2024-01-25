@@ -35,26 +35,22 @@ export const ConsoleList = () => {
                   Learn More...
                 </Link>
 
-                
-
-                {store.auth === true ? <button
-                  className="btn btn-danger"
-                  onClick={() => handleDeleteConsole(console.id)}
-                >
-                  Delete
-                </button> : null}
-
-
 
 
                 <Link to={`/consoles/edit/${console.id}`}>
-                  
-            
+                  {store.auth === true ?
+                  <button className="btn btn-primary">Edit</button>
+                  : null}
 
+                </Link>
 
-            {store.auth === true ? <button className="btn btn-primary">Editar</button> : null}
-          </Link>
-
+                {store.auth === true ? 
+                <button
+                  className="btn btn-danger"
+                  onClick={() => handleDeleteConsole(console.id)}>
+                  Delete
+                </button>
+                : null} 
 
 
               </li>
@@ -62,9 +58,19 @@ export const ConsoleList = () => {
           })}
       </ul>
       <br />
+
       <Link to="/">
         <button className="btn btn-primary">Back home</button>
       </Link>
+
+      {store.auth === true ?
+      <Link to="/consoles/add">
+        <span className="btn btn-primary" href="#" role="button">
+          Add console
+        </span>
+      </Link>
+      : null}
+
     </div>
   );
 };

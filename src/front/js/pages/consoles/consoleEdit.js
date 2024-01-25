@@ -2,26 +2,24 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../../store/appContext";
 
-export const ConsoleEdit = () => {
+const ConsoleEdit = () => {
   const { store, actions } = useContext(Context);
   const params = useParams();
   const [consoleData, setConsoleData] = useState({
     name: "",
     company: "",
     year: "",
-    
   });
 
   useEffect(() => {
-    actions.getSingleConsole(params.consoleId).then((console) => {
+    actions.getSingleConsole(params.theid).then((console) => {
       setConsoleData({
         name: console.name,
         company: console.company,
         year: console.year,
-       
       });
     });
-  }, [params.consoleId]);
+  }, [params.theid]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -32,7 +30,7 @@ export const ConsoleEdit = () => {
   };
 
   const handleUpdate = () => {
-    actions.updateConsole(params.consoleId, consoleData);
+    actions.updateConsole(params.theid, consoleData);
   };
 
   return (
@@ -66,11 +64,16 @@ export const ConsoleEdit = () => {
           className="form-control"
         />
 
-      
-        <button type="button" onClick={handleUpdate} className="btn btn-primary">
+        <button
+          type="button"
+          onClick={handleUpdate}
+          className="btn btn-primary"
+        >
           Update Console
         </button>
       </form>
     </div>
   );
 };
+
+export default ConsoleEdit;
