@@ -32,15 +32,20 @@ export const VideogamesList = () => {
                   <button className="btn btn-success">Learn More...</button>
                 </Link>
 
-                <Link to={`/videogames/edit/${videogame.id}`}>
-                  <button className="btn btn-primary">Edit</button>
-                </Link>
+                {store.auth === true ?
+                  <Link to={`/videogames/edit/${videogame.id}`}>
+                    <button className="btn btn-primary">Edit</button>
+                  </Link>
+                  : null}
 
-                <button
-                  className="btn btn-danger"
-                  onClick={() => handleDeleteVideogame(videogame.id)}>
-                  Delete
-                </button>
+                {store.auth === true ?
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDeleteVideogame(videogame.id)}>
+                    Delete
+                  </button>
+                  : null}
+
               </li>
             );
           })}
@@ -51,11 +56,14 @@ export const VideogamesList = () => {
         <button className="btn btn-primary">Back home</button>
       </Link>
 
-      <Link to="/videogames/add">
-        <span className="btn btn-primary" href="#" role="button">
-          Add videogame
-        </span>
-      </Link>
+      {store.auth === true ?
+        <Link to="/videogames/add">
+          <span className="btn btn-primary" href="#" role="button">
+            Add videogame
+          </span>
+        </Link>
+        : null}
+
     </div>
   );
 };
