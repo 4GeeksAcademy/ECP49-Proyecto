@@ -27,6 +27,8 @@ import { FormGenres } from "./genres/formGenres";
 import { FormEditGenres } from "./genres/formEditGenres";
 import { Genres_favorites } from "./genres/viewFavGenres";
 
+import GenreEdit from "./genres/genreEdit";
+
 
 
 
@@ -75,6 +77,7 @@ const Layout = () => {
 
                         <Route element={<ConsoleList />} path="/consoles" />
                         <Route element={<ConsoleEdit />} path="/consoles/edit/:theid"  />
+                        <Route element={<GenreEdit />} path="/genres/edit/:theid"  />
                           
                         <Route element={<AdminForm />} path="/adminform" />
 

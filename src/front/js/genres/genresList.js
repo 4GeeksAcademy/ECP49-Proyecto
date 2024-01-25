@@ -44,6 +44,16 @@ export const Genres_list = () => {
                   onClick={() => handleDeleteGenre(genre.id)}>
                   Delete
                 </button>
+
+                <Link to={`/genres/edit/${genre.id}`}>
+                 
+                  <button className="btn btn-primary">Edit</button>
+                  
+
+                </Link>
+
+
+
           </li>
             );
           })}

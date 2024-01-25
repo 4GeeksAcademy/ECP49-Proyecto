@@ -19,6 +19,25 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
 
+
+      updateGenre: async (genreId, updatedGenreData) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/genres/${genreId}`;
+          const options = {
+            method: "PUT",
+            body: JSON.stringify(updatedGenreData),
+            headers: { "Content-Type": "application/json" },
+          };
+          await fetch(url, options)
+            .then((res) => res.json())
+            .then((response) => {
+              console.log("Success: ", JSON.stringify(response));
+            });
+        } catch (error) {
+          console.error("Error updating genre from backend", error);
+        }
+      },
+
       getSingleConsole: async (consoleId) => {
         try {
           const url = `${process.env.BACKEND_URL}/api/consoles/${consoleId}`;
@@ -156,18 +175,18 @@ const getState = ({ getStore, getActions, setStore }) => {
         }catch (err){console.error("Error loading list of videogames from backend", err);}
       },
       
-      getSingleGenre: async (genres_id) => {
+      getSingleGenre: async (genreId) => {
         try {
-          const url = `${process.env.BACKEND_URL}/api/genresList/${genres_id}`;
+          const url = `${process.env.BACKEND_URL}/api/genres/${genreId}`;
           const options = {
             method: "GET",
             headers: { "Content-Type": "application/json" },
           };
           const response = await fetch(url, options);
           const data = await response.json();
-          return data; 
+          return data;
         } catch (error) {
-          console.error("Error loading single genre from backend", error);
+          console.error("Error getting single genre from backend", error);
         }
       },
 
@@ -444,7 +463,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       //  setStore({ demo: demo });
       // }
 
-
+      
       
     };
   };
