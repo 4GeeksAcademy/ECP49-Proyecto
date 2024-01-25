@@ -7,7 +7,10 @@ export const Console = () => {
     const { store, actions } = useContext(Context);
     const params = useParams();
 
- 
+    const handleDeleteConsole = (console_id) => {
+        actions.deleteConsole(console_id);
+    };
+
     return (
         <div className="jumbotron">
             {store.consoles[params.theid] ? (
@@ -15,7 +18,6 @@ export const Console = () => {
                     <h1 className="display-4">Name: {store.consoles[params.theid].name}</h1>
                     <h1 className="display-4">Company: {store.consoles[params.theid].company}</h1>
                     <h1 className="display-4">Year: {store.consoles[params.theid].year}</h1>
-                    <button onClick={() => handleUpdate()}></button>
                     <hr className="my-4" />
                 </>
             ) : (
@@ -32,6 +34,13 @@ export const Console = () => {
                     Back to the list
                 </span>
             </Link>
+
+            <button
+                className="btn btn-danger"
+                onClick={() => handleDeleteConsole(store.consoles[params.theid].id)}
+            >
+                Delete
+            </button>
         </div>
     );
 };
