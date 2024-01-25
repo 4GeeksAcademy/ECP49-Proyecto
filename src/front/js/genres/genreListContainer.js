@@ -11,7 +11,7 @@ export const GenreListContainer = () => {
     <div className="jumbotron container">
       <div className="d-flex justify-content-center overflow row">
         <div className="col">
-          <Link to={"/Consoles/"} className="text-decoration-none">
+          <Link to={"/genreslist/"} className="text-decoration-none">
             See All Genres
           </Link>
           <ul
