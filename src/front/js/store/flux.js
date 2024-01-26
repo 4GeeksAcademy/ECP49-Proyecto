@@ -81,18 +81,18 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) { console.error("Error to add a videogame from backend", error) }
       },
 
-      /////////////////////// START GENRES /////////////////////////
-
-
+/////////////////////// START GENRES /////////////////////////
+        
       addFavoriteGenre: (typeGenre) => {
         //console.log("add favorite")
         const store = getStore();
-        if (store.favorites.includes(typeGenre)) {
-          setStore({ favorites: store.favorites.filter((repeated) => repeated != typeGenre) });
-        } else {
-          setStore({ favorites: [...store.favorites, typeGenre] });
-        }
-      },
+          if(store.favorites.includes(typeGenre)) {
+            setStore({ favorites: store.favorites.filter((repeated)=> repeated != typeGenre) });
+          }else{
+            setStore({ favorites: [...store.favorites , typeGenre]});
+          }
+        },
+        
 
       getFavGenres: async () => {
         try {
@@ -174,6 +174,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error deleting genre from backend", error);
         }
       },
+
+      /////////////////////// END GENRES /////////////////////////
 
       deleteVideogame: async (videogame_id) => {
         try {
