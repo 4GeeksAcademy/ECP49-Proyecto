@@ -2,20 +2,16 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       videogames: [],
-
       genres: [],
-
       consoles: [],
-
       favorites: [],
+
       user: [null],
       token: null,
 
       auth: false,
 
-
-      raw: []
-
+      
     },
     actions: {
 
@@ -251,23 +247,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       }
     },
       
-    // editVideogame: async (id, videogame) => {
-    //   let store = getStore();
-    //   try {
-    //     if (!id) {
-    //       console.error("ID is undefined");
-    //       return;
-    //     }
-    
-    //     await fetch(`${process.env.BACKEND_URL}/api/videogames/${id}`, {
-    //       method: "PUT",
-    //       body: JSON.stringify(videogame),
-    //       headers: { "Content-Type": "application/json" },
-    //     });
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
 
     getSingleVideogame: async (videogameId) => {
       try {
@@ -372,15 +351,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
         })
           .then(async resp => {
-            console.log(resp.ok); // will be true if the response is successfull
-            console.log(resp.status); // the status code = 200 or code = 400 etc.
+            console.log(resp.ok); 
+            console.log(resp.status); 
             if (!resp.ok) {
               alert("user already exists");
               console.log(resp.status);
               return false;
 
             }
-            await resp.json(); // (returns promise) will try to parse the result as json as return a promise that you can .then for results
+            await resp.json(); 
             navigate('/login');
           })
           .catch(error => {
@@ -403,13 +382,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
         })
           .then(async resp => {
-            console.log(resp.ok); // will be true if the response is successfull
-            console.log(resp.status); // the status code = 200 or code = 400 etc.
+            console.log(resp.ok); 
+            console.log(resp.status); 
             if (!resp.ok) {
               alert("wrong username or password");
               return false;
             }
-            //console.log(resp.text()); // will try return the exact result as string
+            
             const data = await resp.json();
             sessionStorage.setItem("token", data.token);
             setStore({ token: data.token });
@@ -418,7 +397,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             navigate('/private');
           })
           .catch(error => {
-            //error handling
+            
             console.log(error);
           })
       },
@@ -434,15 +413,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         })
           .then(resp => {
-            console.log(resp.ok); // will be true if the response is successfull
-            console.log(resp.status); // the status code = 200 or code = 400 etc.
+            console.log(resp.ok); 
+            console.log(resp.status); 
             if (!resp.ok) {
               navigate("/login");
               alert("Please login to continue");
 
             }
 
-            //console.log(resp.text()); // will try return the exact result as string
+            
             return resp.json();
           })
           .then(data => {
@@ -468,59 +447,6 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
 
 
-
-    //   getSingleConsole: async (consoleId) => {
-    //     try {
-    //         const url = `https://opulent-space-winner-r4g7prq6ww6r3wx64-3001.app.github.dev/api/consoles/${consoleId}`;
-    //         const options = {
-    //             method: "GET",
-    //             headers: { "Content-Type": "application/json" },
-    //         };
-    //         const response = await fetch(url, options);
-    //         const data = await response.json();
-
-    //         setStore({ singleConsole: data });
-    //     } catch (error) {
-    //         console.error("Error loading single console from backend", error);
-    //     }
-    // },
-
-
-
-    // exampleFunction: () => {
-    //  getActions().changeColor(0, "green");
-    // },
-
-    // getMessage: async () => { 
-    //  try{
-    //    // fetching data from the backend
-    //    const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-    //    const data = await resp.json()
-    //    setStore({ message: data.message })
-    //    // don't forget to return something, that is how the async resolves
-    //    return data;
-    //  }catch(error){
-    //    console.log("Error loading message from backend", error)
-    //  }
-    // },
-    // changeColor: (index, color) => {
-    //  //get the store
-    //  const store = getStore();
-
-
-
-      //  //reset the global store
-      //  setStore({ demo: demo });
-      // }
-
-      
-      
-    };
-
-
-
-
-
     getSingleConsole: async (consoleId) => {
       try {
         const url = `${process.env.BACKEND_URL}/api/consoles/${consoleId}`;
@@ -535,11 +461,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.error("Error loading single console from backend", error);
       }
     },
-
-
-    //  //reset the global store
-    //  setStore({ demo: demo });
-    // }
 
 
     updateConsole: async (consoleId, updatedConsoleData) => {
