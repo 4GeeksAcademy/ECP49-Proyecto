@@ -373,9 +373,10 @@ def get_user_favorites_genres(user_id):
     user = User.query.get(user_id)
     if not user:
         return jsonify({"msg": "User not found"}), 404
-        user_favorites_genres = user.genres_fav
-        results = [fav.serialize() for fav in user_favorites_genres]
-        return jsonify(results), 200
+
+    user_favorites_genres = user.genres_fav
+    results = [fav.serialize() for fav in user_favorites_genres]
+    return jsonify(results), 200
 
 ###################### END GENRES #######################
 ######## LOGIN ADMINISTRADOR ########
