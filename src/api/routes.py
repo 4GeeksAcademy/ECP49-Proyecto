@@ -1,4 +1,4 @@
-from api.models import db, User, Videogame, Consoles, Genres, Administrador
+from api.models import db, User, Videogame, Consoles, Genres, Administrador, Genre_fav
 from flask import request, jsonify, url_for, Blueprint, abort, redirect, Response
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS, cross_origin
@@ -335,7 +335,7 @@ def delete_genre(genre_id):
 
 ##### POST FAVORITES GENRES ####
 
-@api.route('admin/genre_fav', methods=['POST'])
+@api.route('/genre_fav', methods=['POST'])
 def add_new_genre_fav():
     request_body_fav_genre = request.get_json()
 
@@ -360,16 +360,22 @@ def add_new_genre_fav():
 
     return jsonify(response_body), 200
 
-##### GET FAVORITES GENRES BY USER ID ####
+##### GET FAVORITES GENRES ####
+
+@api.route('/genre_fav', methods=['GET'])
+def get_all_favorites_genres():
+    all_favorites_genres = Genre_fav.query.all()
+    results = [fav.serialize() for fav in all_favorites_genres]
+    return jsonify(results), 200
 
 @api.route('/user/<int:user_id>/genre_fav', methods=['GET'])
 def get_user_favorites_genres(user_id):
     user = User.query.get(user_id)
     if not user:
         return jsonify({"msg": "User not found"}), 404
-    user_favorites_genres = user.genres_fav
-    results = [fav.serialize() for fav in user_favorites_genres]
-    return jsonify(results), 200
+        user_favorites_genres = user.genres_fav
+        results = [fav.serialize() for fav in user_favorites_genres]
+        return jsonify(results), 200
 
 ###################### END GENRES #######################
 ######## LOGIN ADMINISTRADOR ########
