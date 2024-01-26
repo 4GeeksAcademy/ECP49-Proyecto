@@ -81,18 +81,17 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
 /////////////////////// START GENRES /////////////////////////
-
-          
+        
       addFavoriteGenre: (typeGenre) => {
-				//console.log("add favorite")
+        //console.log("add favorite")
         const store = getStore();
-        if(store.favorites.includes(typeGenre)) {
-          setStore({ favorites: store.favorites.filter((repeated)=> repeated != typeGenre) });
-        }else{
-          setStore({ favorites: [...store.favorites , typeGenre]});
-        }
-			},
-
+          if(store.favorites.includes(typeGenre)) {
+            setStore({ favorites: store.favorites.filter((repeated)=> repeated != typeGenre) });
+          }else{
+            setStore({ favorites: [...store.favorites , typeGenre]});
+          }
+        },
+        
       getFavGenres: async () => {
         try {const resp = process.env.BACKEND_URL + "/api/genre_fav/";
         const options = {
@@ -172,6 +171,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      /////////////////////// END GENRES /////////////////////////
+
       deleteVideogame: async (videogame_id) => {
       try {
         const url = `${process.env.BACKEND_URL}/api/videogames/${videogame_id}`;
@@ -200,8 +201,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error)
         }
       },
-
-/////////////////////// END GENRES /////////////////////////
 
       getConsoles: async () => {
         try {
