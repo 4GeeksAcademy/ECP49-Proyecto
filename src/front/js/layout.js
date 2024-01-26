@@ -21,15 +21,23 @@ import { EditVideogame } from "./pages/videogames/editVideogame";
 import { ConsoleList } from "./pages/consoles/consoleList";
 import { Console } from "./pages/consoles/console";
 import { FormConsole } from "./pages/consoles/formConsole";
-import { ConsoleEdit } from "./pages/consoles/consoleEdit";
+
 import { Genres_list } from "./genres/genresList";
 import { Genres } from "./genres/genres";
 import { FormGenres } from "./genres/formGenres";
 import { FormEditGenres } from "./genres/formEditGenres";
 import { Genres_favorites } from "./genres/viewFavGenres";
 
+import { FormVideogame } from "./pages/videogames/formVideogame";
+
+import GenreEdit from "./genres/genreEdit";
+import VideogameEdit from "./pages/videogames/videogameEdit";
+
+
+
 
 import AdminForm from "./pages/administrador/adminForm";
+import ConsoleEdit from "./pages/consoles/consoleEdit";
 
 //create your first component
 const Layout = () => {
@@ -62,7 +70,8 @@ const Layout = () => {
 
                         <Route element={<ConsoleList />} path="/consoles" />
                         <Route element={<Console />} path="/consoles/:theid/" />
-                        <Route element={<FormConsole />} path="consoles/edit" />
+                        <Route element={<FormConsole />} path="consoles/add" />
+                        <Route element={<FormVideogame />} path="videogames/add" />
 
 
                         <Route element={<Signup />} path="/signup" />
@@ -74,7 +83,9 @@ const Layout = () => {
 
 
                         <Route element={<ConsoleList />} path="/consoles" />
-                        <Route element={<ConsoleEdit />} path="/consoles/edit/:consoleId" />
+                        <Route element={<ConsoleEdit />} path="/consoles/edit/:theid"  />
+                        <Route element={<GenreEdit />} path="/genres/edit/:theid"  />
+                        <Route element={<VideogameEdit />} path="/videogames/edit/:theid"  />
                           
                         <Route element={<AdminForm />} path="/adminform" />
 

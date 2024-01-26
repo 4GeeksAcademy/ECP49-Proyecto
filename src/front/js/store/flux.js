@@ -19,6 +19,60 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
 
+
+
+      updateGenre: async (genreId, updatedGenreData) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/genres/${genreId}`;
+          const options = {
+            method: "PUT",
+            body: JSON.stringify(updatedGenreData),
+            headers: { "Content-Type": "application/json" },
+          };
+          await fetch(url, options)
+            .then((res) => res.json())
+            .then((response) => {
+              console.log("Success: ", JSON.stringify(response));
+            });
+        } catch (error) {
+          console.error("Error updating genre from backend", error);
+        }
+      },
+
+      getSingleConsole: async (consoleId) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/consoles/${consoleId}`;
+          const options = {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          };
+          const response = await fetch(url, options);
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error("Error loading single console from backend", error);
+        }
+      },
+
+      updateConsole: async (consoleId, updatedConsoleData) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/consoles/${consoleId}`;
+          const options = {
+            method: "PUT",
+            body: JSON.stringify(updatedConsoleData),
+            headers: { "Content-Type": "application/json" },
+          };
+          await fetch(url, options)
+            .then((res) => res.json())
+            .then((response) => {
+              console.log("Success: ", JSON.stringify(response));
+            });
+        } catch (error) {
+          console.error("Error updating console from backend", error);
+        }
+      },
+      
+
       loginadmin: (email, password) => {
 
         const requestOptions = {
@@ -126,9 +180,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (err) { console.error("Error loading list of videogames from backend", err); }
       },
 
-      getSingleGenre: async (genres_id) => {
+      
+      getSingleGenre: async (genreId) => {
+
         try {
-          const url = `${process.env.BACKEND_URL}/api/genresList/${genres_id}`;
+          const url = `${process.env.BACKEND_URL}/api/genres/${genreId}`;
           const options = {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -137,7 +193,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
           return data;
         } catch (error) {
-          console.error("Error loading single genre from backend", error);
+          console.error("Error getting single genre from backend", error);
         }
       },
 
@@ -178,33 +234,74 @@ const getState = ({ getStore, getActions, setStore }) => {
       /////////////////////// END GENRES /////////////////////////
 
       deleteVideogame: async (videogame_id) => {
-        try {
-          const url = `${process.env.BACKEND_URL}/api/videogames/${videogame_id}`;
-          const options = {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-          };
-          await fetch(url, options)
-            .then((res) => res.json())
-            .then((response) => {
-              console.log("Success: ", JSON.stringify(response));
-            });
-        } catch (error) {
-          console.error("Error deleting videogame from backend", error);
-        }
-      },
 
-      editVideogame: async (id, videogame) => {
-        let store = getStore();
-        try {
-          await fetch(`${process.env.BACKEND_URL}/editVideogames/${id}`, {
-            method: "PUT",
-            body: videogame
-          })
-        } catch (error) {
-          console.log(error)
-        }
-      },
+      try {
+        const url = `${process.env.BACKEND_URL}/api/videogames/${videogame_id}`;
+        const options = {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        };
+        await fetch(url, options)
+          .then((res) => res.json())
+          .then((response) => {
+            console.log("Success: ", JSON.stringify(response));
+          });
+      } catch (error) {
+        console.error("Error deleting videogame from backend", error);
+      }
+    },
+      
+    // editVideogame: async (id, videogame) => {
+    //   let store = getStore();
+    //   try {
+    //     if (!id) {
+    //       console.error("ID is undefined");
+    //       return;
+    //     }
+    
+    //     await fetch(`${process.env.BACKEND_URL}/api/videogames/${id}`, {
+    //       method: "PUT",
+    //       body: JSON.stringify(videogame),
+    //       headers: { "Content-Type": "application/json" },
+    //     });
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
+
+    getSingleVideogame: async (videogameId) => {
+      try {
+        const url = `${process.env.BACKEND_URL}/api/videogames/${videogameId}`;
+        const options = {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        };
+        const response = await fetch(url, options);
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error loading single videogame from backend", error);
+      }
+    },
+    
+    updateVideogame: async (videogameId, updatedVideogameData) => {
+      try {
+        const url = `${process.env.BACKEND_URL}/api/videogames/${videogameId}`;
+        const options = {
+          method: "PUT",
+          body: JSON.stringify(updatedVideogameData),
+          headers: { "Content-Type": "application/json" },
+        };
+        await fetch(url, options)
+          .then((res) => res.json())
+          .then((response) => {
+            console.log("Success: ", JSON.stringify(response));
+          });
+      } catch (error) {
+        console.error("Error updating videogame from backend", error);
+      }
+    },
+
 
       /////////////////////// END GENRES /////////////////////////
 
@@ -412,6 +509,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
+      //  //reset the global store
+      //  setStore({ demo: demo });
+      // }
+
+      
+      
+    };
+
+
 
 
 
@@ -463,6 +569,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log("Error loading message from backend", error)
       }
     },
+
   };
 };
 

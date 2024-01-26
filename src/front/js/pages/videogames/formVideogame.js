@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../store/appContext";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 export const FormVideogame = () => {
   const { actions } = useContext(Context);
   const [name, setName] = useState("");
   const [pegi, setPegi] = useState("");
   const [year, setYear] = useState("");
-  const [contactLink, setcontactLink] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,34 +20,26 @@ export const FormVideogame = () => {
     }
   };
 
-  const addVideogames = () => {
-    const newContact = {
+  const addVideogame = () => {
+    const newVideogame = {
       name: name,
       pegi: pegi,
       year: year,
     };
-    setcontactLink(newContact);
-    actions.addVideogame(newContact);
-    deleteHandleInputChange();
-    window.location.reload()
-    console.log("Nuevo contacto JSON:", newContact);
+    actions.addVideogame(newVideogame);
+    resetForm();
+    console.log("Nuevo videojuego JSON:", newVideogame);
   };
 
-  const deleteHandleInputChange = () => {
+  const resetForm = () => {
     setName("");
     setPegi("");
     setYear("");
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      addVideogames();
-    }
-  };
   return (
     <div>
-      <h2>Add New Videogame</h2>
+      <h2>Add Videogame</h2>
       <form>
         <label htmlFor="name">Name:</label>
         <input
@@ -56,7 +48,6 @@ export const FormVideogame = () => {
           value={name}
           onChange={handleInputChange}
           className="form-control"
-          onKeyDown={handleKeyPress}
         />
         <br />
 
@@ -67,7 +58,6 @@ export const FormVideogame = () => {
           value={pegi}
           onChange={handleInputChange}
           className="form-control"
-          onKeyDown={handleKeyPress}
         />
         <br />
 
@@ -78,24 +68,17 @@ export const FormVideogame = () => {
           value={year}
           onChange={handleInputChange}
           className="form-control"
-          onKeyDown={handleKeyPress}
         />
         <br />
 
-        <button
-          type="button"
-          onClick={addVideogames}
-          className="btn btn-primary"
-        >
-          Submit
+        <button type="button" onClick={addVideogame} className="btn btn-primary">
+          Add Videogame
         </button>
-        <button
-          type="button"
-          onClick={deleteHandleInputChange}
-          className="btn btn-primary"
-        >
-          Delete Videogame
-        </button>
+        <Link to="/">
+          <span className="btn btn-primary btn-lg" href="#" role="button">
+            Back home
+          </span>
+        </Link>
       </form>
     </div>
   );

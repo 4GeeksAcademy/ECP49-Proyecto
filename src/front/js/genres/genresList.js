@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+
 import { Context } from "../store/appContext";
 
 export const Genres_list = () => {
@@ -13,45 +15,70 @@ export const Genres_list = () => {
       console.error("Error deleting genre:", error);
     }
   };
+
   return (
-    <>
-    
-    <div>
-      <h2>Genres</h2>
+    <div className="container">
+      <ul className="list-group">
+        {store.genres == false && <p>...loading</p>}
+        {store.genres.length > 0 &&
+          store.genres.map((genre, index) => {
+            return (
+              <li
+                key={index}
+                className="list-group-item d-flex justify-content-between"
+              >
+                <Link to={"/genres/" + index} className="text-decoration-none">
+                  <span>{genre.type}</span>
+                </Link>
 
-        <div className="contenedorGenres">
+                <Link
+                  className="btn btn-success"
+                  to={"/genres/" + index}
+                >
+                  Learn More...
+                </Link>
 
-          {store.genres.map((item, index) => (
-            <div className="cardGenre card-container" >
-                <img src="" alt="..." />
-                <div className="card-body">
-                  <h5 className="card-title">{item.type}</h5>
-                  <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              
-                  <Link to={"/genres/" + index}>
-                    <button className="btn btn-primary">More</button>
+                <button className="btn btn-success" onClick={() => actions.addFavoriteGenre(genre.type)}>Like!</button>
+
+                {store.auth === true ?
+                  <Link to={`/genres/edit/${genre.id}`}>
+                    <button className="btn btn-primary">Edit</button>
                   </Link>
+                  : null}
 
-                  <button className="btn btn-success" onClick={()=>actions.addFavoriteGenre(item.type)}>Like!</button>
+                {store.auth === true ?
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDeleteGenre(genre.id)}>
+                    Delete
+                  </button>
+                  : null}
 
-                </div>
-            </div>))}
-        </div>
-        
-    </div>
-    <br/>
-    <div>
+
+              </li>
+            );
+          })}
+      </ul>
+      <br />
+
       <Link to="/">
         <button className="btn btn-primary">Back Home</button>
       </Link>
-      <Link to="/formGenres/">
-        <button className="btn btn-success">Add Genre</button>
-      </Link>
+
+      {store.auth === true ?
+        <Link to="/formGenres/">
+          <button className="btn btn-success">Add genre</button>
+        </Link>
+        : null}
+
       <Link to="/viewFavGenres/">
         <button className="btn btn-warning">Favorites</button>
       </Link>
     </div>
-    </>
-
   );
+};
+
+Genres_list.propTypes = {
+  type: PropTypes.string,
+
 };
