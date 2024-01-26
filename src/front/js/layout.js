@@ -16,6 +16,7 @@ import  Signup  from "./pages/user/signup";
 import Private from "./pages/user/private"
 import { VideogamesList } from "./pages/videogames/videogameList";
 import { Videogame } from "./pages/videogames/videogame";
+import { Game } from "./pages/videogames/game";
 import { EditVideogame } from "./pages/videogames/editVideogame";
 import { ConsoleList } from "./pages/consoles/consoleList";
 import { Console } from "./pages/consoles/console";
@@ -56,6 +57,8 @@ const Layout = () => {
                         <Route element={<FormEditGenres />} path="formEditGenres" />
                         <Route element={<Videogame />} path="/videogames/:theid/" />
                         <Route element={<EditVideogame />} path="/editVideogame/:theid/" />
+                       
+                        <Route path="/games/:gameId" element={<Game />} />
 
                         <Route element={<ConsoleList />} path="/consoles" />
                         <Route element={<Console />} path="/consoles/:theid/" />
