@@ -18,27 +18,13 @@ export const SearchBar = () => {
         e.preventDefault();
 
         for (let i = 0; i < videogamesArray.length; i++) {
-            if (videogamesArray[i] === textInput) {
-                navigate(`/videogames/${i}`);
-                return;
-            }
+            if (videogamesArray[i] === textInput)
+                navigate("/videogames/" + i);
+            else if (consolesArray[i] === textInput)
+                navigate("/consoles/" + i);
+            else if (genresArray[i] === textInput)
+                navigate("/genres/" + i);
         }
-
-        for (let i = 0; i < consolesArray.length; i++) {
-            if (consolesArray[i] === textInput) {
-                navigate(`/consoles/${i}`);
-                return;
-            }
-        }
-
-        for (let i = 0; i < genresArray.length; i++) {
-            if (genresArray[i] === textInput) {
-                navigate(`/genres/${i}`);
-                return;
-            }
-        }
-
-        // If no match is found, you can handle it as needed (e.g., show an error message)
         console.log("No match found");
     };
 
@@ -72,39 +58,40 @@ export const SearchBar = () => {
         <>
             <div className="">
                 <div className="input-group mb-3">
-                    <div className="input-group-append">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search"
-                            aria-label="Search"
-                            aria-describedby="basic-addon2"
-                            value={textInput}
-                            onChange={(e) => setTextInput(e.target.value)}
-                        />
-                        <datalist>
-                            {filteredArray.length > 0 &&
-                                filteredArray.map((item, index) => (
-                                    <option key={index} value={item}>
-                                        {item}
-                                    </option>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search"
+                        aria-label="Search"
+                        aria-describedby="basic-addon2"
+                        value={textInput}
+                        onChange={(e) => setTextInput(e.target.value)}
+                    />
+                    <datalist className="">
+                        {filteredArray.length > 0 &&
+                            filteredArray.map((item, index) => (
+                                <option key={index} value={item}>
+                                    {item}
+                                </option>
+                            ))}
+                    </datalist>
+                    <div className="dropdown position-absolute mt-3 card bg-light">
+                        {/* Render search results */}
+                        {searchResults.length > 0 && (
+                            <ul>
+                                {searchResults.map((game) => (
+                                    <li key={game.id}>
+                                        <Link to={`/games/${game.id}`}>{game.name}</Link>
+                                    </li>
                                 ))}
-                        </datalist>
-                        <div className="dropdown">
-                            {/* Render search results */}
-                            {searchResults.length > 0 && (
-                                <ul>
-                                    {searchResults.map((game) => (
-                                        <li key={game.id}>
-                                            <Link to={`/games/${game.id}`}>{game.name}</Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                        </div>
+                            </ul>
+                        )}
+                    </div>
+                    <div className="input-group-append">
                         <button
-                            className="btn btn-outline-secondary"
+                            className="btn btn-primary"
                             type="button"
+                            data-mdb-ripple-init
                             onClick={(e) => handleSearch(e)}
                         >
                             <i className="fa fa-search"></i>
@@ -112,8 +99,6 @@ export const SearchBar = () => {
                     </div>
                 </div>
             </div>
-
-
         </>
     );
 };
