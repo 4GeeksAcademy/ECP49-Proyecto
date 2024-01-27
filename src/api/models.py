@@ -2,12 +2,19 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+# Modelo intermedio para la relación muchos a muchos
+consoles_fav_association = db.Table('consoles_fav_association',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('console_id', db.Integer, db.ForeignKey('consoles.id'))
+)
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     genres_fav = db.relationship('Genre_fav', backref='user', lazy=True)
+    consoles_fav = db.relationship('Consoles', secondary=consoles_fav_association, backref='users_fav')
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -16,7 +23,8 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "genres_fav": [fav.serialize() for fav in self.genres_fav]
+            "genres_fav": [fav.serialize() for fav in self.genres_fav],
+            "consoles_fav": [console.serialize() for console in self.consoles_fav]
             # do not serialize the password, its a security breach
         }
 class Administrador(db.Model):
@@ -52,11 +60,18 @@ class Videogame(db.Model):
     #     return self.serialize()
 # def __repr__(self):
 #         return '<Videogame %r>' % self.id
+    
+
+
+
+###################### START CONSOLES #######################    
+    
+
 
 class Consoles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(180), unique=False, nullable=False)
-    company = db.Column(db.String(180), unique=False, nullable=False)    
+    company = db.Column(db.String(180), unique=False, nullable=False)
     year = db.Column(db.Integer)
 
     def serialize(self):
@@ -66,6 +81,23 @@ class Consoles(db.Model):
             "company": self.company,
             "year": self.year
         }
+
+class Consoles_fav(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    console_id = db.Column(db.Integer, db.ForeignKey('consoles.id'), nullable=False)
+
+    user = db.relationship('User', backref=db.backref('consoles_fav_association'))
+    console = db.relationship('Consoles', backref=db.backref('users_fav_association'))
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "console_id": self.console_id
+        }
+    
+
     
 ###################### START GENRES #######################
        

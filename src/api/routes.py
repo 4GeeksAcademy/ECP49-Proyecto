@@ -251,6 +251,54 @@ def delete_console(console_id):
 
     return jsonify({"msg": f"Console with ID {console_id} successfully deleted"}), 200
 
+# Ruta para crear una consola favorita
+@api.route('/consoles_fav', methods=['POST'])
+@jwt_required()
+def create_console_fav():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    request_body = request.get_json()
+
+    if "console_id" not in request_body:
+        return jsonify({"error": "Incomplete data"}), 400
+
+    console_id = request_body["console_id"]
+    console = Consoles.query.get(console_id)
+
+    if not console:
+        return jsonify({"msg": "Console not found"}), 404
+
+    # Verificar si ya existe la relación
+    existing_fav = Consoles_fav.query.filter_by(user_id=current_user_id, console_id=console_id).first()
+
+    if existing_fav:
+        return jsonify({"msg": "Console already added as favorite"}), 400
+
+    new_console_fav = Consoles_fav(user_id=current_user_id, console_id=console_id)
+    db.session.add(new_console_fav)
+    db.session.commit()
+
+    return jsonify({"msg": "Console added to favorites successfully"}), 200
+
+# Ruta para traer una consola favorita
+@api.route('/consoles_fav', methods=['GET'])
+@jwt_required()
+def get_console_fav():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    consoles_fav = user.consoles_fav
+
+    serialized_consoles_fav = [console_fav.serialize() for console_fav in consoles_fav]
+    return jsonify(serialized_consoles_fav), 200
+
 
 
 ###################### START GENRES #######################
