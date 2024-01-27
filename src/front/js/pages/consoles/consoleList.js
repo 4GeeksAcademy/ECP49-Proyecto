@@ -80,6 +80,10 @@ export const ConsoleList = () => {
         </Link>
         : null}
 
+      <Link to="/viewFavConsoles/">
+        <button className="btn btn-warning">Favorites</button>
+      </Link>
+
     </div>
   );
 };

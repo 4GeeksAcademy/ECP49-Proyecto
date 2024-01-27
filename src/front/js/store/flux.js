@@ -11,6 +11,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       auth: false,
 
+      favoriteConsoles:[],
+
       
     },
     actions: {
@@ -86,6 +88,30 @@ const getState = ({ getStore, getActions, setStore }) => {
             });
         } catch (error) {
           console.error("Error toggling console favorite", error);
+        }
+      },
+
+      getFavoriteConsoles: async () => {
+        try {
+          const url = process.env.BACKEND_URL + "/api/consoles_fav";
+          const options = {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${getStore().token}`, 
+            },
+          };
+      
+          const response = await fetch(url, options);
+          if (!response.ok) {
+            throw new Error("Error fetching favorite consoles");
+          }
+      
+          const data = await response.json();
+          setStore({ favoriteConsoles: data }); // Asumiendo que tienes un estado 'favoriteConsoles'
+      
+        } catch (error) {
+          console.error("Error getting favorite consoles:", error);
         }
       },
 

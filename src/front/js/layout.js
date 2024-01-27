@@ -33,6 +33,7 @@ import { FormVideogame } from "./pages/videogames/formVideogame";
 import GenreEdit from "./genres/genreEdit";
 import VideogameEdit from "./pages/videogames/videogameEdit";
 
+import { Consoles_Favorites } from "./pages/consoles/viewFavConsoles";
 
 
 
@@ -86,6 +87,8 @@ const Layout = () => {
                         <Route element={<ConsoleEdit />} path="/consoles/edit/:theid"  />
                         <Route element={<GenreEdit />} path="/genres/edit/:theid"  />
                         <Route element={<VideogameEdit />} path="/videogames/edit/:theid"  />
+
+                        <Route element={<Consoles_Favorites />} path="/viewFavConsoles" />
                           
                         <Route element={<AdminForm />} path="/adminform" />
 

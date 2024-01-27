@@ -255,15 +255,15 @@ def delete_console(console_id):
 @api.route('/consoles_fav', methods=['GET'])
 @jwt_required()
 def get_console_fav():
-    current_user_id = get_jwt_identity()
-    user = User.query.get(current_user_id)
+   current_user_id = get_jwt_identity()
+   user = User.query.get(current_user_id)
 
-    if not user:
-        return jsonify({"msg": "User not found"}), 404
+   if not user:
+       return jsonify({"msg": "User not found"}), 404
 
-    consoles_fav = user.consoles_fav
-    serialized_consoles_fav = [console_fav.console.serialize() for console_fav in consoles_fav]
-    return jsonify(serialized_consoles_fav), 200
+   consoles_fav = user.consoles_fav
+   serialized_consoles_fav = [console_fav.console.serialize() for console_fav in consoles_fav]
+   return jsonify(serialized_consoles_fav), 200
 
 # Ruta para agregar o quitar una consola de las favoritas de un usuario
 @api.route('/consoles_fav', methods=['POST'])
