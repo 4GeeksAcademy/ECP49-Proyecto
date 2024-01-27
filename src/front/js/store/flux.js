@@ -96,6 +96,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           .catch(error => console.log('error', error));
       },
 
+      logoutadmin: () => {
+				setStore({ auth: false});
+				localStorage.removeItem("token");
+				
+			},
+
       // Use getActions to call a function within a function
       getVideogames: async () => {
         try {

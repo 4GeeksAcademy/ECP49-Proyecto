@@ -17,7 +17,7 @@ import Private from "./pages/user/private"
 import { VideogamesList } from "./pages/videogames/videogameList";
 import { Videogame } from "./pages/videogames/videogame";
 import { Game } from "./pages/videogames/game";
-import { EditVideogame } from "./pages/videogames/editVideogame";
+
 import { ConsoleList } from "./pages/consoles/consoleList";
 import { Console } from "./pages/consoles/console";
 import { FormConsole } from "./pages/consoles/formConsole";
@@ -64,7 +64,7 @@ const Layout = () => {
                         <Route element={<FormGenres />} path="formGenres/" />
                         <Route element={<FormEditGenres />} path="formEditGenres" />
                         <Route element={<Videogame />} path="/videogames/:theid/" />
-                        <Route element={<EditVideogame />} path="/editVideogame/:theid/" />
+                       
                        
                         <Route path="/games/:gameId" element={<Game />} />
 

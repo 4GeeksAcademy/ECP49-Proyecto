@@ -15,7 +15,7 @@ export const Navbar = () => {
 				</Link>
 
 				<Link to="/adminform">
-					{store.auth === true ? null : <button className="btn btn-primary">Administrador</button>}
+					{store.auth === true ? <button onClick={() => actions.logoutadmin()} className="btn btn-danger" >logoutADMIN</button> : <button className="btn btn-primary">ADMIN</button>}
 				</Link>
 
 			{/* ++ SEARCH BUTTON ++ */}
