@@ -1,3 +1,4 @@
+// En ConsoleList.js
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
@@ -9,6 +10,10 @@ export const ConsoleList = () => {
 
   const handleDeleteConsole = (console_id) => {
     actions.deleteConsole(console_id);
+  };
+
+  const handleToggleFavorite = (console_id) => {
+    actions.toggleFavoriteConsole(console_id);
   };
 
   return (
@@ -35,7 +40,6 @@ export const ConsoleList = () => {
                   Learn More...
                 </Link>
 
-
                 {store.auth === true ?
                   <Link to={`/consoles/edit/${console.id}`}>
                     <button className="btn btn-primary">Edit</button>
@@ -50,6 +54,13 @@ export const ConsoleList = () => {
                   </button>
                   : null}
 
+                
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => handleToggleFavorite(console.id)}>
+                    Like
+                  </button>
+                 
 
               </li>
             );
@@ -78,4 +89,3 @@ ConsoleList.propTypes = {
   company: PropTypes.string,
   year: PropTypes.number,
 };
-

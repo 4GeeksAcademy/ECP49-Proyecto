@@ -2,11 +2,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-# Modelo intermedio para la relación muchos a muchos
-consoles_fav_association = db.Table('consoles_fav_association',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('console_id', db.Integer, db.ForeignKey('consoles.id'))
-)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -14,7 +9,7 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     genres_fav = db.relationship('Genre_fav', backref='user', lazy=True)
-    consoles_fav = db.relationship('Consoles', secondary=consoles_fav_association, backref='users_fav')
+    consoles_fav = db.relationship('Consoles_fav', backref='user', lazy=True)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -24,7 +19,7 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             "genres_fav": [fav.serialize() for fav in self.genres_fav],
-            "consoles_fav": [console.serialize() for console in self.consoles_fav]
+            "consoles_fav": [console_fav.console.serialize() for console_fav in self.consoles_fav],
             # do not serialize the password, its a security breach
         }
 class Administrador(db.Model):
@@ -87,8 +82,7 @@ class Consoles_fav(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     console_id = db.Column(db.Integer, db.ForeignKey('consoles.id'), nullable=False)
 
-    user = db.relationship('User', backref=db.backref('consoles_fav_association'))
-    console = db.relationship('Consoles', backref=db.backref('users_fav_association'))
+    console = db.relationship('Consoles', backref=db.backref('users_fav'))
 
     def serialize(self):
         return {

@@ -68,6 +68,26 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       
+      toggleFavoriteConsole: async (console_id) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/consoles_fav`;
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${getStore().token}`,
+            },
+            body: JSON.stringify({ console_id }),
+          };
+          await fetch(url, options)
+            .then((res) => res.json())
+            .then((response) => {
+              console.log("Success: ", JSON.stringify(response));
+            });
+        } catch (error) {
+          console.error("Error toggling console favorite", error);
+        }
+      },
 
       loginadmin: (email, password) => {
 
