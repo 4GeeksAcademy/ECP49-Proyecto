@@ -1,18 +1,78 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../../store/appContext";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const FormVideogame = () => {
-  const { actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const [name, setName] = useState("");
   const [pegi, setPegi] = useState("");
   const [year, setYear] = useState("");
 
+  //LOGICA PARA SUGERIR GAMES DESDE LA API EXTERNA
+  const [textInput, setTextInput] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearchResultsVisible, setIsSearchResultsVisible] = useState(true);
+  const navigate = useNavigate();
+
+  const videogamesArray = store.videogames.map((videogame) => videogame.name);
+  const consolesArray = store.consoles.map((console) => console.name);
+  const genresArray = store.genres.map((genre) => genre.name);
+
+  const combinesArray = [...videogamesArray, ...consolesArray, ...genresArray];
+
+  const handleSearch = (e) => {
+      e.preventDefault();
+
+      for (let i = 0; i < videogamesArray.length; i++) {
+          if (videogamesArray[i] === textInput)
+              navigate("/videogames/" + i);
+          else if (consolesArray[i] === textInput)
+              navigate("/consoles/" + i);
+          else if (genresArray[i] === textInput)
+              navigate("/genres/" + i);
+      }
+      console.log("No match found");
+  };
+
+  const filteredArray = combinesArray.filter(
+      (item) =>
+          item && item.toLowerCase().includes(textInput.toLowerCase()) && item !== textInput
+  );
+
+  useEffect(() => {
+    const fetchRawgData = async () => {
+      try {
+        const response = await fetch(`https://api.rawg.io/api/games?key=e8722d91c21d4eec9047a9a02fd9efe7&search=${textInput}`);
+        const data = await response.json();
+
+        // Assuming the data structure from the API has a results property containing an array of games
+        setSearchResults(data.results || []);
+      } catch (error) {
+        console.error("Error fetching data from RAWG API:", error);
+      }
+    };
+
+    if (textInput.trim() !== "") {
+      fetchRawgData();
+      setIsSearchResultsVisible(false);
+    } else {
+      setSearchResults([]);
+      setIsSearchResultsVisible(true);
+    }
+  }, [textInput]);
+
+
+
+  //LOGICA PARA AÑADIR GAME
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "name") {
-      setName(value);
+      if (value.trim() === "") {
+        setIsSearchResultsVisible(false);
+      } else {
+        setIsSearchResultsVisible(true);
+      }
     } else if (name === "pegi") {
       setPegi(value);
     } else if (name === "year") {
@@ -45,10 +105,29 @@ export const FormVideogame = () => {
         <input
           type="text"
           name="name"
-          value={name}
-          onChange={handleInputChange}
+          onChange={(e) => setTextInput(e.target.value)}
           className="form-control"
         />
+        <datalist className="">
+          {filteredArray.length > 0 &&
+            filteredArray.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+        </datalist>
+        <div className="dropdown position-absolute mt-3 card bg-light">
+          {/* Render search results */}
+          {searchResults.length > 0 && (
+            <ul>
+              {searchResults.map((game) => (
+                <li key={game.id}>
+                  <Link to={`/games/${game.id}`}>{game.name}</Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
         <br />
 
         <label htmlFor="pegi">PEGI:</label>
