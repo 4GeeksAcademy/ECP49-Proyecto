@@ -12,6 +12,7 @@ export const FormVideogame = () => {
   //LOGICA PARA SUGERIR GAMES DESDE LA API EXTERNA
   const [textInput, setTextInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [isSearchResultsVisible, setIsSearchResultsVisible] = useState(true);
   const navigate = useNavigate();
 
   const videogamesArray = store.videogames.map((videogame) => videogame.name);
@@ -54,8 +55,10 @@ export const FormVideogame = () => {
 
     if (textInput.trim() !== "") {
       fetchRawgData();
+      setIsSearchResultsVisible(false);
     } else {
       setSearchResults([]);
+      setIsSearchResultsVisible(true);
     }
   }, [textInput]);
 
@@ -65,7 +68,11 @@ export const FormVideogame = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "name") {
-      setName(value);
+      if (value.trim() === "") {
+        setIsSearchResultsVisible(false);
+      } else {
+        setIsSearchResultsVisible(true);
+      }
     } else if (name === "pegi") {
       setPegi(value);
     } else if (name === "year") {
