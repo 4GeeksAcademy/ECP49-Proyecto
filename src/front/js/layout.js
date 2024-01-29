@@ -18,7 +18,7 @@ import { VideogamesList } from "./pages/videogames/videogameList";
 import { Videogame } from "./pages/videogames/videogame";
 
 import { GameRawg } from "./pages/videogames/game";
-import { EditVideogame } from "./pages/videogames/editVideogame";
+import { EditVideogame } from "./pages/videogames/videogameEdit";
 
 import { ConsoleList } from "./pages/consoles/consoleList";
 import { Console } from "./pages/consoles/console";
