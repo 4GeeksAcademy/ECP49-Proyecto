@@ -16,8 +16,10 @@ import  Signup  from "./pages/user/signup";
 import Private from "./pages/user/private"
 import { VideogamesList } from "./pages/videogames/videogameList";
 import { Videogame } from "./pages/videogames/videogame";
+
 import { GameRawg } from "./pages/videogames/game";
 import { EditVideogame } from "./pages/videogames/editVideogame";
+
 import { ConsoleList } from "./pages/consoles/consoleList";
 import { Console } from "./pages/consoles/console";
 import { FormConsole } from "./pages/consoles/formConsole";
@@ -34,6 +36,8 @@ import { FormVideogame } from "./pages/videogames/formVideogame";
 import GenreEdit from "./genres/genreEdit";
 import VideogameEdit from "./pages/videogames/videogameEdit";
 
+import { Consoles_Favorites } from "./pages/consoles/viewFavConsoles";
+import { Videogames_Favorites } from "./pages/videogames/viewFavVideogames";
 
 
 
@@ -65,7 +69,7 @@ const Layout = () => {
                         <Route element={<FormGenres />} path="formGenres/" />
                         <Route element={<FormEditGenres />} path="formEditGenres" />
                         <Route element={<Videogame />} path="/videogames/:theid/" />
-                        <Route element={<EditVideogame />} path="/editVideogame/:theid/" />
+                       
                        
                         <Route element={<GameRawg />} path="/games/:gameId"  />
                         <Route element={<ConsoleRawg />} path="/platforms/:platformId"  />
@@ -89,6 +93,9 @@ const Layout = () => {
                         <Route element={<ConsoleEdit />} path="/consoles/edit/:theid"  />
                         <Route element={<GenreEdit />} path="/genres/edit/:theid"  />
                         <Route element={<VideogameEdit />} path="/videogames/edit/:theid"  />
+
+                        <Route element={<Consoles_Favorites />} path="/viewFavConsoles" />
+                        <Route element={<Videogames_Favorites />} path="/viewFavVideogames" />
                           
                         <Route element={<AdminForm />} path="/adminform" />
 

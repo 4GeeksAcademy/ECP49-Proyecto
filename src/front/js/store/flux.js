@@ -11,6 +11,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       auth: false,
 
+      favoriteConsoles:[],
+      favoriteVideogames: [],
+      favoriteGenres: [],
+
       
     },
     actions: {
@@ -68,6 +72,96 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       
+      toggleFavoriteConsole: async (console_id) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/consoles_fav`;
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${getStore().token}`,
+            },
+            body: JSON.stringify({ console_id }),
+          };
+          await fetch(url, options)
+            .then((res) => res.json())
+            .then((response) => {
+              console.log("Success: ", JSON.stringify(response));
+            });
+        } catch (error) {
+          console.error("Error toggling console favorite", error);
+        }
+      },
+
+      getFavoriteConsoles: async () => {
+        try {
+          const url = process.env.BACKEND_URL + "/api/consoles_fav";
+          const options = {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${getStore().token}`, 
+            },
+          };
+      
+          const response = await fetch(url, options);
+          if (!response.ok) {
+            throw new Error("Error fetching favorite consoles");
+          }
+      
+          const data = await response.json();
+          setStore({ favoriteConsoles: data }); 
+      
+        } catch (error) {
+          console.error("Error getting favorite consoles:", error);
+        }
+      },
+
+      toggleFavoriteVideogame : async (videogame_id) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/videogames_fav`; 
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${getStore().token}`,
+            },
+            body: JSON.stringify({ videogame_id }),
+          };
+          await fetch(url, options)
+            .then((res) => res.json())
+            .then((response) => {
+              console.log("Success: ", JSON.stringify(response));
+            });
+        } catch (error) {
+          console.error("Error toggling videogame favorite", error);
+        }
+      },
+
+      getFavoriteVideogames : async () => {
+        try {
+          const url = process.env.BACKEND_URL + "/api/videogames_fav"; 
+          const options = {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${getStore().token}`,
+            },
+          };
+      
+          const response = await fetch(url, options);
+          if (!response.ok) {
+            throw new Error("Error fetching favorite videogames");
+          }
+      
+          const data = await response.json();
+          setStore({ favoriteVideogames: data }); 
+      
+        } catch (error) {
+          console.error("Error getting favorite videogames:", error);
+        }
+      },
+
 
       loginadmin: (email, password) => {
 
@@ -95,6 +189,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .catch(error => console.log('error', error));
       },
+
+      logoutadmin: () => {
+				setStore({ auth: false});
+				localStorage.removeItem("token");
+				
+			},
 
       // Use getActions to call a function within a function
       getVideogames: async () => {
@@ -133,33 +233,54 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 /////////////////////// START GENRES /////////////////////////
         
-      addFavoriteGenre: (typeGenre) => {
-        //console.log("add favorite")
-        const store = getStore();
-          if(store.favorites.includes(typeGenre)) {
-            setStore({ favorites: store.favorites.filter((repeated)=> repeated != typeGenre) });
-          }else{
-            setStore({ favorites: [...store.favorites , typeGenre]});
-          }
-        },
-        
-
-      getFavGenres: async () => {
-        try {
-          const resp = process.env.BACKEND_URL + "/api/genre_fav/";
-          const options = {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          };
-          await fetch(resp, options)
-            .then((res) => res.json())
-            .then((data) => {
-              console.log(data);
-              setStore({ favorites: data });
-            });
-        } catch (err) { console.error("Error loading list of favorites from backend", err); }
+      
+toggleFavoriteGenre: async (genre_id) => {
+  try {
+    const url = `${process.env.BACKEND_URL}/api/genres_fav`; 
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${getStore().token}`,
       },
+      body: JSON.stringify({ genre_id }),
+    };
 
+    await fetch(url, options)
+      .then((res) => res.json())
+      .then((response) => {
+        console.log("Success: ", JSON.stringify(response));
+      });
+  } catch (error) {
+    console.error("Error toggling genre favorite", error);
+  }
+},
+
+getFavoriteGenres : async () => {
+  try {
+    const url = `${process.env.BACKEND_URL}/api/genres_fav`;
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${getStore().token}`, 
+      },
+    };
+
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error("Error fetching favorite genres");
+    }
+
+    const data = await response.json();
+    setStore({ favoriteGenres: data }); 
+
+  } catch (error) {
+    console.error("Error getting favorite genres:", error);
+  }
+},
+
+      
       getGenres: async () => {
         try {
           const resp = process.env.BACKEND_URL + "/api/genres/";
