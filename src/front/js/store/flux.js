@@ -12,6 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       auth: false,
 
       favoriteConsoles:[],
+      favoriteVideogames: [],
 
       
     },
@@ -108,12 +109,58 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
       
           const data = await response.json();
-          setStore({ favoriteConsoles: data }); // Asumiendo que tienes un estado 'favoriteConsoles'
+          setStore({ favoriteConsoles: data }); 
       
         } catch (error) {
           console.error("Error getting favorite consoles:", error);
         }
       },
+
+      toggleFavoriteVideogame : async (videogame_id) => {
+        try {
+          const url = `${process.env.BACKEND_URL}/api/videogames_fav`; 
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${getStore().token}`,
+            },
+            body: JSON.stringify({ videogame_id }),
+          };
+          await fetch(url, options)
+            .then((res) => res.json())
+            .then((response) => {
+              console.log("Success: ", JSON.stringify(response));
+            });
+        } catch (error) {
+          console.error("Error toggling videogame favorite", error);
+        }
+      },
+
+      getFavoriteVideogames : async () => {
+        try {
+          const url = process.env.BACKEND_URL + "/api/videogames_fav"; 
+          const options = {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${getStore().token}`,
+            },
+          };
+      
+          const response = await fetch(url, options);
+          if (!response.ok) {
+            throw new Error("Error fetching favorite videogames");
+          }
+      
+          const data = await response.json();
+          setStore({ favoriteVideogames: data }); 
+      
+        } catch (error) {
+          console.error("Error getting favorite videogames:", error);
+        }
+      },
+
 
       loginadmin: (email, password) => {
 
