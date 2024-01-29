@@ -13,6 +13,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       favoriteConsoles:[],
       favoriteVideogames: [],
+      favoriteGenres: [],
 
       
     },
@@ -232,33 +233,54 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 /////////////////////// START GENRES /////////////////////////
         
-      addFavoriteGenre: (typeGenre) => {
-        //console.log("add favorite")
-        const store = getStore();
-          if(store.favorites.includes(typeGenre)) {
-            setStore({ favorites: store.favorites.filter((repeated)=> repeated != typeGenre) });
-          }else{
-            setStore({ favorites: [...store.favorites , typeGenre]});
-          }
-        },
-        
-
-      getFavGenres: async () => {
-        try {
-          const resp = process.env.BACKEND_URL + "/api/genre_fav/";
-          const options = {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          };
-          await fetch(resp, options)
-            .then((res) => res.json())
-            .then((data) => {
-              console.log(data);
-              setStore({ favorites: data });
-            });
-        } catch (err) { console.error("Error loading list of favorites from backend", err); }
+      
+toggleFavoriteGenre: async (genre_id) => {
+  try {
+    const url = `${process.env.BACKEND_URL}/api/genres_fav`; 
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${getStore().token}`,
       },
+      body: JSON.stringify({ genre_id }),
+    };
 
+    await fetch(url, options)
+      .then((res) => res.json())
+      .then((response) => {
+        console.log("Success: ", JSON.stringify(response));
+      });
+  } catch (error) {
+    console.error("Error toggling genre favorite", error);
+  }
+},
+
+getFavoriteGenres : async () => {
+  try {
+    const url = `${process.env.BACKEND_URL}/api/genres_fav`;
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${getStore().token}`, 
+      },
+    };
+
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error("Error fetching favorite genres");
+    }
+
+    const data = await response.json();
+    setStore({ favoriteGenres: data }); 
+
+  } catch (error) {
+    console.error("Error getting favorite genres:", error);
+  }
+},
+
+      
       getGenres: async () => {
         try {
           const resp = process.env.BACKEND_URL + "/api/genres/";
