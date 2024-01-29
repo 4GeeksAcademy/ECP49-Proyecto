@@ -68,9 +68,13 @@ export const FormVideogame = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "name") {
+      setName(value);
       if (value.trim() === "") {
         setIsSearchResultsVisible(false);
-      } else {
+      } else if (name !== "name") {
+        setIsSearchResultsVisible(false);
+      }
+      else {
         setIsSearchResultsVisible(true);
       }
     } else if (name === "pegi") {
@@ -98,14 +102,15 @@ export const FormVideogame = () => {
   };
 
   return (
-    <div>
-      <h2>Add Videogame</h2>
-      <form>
+    <div className="container card mt-5">
+      <h2 className="m-3">Add Videogame</h2>
+      <form className="m-3">
         <label htmlFor="name">Name:</label>
         <input
           type="text"
           name="name"
-          onChange={(e) => setTextInput(e.target.value)}
+          value={name}
+          onChange={handleInputChange}
           className="form-control"
         />
         <datalist className="">
@@ -146,6 +151,14 @@ export const FormVideogame = () => {
           name="year"
           value={year}
           onChange={handleInputChange}
+          className="form-control"
+        />
+        <label htmlFor="year">Search your game here:</label> 
+        <input
+          type="text"
+          name="name"
+          // value={name}
+          onChange={(e) => setTextInput(e.target.value) && handleInputChange}
           className="form-control"
         />
         <br />

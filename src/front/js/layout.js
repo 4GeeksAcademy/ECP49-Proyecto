@@ -16,17 +16,18 @@ import  Signup  from "./pages/user/signup";
 import Private from "./pages/user/private"
 import { VideogamesList } from "./pages/videogames/videogameList";
 import { Videogame } from "./pages/videogames/videogame";
-import { Game } from "./pages/videogames/game";
+import { GameRawg } from "./pages/videogames/game";
 import { EditVideogame } from "./pages/videogames/editVideogame";
 import { ConsoleList } from "./pages/consoles/consoleList";
 import { Console } from "./pages/consoles/console";
 import { FormConsole } from "./pages/consoles/formConsole";
-
+import { ConsoleRawg } from "./pages/consoles/consoleRaw";
 import { Genres_list } from "./genres/genresList";
 import { Genres } from "./genres/genres";
 import { FormGenres } from "./genres/formGenres";
 import { FormEditGenres } from "./genres/formEditGenres";
 import { Genres_favorites } from "./genres/viewFavGenres";
+import { GenresRawg } from "./genres/genresRawg";
 
 import { FormVideogame } from "./pages/videogames/formVideogame";
 
@@ -66,7 +67,9 @@ const Layout = () => {
                         <Route element={<Videogame />} path="/videogames/:theid/" />
                         <Route element={<EditVideogame />} path="/editVideogame/:theid/" />
                        
-                        <Route path="/games/:gameId" element={<Game />} />
+                        <Route element={<GameRawg />} path="/games/:gameId"  />
+                        <Route element={<ConsoleRawg />} path="/platforms/:platformId"  />
+                        <Route element={<GenresRawg />} path="/genres/:genreId"  />
 
                         <Route element={<ConsoleList />} path="/consoles" />
                         <Route element={<Console />} path="/consoles/:theid/" />
