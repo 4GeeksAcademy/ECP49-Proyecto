@@ -1,4 +1,4 @@
-from api.models import db, User, Videogame, Consoles, Genres, Administrador, Genre_fav, Consoles_fav
+from api.models import db, User, Videogame, Consoles, Genres, Administrador, Genre_fav, Consoles_fav, Videogame_fav
 from flask import request, jsonify, url_for, Blueprint, abort, redirect, Response
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS, cross_origin
@@ -172,6 +172,58 @@ def update_videogame(videogame_id):
     db.session.commit()
 
     return jsonify({"msg": f"Videogame with ID {videogame_id} updated successfully"}), 200
+
+
+# Ruta para obtener los videojuegos favoritos de un usuario
+@api.route('/videogames_fav', methods=['GET'])
+@jwt_required()
+def get_videogame_fav():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    videogames_fav = user.videogames_fav
+    serialized_videogames_fav = [videogame_fav.videogame.serialize() for videogame_fav in videogames_fav]
+    return jsonify(serialized_videogames_fav), 200
+
+# Ruta para agregar o quitar un videojuego de las favoritas de un usuario
+@api.route('/videogames_fav', methods=['POST'])
+@jwt_required()
+def toggle_videogame_fav():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    request_body = request.get_json()
+
+    if "videogame_id" not in request_body:
+        return jsonify({"error": "Incomplete data"}), 400
+
+    videogame_id = request_body["videogame_id"]
+    videogame = Videogame.query.get(videogame_id)
+
+    if not videogame:
+        return jsonify({"msg": "Videogame not found"}), 404
+
+    # Verificar si ya existe la relación
+    existing_fav = Videogame_fav.query.filter_by(user_id=current_user_id, videogame_id=videogame_id).first()
+
+    if existing_fav:
+        # Si ya es favorito, quitarlo
+        db.session.delete(existing_fav)
+        db.session.commit()
+        return jsonify({"msg": "Videogame removed from favorites successfully"}), 200
+    else:
+        # Si no es favorito, agregarlo
+        new_videogame_fav = Videogame_fav(user_id=current_user_id, videogame_id=videogame_id)
+        db.session.add(new_videogame_fav)
+        db.session.commit()
+        return jsonify({"msg": "Videogame added to favorites successfully"}), 200
+
 
 
 ### CONSOLE METHODS ###

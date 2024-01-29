@@ -10,6 +10,7 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     genres_fav = db.relationship('Genre_fav', backref='user', lazy=True)
     consoles_fav = db.relationship('Consoles_fav', backref='user', lazy=True)
+    videogames_fav = db.relationship('Videogame_fav', backref='user', lazy=True)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -20,6 +21,7 @@ class User(db.Model):
             "email": self.email,
             "genres_fav": [fav.serialize() for fav in self.genres_fav],
             "consoles_fav": [console_fav.console.serialize() for console_fav in self.consoles_fav],
+            "videogames_fav": [videogame_fav.videogame.serialize() for videogame_fav in self.videogames_fav],
             # do not serialize the password, its a security breach
         }
 class Administrador(db.Model):
@@ -55,6 +57,20 @@ class Videogame(db.Model):
     #     return self.serialize()
 # def __repr__(self):
 #         return '<Videogame %r>' % self.id
+    
+class Videogame_fav(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    videogame_id = db.Column(db.Integer, db.ForeignKey('videogame.id'), nullable=False)
+
+    videogame = db.relationship('Videogame', backref=db.backref('users_fav'))
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "videogame_id": self.videogame_id
+        }
     
 
 
