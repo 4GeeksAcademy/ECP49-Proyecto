@@ -21,12 +21,16 @@ CORS(api)
 def handle_signup():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    user = User.query.filter_by(email = email).first()
+    is_active = request.json.get("is_active", True)  
+    user = User.query.filter_by(email=email).first()
+
     if user:
-        return jsonify({"msg": "User account already exists"})
-    newUser = User(email = email, password = password)
+        return jsonify({"error": "User account already exists"}), 400
+
+    newUser = User(email=email, password=password, is_active=is_active)
     db.session.add(newUser)
     db.session.commit()
+
     return jsonify("Added User"), 200
 
 @api.route('/login', methods=['POST'])
