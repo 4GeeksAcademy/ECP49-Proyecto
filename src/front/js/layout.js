@@ -34,6 +34,7 @@ import GenreEdit from "./genres/genreEdit";
 import VideogameEdit from "./pages/videogames/videogameEdit";
 
 import { Consoles_Favorites } from "./pages/consoles/viewFavConsoles";
+import { Videogames_Favorites } from "./pages/videogames/viewFavVideogames";
 
 
 
@@ -89,6 +90,7 @@ const Layout = () => {
                         <Route element={<VideogameEdit />} path="/videogames/edit/:theid"  />
 
                         <Route element={<Consoles_Favorites />} path="/viewFavConsoles" />
+                        <Route element={<Videogames_Favorites />} path="/viewFavVideogames" />
                           
                         <Route element={<AdminForm />} path="/adminform" />
 

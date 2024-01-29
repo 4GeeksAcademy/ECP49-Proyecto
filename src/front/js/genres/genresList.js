@@ -16,6 +16,10 @@ export const Genres_list = () => {
     }
   };
 
+  const handleToggleFavorite = (genre_id) => {
+    actions.toggleFavoriteGenre(genre_id);
+  };
+
   return (
     <div className="container">
       <ul className="list-group">
@@ -38,7 +42,7 @@ export const Genres_list = () => {
                   Learn More...
                 </Link>
 
-                <button className="btn btn-success" onClick={() => actions.addFavoriteGenre(genre.type)}>Like!</button>
+                
 
                 {store.auth === true ?
                   <Link to={`/genres/edit/${genre.id}`}>
@@ -53,6 +57,12 @@ export const Genres_list = () => {
                     Delete
                   </button>
                   : null}
+
+<button
+                    className="btn btn-primary"
+                    onClick={() => handleToggleFavorite(genre.id)}>
+                    Like
+                  </button>
 
 
               </li>

@@ -11,6 +11,10 @@ export const VideogamesList = () => {
     actions.deleteVideogame(videogame_id);
   };
 
+  const handleToggleFavorite = (videogame_id) => {
+    actions.toggleFavoriteVideogame(videogame_id);
+  };
+
   return (
     <div className="container">
       <ul className="list-group">
@@ -46,6 +50,12 @@ export const VideogamesList = () => {
                   </button>
                   : null}
 
+<button
+  className="btn btn-primary"
+  onClick={() => handleToggleFavorite(videogame.id)}>
+  Like
+</button>
+
               </li>
             );
           })}
@@ -63,6 +73,10 @@ export const VideogamesList = () => {
           </span>
         </Link>
         : null}
+
+<Link to="/viewFavVideogames/">
+        <button className="btn btn-warning">Favorites</button>
+      </Link>
 
     </div>
   );

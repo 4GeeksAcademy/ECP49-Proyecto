@@ -1,4 +1,4 @@
-from api.models import db, User, Videogame, Consoles, Genres, Administrador, Genre_fav, Consoles_fav
+from api.models import db, User, Videogame, Consoles, Genres, Administrador, Consoles_fav, Videogame_fav, Genre_fav
 from flask import request, jsonify, url_for, Blueprint, abort, redirect, Response
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS, cross_origin
@@ -21,12 +21,16 @@ CORS(api)
 def handle_signup():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    user = User.query.filter_by(email = email).first()
+    is_active = request.json.get("is_active", True)  
+    user = User.query.filter_by(email=email).first()
+
     if user:
-        return jsonify({"msg": "User account already exists"})
-    newUser = User(email = email, password = password)
+        return jsonify({"error": "User account already exists"}), 400
+
+    newUser = User(email=email, password=password, is_active=is_active)
     db.session.add(newUser)
     db.session.commit()
+
     return jsonify("Added User"), 200
 
 @api.route('/login', methods=['POST'])
@@ -172,6 +176,58 @@ def update_videogame(videogame_id):
     db.session.commit()
 
     return jsonify({"msg": f"Videogame with ID {videogame_id} updated successfully"}), 200
+
+
+# Ruta para obtener los videojuegos favoritos de un usuario
+@api.route('/videogames_fav', methods=['GET'])
+@jwt_required()
+def get_videogame_fav():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    videogames_fav = user.videogames_fav
+    serialized_videogames_fav = [videogame_fav.videogame.serialize() for videogame_fav in videogames_fav]
+    return jsonify(serialized_videogames_fav), 200
+
+# Ruta para agregar o quitar un videojuego de las favoritas de un usuario
+@api.route('/videogames_fav', methods=['POST'])
+@jwt_required()
+def toggle_videogame_fav():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    request_body = request.get_json()
+
+    if "videogame_id" not in request_body:
+        return jsonify({"error": "Incomplete data"}), 400
+
+    videogame_id = request_body["videogame_id"]
+    videogame = Videogame.query.get(videogame_id)
+
+    if not videogame:
+        return jsonify({"msg": "Videogame not found"}), 404
+
+    # Verificar si ya existe la relación
+    existing_fav = Videogame_fav.query.filter_by(user_id=current_user_id, videogame_id=videogame_id).first()
+
+    if existing_fav:
+        # Si ya es favorito, quitarlo
+        db.session.delete(existing_fav)
+        db.session.commit()
+        return jsonify({"msg": "Videogame removed from favorites successfully"}), 200
+    else:
+        # Si no es favorito, agregarlo
+        new_videogame_fav = Videogame_fav(user_id=current_user_id, videogame_id=videogame_id)
+        db.session.add(new_videogame_fav)
+        db.session.commit()
+        return jsonify({"msg": "Videogame added to favorites successfully"}), 200
+
 
 
 ### CONSOLE METHODS ###
@@ -383,50 +439,57 @@ def delete_genre(genre_id):
 
     return jsonify({"msg": f"Console with ID {genre_id} successfully deleted"}), 200
 
-##### POST FAVORITES GENRES ####
 
-@api.route('/genre_fav', methods=['POST'])
-def add_new_genre_fav():
-    request_body_fav_genre = request.get_json()
+# Ruta para obtener los géneros favoritos de un usuario
+@api.route('/genres_fav', methods=['GET'])
+@jwt_required()
+def get_genres_fav():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
 
-    if (
-        "genres_id" not in request_body_fav_genre
-        or "user_id" not in request_body_fav_genre
-    ):
-        return jsonify({"error": "Datos incompletos"}), 400
-
-    
-    new_fav_genre = Genre_fav(
-        genres_id=request_body_fav_genre["genres_id"],
-        user_id=request_body_fav_genre["user_id"]
-    )
-    
-    db.session.add(new_fav_genre)
-    db.session.commit()
-
-    response_body = {
-        "msg": "Nuevo genero favorito añadido exitosamente"
-    }
-
-    return jsonify(response_body), 200
-
-##### GET FAVORITES GENRES ####
-
-@api.route('/genre_fav', methods=['GET'])
-def get_all_favorites_genres():
-    all_favorites_genres = Genre_fav.query.all()
-    results = [fav.serialize() for fav in all_favorites_genres]
-    return jsonify(results), 200
-
-@api.route('/user/<int:user_id>/genre_fav', methods=['GET'])
-def get_user_favorites_genres(user_id):
-    user = User.query.get(user_id)
     if not user:
         return jsonify({"msg": "User not found"}), 404
 
-    user_favorites_genres = user.genres_fav
-    results = [fav.serialize() for fav in user_favorites_genres]
-    return jsonify(results), 200
+    genres_fav = user.genres_fav
+    serialized_genres_fav = [genre_fav.genre.serialize() for genre_fav in genres_fav]
+    return jsonify(serialized_genres_fav), 200
+
+# Ruta para agregar o quitar un género de los favoritos de un usuario
+@api.route('/genres_fav', methods=['POST'])
+@jwt_required()
+def toggle_genre_fav():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    request_body = request.get_json()
+
+    if "genre_id" not in request_body:
+        return jsonify({"error": "Incomplete data"}), 400
+
+    genre_id = request_body["genre_id"]
+    genre = Genres.query.get(genre_id)
+
+    if not genre:
+        return jsonify({"msg": "Genre not found"}), 404
+
+    # Verificar si ya existe la relación
+    existing_fav = Genre_fav.query.filter_by(user_id=current_user_id, genre_id=genre_id).first()
+
+    if existing_fav:
+        # Si ya es favorito, quitarlo
+        db.session.delete(existing_fav)
+        db.session.commit()
+        return jsonify({"msg": "Genre removed from favorites successfully"}), 200
+    else:
+        # Si no es favorito, agregarlo
+        new_genre_fav = Genre_fav(user_id=current_user_id, genre_id=genre_id)
+        db.session.add(new_genre_fav)
+        db.session.commit()
+        return jsonify({"msg": "Genre added to favorites successfully"}), 200
+
 
 ###################### END GENRES #######################
 ######## LOGIN ADMINISTRADOR ########
