@@ -1,0 +1,78 @@
+/* Colores personalizados */
+:root {
+    --main-bg-color: #ffffff;
+    --card-bg-color: #eaeccc00;
+    --text-color: #090909;
+    --link-color: #DBCC95;
+    --button-bg-color: #CD8D7A;
+  }
+  
+  /* Estilo para el contenedor principal */
+  .jumbotronList.container {
+    background-color: var(--main-bg-color);
+   
+   
+    
+  }
+  
+  /* Estilo para cada tarjeta */
+  .card-bodyList {
+    background-color: var(--card-bg-color);
+    border: 2px solid rgba(202, 175, 167, 0.24);
+    border-radius: 16px;
+    margin: 10px;
+    padding: 15px;
+  }
+  
+  /* Estilo para los enlaces
+  .text-decoration-none {
+    color: var(--link-color);
+    text-decoration: none;
+  } */
+  
+  /* Estilo para el botón "More info" */
+  .btn-success.moreinfo {
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-success.moreinfo:hover {
+    background-color: #B56B4B;
+  }
+  
+  /* Estilo para la lista de tarjetas */
+  /* .list-group {
+    display: flex;
+    overflow-x: auto;
+  } */
+  
+  
+  
+  /* Estilo para los títulos de las tarjetas */
+  .card-titleList1 {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: var(--text-color);
+  }
+
+  .card-titleList2 {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: var(--text-color);
+  }
+
+  .card-titleList3 {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--text-color);
+  }
+  
