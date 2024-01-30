@@ -1,0 +1,93 @@
+/* Colores personalizados */
+:root {
+    
+    --card-bg-color: #eaeccc00;
+    --text-color: #090909;
+    --link-color: #ddc777;
+  }
+  
+  
+ /* Estilo para cada tarjeta */
+.card-bodyList {
+  background-color: var(--card-bg-color);
+  border: 2px solid rgba(255, 255, 255, 0.24);
+  border-radius: 2px;
+  margin: 10px;
+  padding: 15px;
+  transition: border-radius 0.3s, border-color 0.3s;
+}
+
+.card-bodyList:hover {
+  border-radius: 16px; 
+  border-color: var(--link-color); 
+}
+  
+
+  /* Estilo para los enlaces */
+  .text-decoration-noneList {
+    color: var(--link-color);
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  
+ /* Estilo para los títulos de las tarjetas */
+.card-titleList1 {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: var(--text-color);
+}
+.card-titleList2 {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: var(--text-color);
+}
+.card-titleList3 {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+
+.overflow {
+  overflow-x: auto;
+}
+.image_top_game{
+height: 200px;
+width: 650px;
+}
+
+
+/* Estilos para la tarjeta "All" */
+.text-decoration-noneList2 {
+  text-decoration: none;
+}
+
+.card-bodyList2 {
+  position: relative;
+  padding: 14px;
+  margin: 10px;
+  transition: border-radius 0.3s, border-color 0.3s;
+  width: 1500px;
+  
+}
+
+.card-titleList21 {
+  position: absolute;
+  top: 50%;
+  left: 42%;
+  transform: translate(-50%, -50%);
+  display: block;
+  margin-bottom: 10px;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.466); 
+  padding: 6px; 
+  border-radius: 6px; 
+}
+
+.card-imageList2 {
+  border-radius: 20px;
+}
