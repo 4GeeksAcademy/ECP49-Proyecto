@@ -11,11 +11,11 @@ export const Navbar = () => {
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
 				<Link to="/">
-					<button className="btn btn-danger mb-0 h1">Inicio</button>
+					<button className="btn btn-danger mb-0 h1"><i class="fa-solid fa-house-user"></i></button>
 				</Link>
 
 				<Link to="/adminform">
-					{store.auth === true ? <button onClick={() => actions.logoutadmin()} className="btn btn-danger" >logoutADMIN</button> : <button className="btn btn-primary">ADMIN</button>}
+					{store.auth === true ? <button onClick={() => actions.logoutadmin()} className="btn btn-danger" ><i class="fa-solid fa-right-from-bracket mx-2"></i>logoutADMIN</button> : <button className="btn btn-primary">ADMIN</button>}
 				</Link>
 
 			{/* ++ SEARCH BUTTON ++ */}
@@ -23,11 +23,11 @@ export const Navbar = () => {
 				<div className="ml-auto">
 					{store.user ?
 						<>
-							<Link to="/signup">
-								<button className="btn btn-primary">Signup</button>
+							<Link to="/signup" className="mx-2">
+								<button className="btn btn-primary"><i className="fa-solid fa-user-plus mx-2"></i>Signup</button>
 							</Link>
 							<Link to="/login">
-								<button className="btn btn-primary">Login</button>
+								<button className="btn btn-primary"><i className="fas fa-sign-in mx-2"></i>Login</button>
 							</Link>
 						</>
 						:
