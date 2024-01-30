@@ -9,26 +9,31 @@ export const Genres = () => {
 
 
 	return (
-		<div className="jumbotron">
-			{store.genres[params.theid] ? (
-				<>
-					<h1 className="display-4">Type: {store.genres[params.theid].type}</h1>
-					<hr className="my-4" />
-				</>
-			) : (
-				<p>Genrenot found</p>
-			)}
-			<Link to="/">
-				<span className="btn btn-primary btn-lg" href="#" role="button">
-					Back home
-				</span>
-			</Link>
-			<Link to="/genresList">
-				<span className="btn btn-primary" href="#" role="button">
-					BackList
-				</span>
-			</Link>
-		</div>
+		<div className="px-4 py-5 my-5 text-center">
+      {store.genres[params.theid] ? (
+        <>
+          <h1 className="display-5 fw-bold text-body-emphasis">{store.genres[params.theid].type}</h1>
+          <hr className="my-4" />
+        </>
+      ) : (
+        <p>Genre not found</p>
+      )}
+
+      <div className="col-lg-6 mx-auto">
+        <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <Link to="/">
+            <span className="btn btn-primary btn-lg" href="#" role="button">
+              Back home
+            </span>
+          </Link>
+          <Link to="/genresList">
+            <span className="btn btn-primary btn-lg" href="#" role="button">
+              BackList
+            </span>
+          </Link>
+        </div>
+      </div>
+    </div>
 	);
 };
 
