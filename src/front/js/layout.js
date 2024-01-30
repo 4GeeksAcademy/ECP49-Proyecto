@@ -39,6 +39,7 @@ import VideogameEdit from "./pages/videogames/videogameEdit";
 import { Consoles_Favorites } from "./pages/consoles/viewFavConsoles";
 import { Videogames_Favorites } from "./pages/videogames/viewFavVideogames";
 
+import { User_Profile } from "./pages/user/userProfile";
 
 
 import AdminForm from "./pages/administrador/adminForm";
@@ -98,6 +99,8 @@ const Layout = () => {
                         <Route element={<Videogames_Favorites />} path="/viewFavVideogames" />
                           
                         <Route element={<AdminForm />} path="/adminform" />
+
+                        <Route element={<User_Profile />} path="/userProfile" />
 
                     </Routes>
                     <Footer />

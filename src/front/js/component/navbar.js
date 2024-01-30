@@ -14,6 +14,10 @@ export const Navbar = () => {
 					<button className="btn btn-danger mb-0 h1"><i class="fa-solid fa-house-user"></i></button>
 				</Link>
 
+				<Link to="/userProfile">
+					<button className="btn btn-danger mb-0 h1">My Profile</button>
+				</Link>
+
 				<Link to="/adminform">
 					{store.auth === true ? <button onClick={() => actions.logoutadmin()} className="btn btn-danger" ><i class="fa-solid fa-right-from-bracket mx-2"></i>logoutADMIN</button> : <button className="btn btn-primary">ADMIN</button>}
 				</Link>
