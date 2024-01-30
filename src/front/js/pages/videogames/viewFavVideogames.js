@@ -13,7 +13,7 @@ export const Videogames_Favorites = () => {
   return (
     <>
       <div>
-        <h2>Favorite Videogames</h2>
+        <h2>My Favorite Videogames</h2>
         <ul className="list-group">
           {store.favoriteVideogames.map((videogameFav, index) => (
             <li key={index}>

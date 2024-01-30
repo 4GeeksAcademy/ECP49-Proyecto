@@ -13,7 +13,7 @@ export const Consoles_Favorites = () => {
   return (
     <>
       <div>
-        <h2>Favorite Consoles</h2>
+        <h2>My Favorite Consoles</h2>
         <ul className="list-group">
   {store.favoriteConsoles.map((consoleFav, index) => (
     <li key={index}>

@@ -14,8 +14,6 @@ export const Genres = () => {
 				<>
 					<h1 className="display-4">Type: {store.genres[params.theid].type}</h1>
 					<hr className="my-4" />
-					<button className="btn btn-success" onClick={() => actions.addFavoriteGenre(store.genres[params.theid].type)}>Like!</button>
-
 				</>
 			) : (
 				<p>Genrenot found</p>
