@@ -16,67 +16,57 @@ export const VideogamesList = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container text-center">
+      <div>
+        <h2>All Videogames</h2>
+      </div>
+      <div style={{width:"900px", margin: "auto"}}>
       <ul className="list-group">
         {store.videogames === false && <p>...loading</p>}
         {store.videogames.length > 0 &&
           store.videogames.map((videogame, index) => {
             return (
-              <li
-                key={index}
-                className="list-group-item d-flex justify-content-between"
-              >
-                <Link to={`/videogames/${videogame.id}`} className="text-decoration-none">
-                  <span>{videogame.name}</span>
-                  <span>{videogame.pegi}</span>
-                  <span>{videogame.year}</span>
-                </Link>
+              <li key={index} className="list-group-item d-flex justify-content-between">
+                <h5>{videogame.name}</h5>
 
-                <Link to={`/videogames/${videogame.id}`}>
-                  <button className="btn btn-success">Learn More...</button>
+                <div className="d-flex justify-content-end">
+
+                <Link to={`/videogames/` + index}>
+                <button className="btn btn-sm m-2" style={{backgroundColor: "#C3E2C2"}} >View More...</button>
                 </Link>
 
                 {store.auth === true ?
                   <Link to={`/videogames/edit/${videogame.id}`}>
-                    <button className="btn btn-primary">Edit</button>
+                    <button className="btn btn-sm m-2" style={{backgroundColor: "#DBCC95"}}>Edit</button>
                   </Link>
                   : null}
 
                 {store.auth === true ?
                   <button
-                    className="btn btn-danger"
+                    className="btn btn-sm m-2" style={{backgroundColor: "#CD8D7A"}}
                     onClick={() => handleDeleteVideogame(videogame.id)}>
                     Delete
                   </button>
                   : null}
 
 <button
-  className="btn btn-primary"
-  onClick={() => handleToggleFavorite(videogame.id)}>
-  Like
+  className="btn btn-lg" style={{color: "#EAECCC"}}
+  onClick={() => handleToggleFavorite(videogame.id)}><i class="fa-solid fa-star"></i>
+  
 </button>
-
+                  </div>
               </li>
             );
           })}
       </ul>
+      </div>
       <br />
-
-      <Link to="/">
-        <button className="btn btn-primary">Back home</button>
-      </Link>
 
       {store.auth === true ?
         <Link to="/videogames/add">
-          <span className="btn btn-primary" href="#" role="button">
-            Add videogame
-          </span>
+          <button className="btn btn-md" style={{backgroundColor: "#C3E2C2"}} >Add New Videogame</button>
         </Link>
         : null}
-
-<Link to="/viewFavVideogames/">
-        <button className="btn btn-warning">Favorites</button>
-      </Link>
 
     </div>
   );
