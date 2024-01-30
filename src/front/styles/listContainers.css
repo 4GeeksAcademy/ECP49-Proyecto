@@ -67,16 +67,27 @@ width: 650px;
 }
 
 .card-bodyList2 {
-  
-  border: 2px solid #cd8d7a4b;
+  position: relative;
   padding: 14px;
   margin: 10px;
   transition: border-radius 0.3s, border-color 0.3s;
+  width: 1500px;
+  
 }
 
 .card-titleList21 {
+  position: absolute;
+  top: 50%;
+  left: 42%;
+  transform: translate(-50%, -50%);
   display: block;
   margin-bottom: 10px;
-  font-size: 16px;
-  color: #090909;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.466); 
+  padding: 6px; 
+  border-radius: 6px; 
+}
+
+.card-imageList2 {
+  border-radius: 20px;
 }

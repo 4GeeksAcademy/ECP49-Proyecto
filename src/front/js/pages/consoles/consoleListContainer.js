@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import { Context } from '../../store/appContext';
 import '../../../styles/listContainers.css';
+import AllConsolesImage from '/workspaces/ECP49-Proyecto/src/front/img/Consolas1.jpeg';
 
 
 export const ConsoleListContainer = () => {
@@ -11,14 +12,19 @@ export const ConsoleListContainer = () => {
 
   return (
     <div className="jumbotron jumbotronList container">
-      <div className="d-flex justify-content-center overflow row">
-        <div className="col">
-          {/* Card "All Consoles" */}
-          <Link to={"/Consoles/"} className="text-decoration-noneList2">
-            <div className="card-body card-bodyList2 list-group">
-              <span className="card-titleList21">All Consoles</span>
-            </div>
-          </Link>
+  <div className="d-flex justify-content-center overflow row">
+    <div className="col">
+      {/* Card "All Consoles" */}
+      <Link to={"/Consoles/"} className="text-decoration-noneList2">
+        <div className="card-body card-bodyList2 list-group">
+          <img
+            src={AllConsolesImage}
+            alt="All Consoles"
+            className="card-imageList2"
+          />
+          <span className="card-titleList21 display-6">All Consoles</span>
+        </div>
+      </Link>
 
           {/* Cards generadas con el bucle map */}
           <ul

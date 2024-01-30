@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import { Context } from '../../store/appContext';
-
+import AllVideogamesImage from '/workspaces/ECP49-Proyecto/src/front/img/Videojuegos1.jpeg';
 
 export const VideogameListContainer = () => {
   const { store, actions } = useContext(Context);
@@ -15,7 +15,12 @@ export const VideogameListContainer = () => {
           {/* Card "All Videogames" */}
           <Link to={"/videogames/"} className="text-decoration-noneList2">
             <div className="card-body card-bodyList2 list-group">
-              <span className="card-titleList21">All Videogames</span>
+            <img
+            src={AllVideogamesImage}
+            alt="All Videogames"
+            className="card-imageList2"
+          />
+              <span className="card-titleList21 display-6">All Videogames</span>
             </div>
           </Link>
 

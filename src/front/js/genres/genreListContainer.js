@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import '../../styles/listContainers.css';
+import AllGenresImage from '/workspaces/ECP49-Proyecto/src/front/img/Generos1.jpeg';
 
 export const GenreListContainer = () => {
   const { store, actions } = useContext(Context);
@@ -15,7 +16,12 @@ export const GenreListContainer = () => {
           {/* Card "All Genres" */}
           <Link to={"/genreslist/"} className="text-decoration-noneList2">
             <div className="card-body card-bodyList2 list-group">
-              <span className="card-titleList21">All Genres</span>
+            <img
+            src={AllGenresImage}
+            alt="All Genres"
+            className="card-imageList2"
+          />
+              <span className="card-titleList21 display-6">All Genres</span>
             </div>
           </Link>
 
