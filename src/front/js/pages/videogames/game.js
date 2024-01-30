@@ -11,7 +11,6 @@ export const GameRawg = () => {
                 const response = await fetch(`https://api.rawg.io/api/games/${gameId}?key=e8722d91c21d4eec9047a9a02fd9efe7`);
                 const data = await response.json();
 
-                // Verificar si hay resultados y seleccionar el juego
                 if (data) {
                     setSelectedGame(data);
                 }
