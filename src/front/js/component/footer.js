@@ -6,19 +6,20 @@ export const Footer = () => {
   const { store } = useContext(Context);
 
   return (
-    <footer className="footer mt-auto py-3 text-center">
-      <p>
-        Made with <i className="fa fa-heart text-danger" /> by{" "}
-        <a href="http://www.4geeksacademy.com">4Geeks Academy</a>
-      </p>
-      {store.user && (
+    <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 mx-4 w-75 border-top">
+        <Link to="/" className="btn btn-outline-danger">
+          Go to Home
+        </Link>
+
+        {store.user && (
+          <p>
+            Logged in as: {store.user.email}
+          </p>
+        )}
         <p>
-          Logged in as: {store.user.email}
+          Made with <i className="fa fa-heart text-danger" /> by{" "}
+          <a href="http://www.4geeksacademy.com">4Geeks Academy, Group 49</a>
         </p>
-      )}
-      <Link to="/" className="btn btn-outline-danger">
-        Go to Home
-      </Link>
     </footer>
   );
 };
