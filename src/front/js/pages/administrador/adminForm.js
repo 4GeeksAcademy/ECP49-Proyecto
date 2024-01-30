@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Context } from "../../store/appContext";
 import { Navigate } from "react-router-dom";
 import { useContext } from "react";
+import '../../../styles/adminForm.css';
 
 const AdminForm = () => {
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { store, actions } = useContext(Context);
@@ -17,71 +17,69 @@ const AdminForm = () => {
         setPassword(e.target.value);
     };
 
-
     const handleLogin = () => {
-        actions.loginadmin(email, password)
-
+        actions.loginadmin(email, password);
     };
 
-
-
     return (
-        <>
-        {store.auth === true ? <Navigate to = "/"/> : ""}
-        
 
-        <div className="container text-center">
-  <div className="row align-items-start">
-    <div className="col">
+<div class="container text-center">
+  <div class="row align-items-start">
+    <div class="col">
       
     </div>
-    <div className="col-6">
-    <div className="container mt-5">
-            <h1>Accede como Administrador</h1>
-            <br></br>
-            <form>
-                <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email:</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        id="email"
-                        value={email}
-                        onChange={handleEmailChange}
-                    />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Contraseña:</label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        id="password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                    />
-                </div>
-                <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={handleLogin}
-                >
-                    Acceder
-                </button>
-            </form>
+    <div class="col">
+    <div>
+            {store.auth === true ? <Navigate to="/" /> : ""}
+
+            <div className="container mt-5">
+                <form className="new-form-control">
+                    <p className="new-title">Login ADMIN</p>
+                    <div className="new-input-field">
+                        <input
+                            required=""
+                            className="new-input"
+                            type="text"
+                            id="email"
+                            value={email}
+                            onChange={handleEmailChange}
+                        />
+                        <label className="new-label" htmlFor="email">
+                            Enter Email
+                        </label>
+                    </div>
+                    <div className="new-input-field">
+                        <input
+                            required=""
+                            className="new-input"
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={handlePasswordChange}
+                        />
+                        <label className="new-label" htmlFor="password">
+                            Enter Password
+                        </label>
+                    </div>
+
+                    <button
+                        className="new-submit-btn"
+                        type="button"
+                        onClick={handleLogin}
+                    >
+                        Sign In
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
-    <div className="col">
-     
+    <div class="col">
+      
     </div>
   </div>
 </div>
 
-
-
-
-
         
-        </>
     );
 };
 
