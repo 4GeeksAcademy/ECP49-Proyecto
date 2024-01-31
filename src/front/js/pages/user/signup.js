@@ -1,6 +1,7 @@
 import React, {useContext, useState} from "react";
 import { Context } from "../../store/appContext";
 import {useNavigate } from "react-router-dom";
+import '../../../styles/adminForm.css';
 
 const Signup = () => {    
     const { store, actions } = useContext(Context);
@@ -14,22 +15,65 @@ const Signup = () => {
                             
     }
     return(
-        <div className="container mt-5">
-                <form className="row g-3 border border-lightgray">
-                    <div className="py-2 bg-light border-bottom border-lightgray mt-0 text-center">
-                        <h2 >Signup</h2>
-                    </div>                    
-                    <div className="col-md-12">
-                        <label htmlFor="email" className="form-label">Email</label>
-                        <input onChange={onChange} value={formValue.email} type="email" className="form-control" placeholder="Enter email" id="email" />
-                    </div>
-                    <div className="col-md-12">
-                        <label htmlFor="password" className="form-label">Password</label>
-                        <input onChange={onChange} value={formValue.password} type="password" className="form-control" placeholder="Enter password" id="password" />
-                    </div>
-                    <button type="button" onClick={() => actions.signUp(formValue, navigate)} className="btn btn-primary">Signup</button>                      
-                </form>
-            </div>
+
+        <div class="container text-center">
+  <div class="row align-items-start">
+    <div class="col">
+      
+    </div>
+    <div class="col">
+    <div className="container mt-5">
+            <form className="new-form-control">
+                <p className="new-title">Signup user</p>
+                <div className="new-input-field">
+                    <input
+                        required=""
+                        className="new-input"
+                        type="text"
+                        id="email"
+                        value={formValue.email}
+                        onChange={onChange}
+                    />
+                    <label className="new-label" htmlFor="email">
+                        Enter Email
+                    </label>
+                </div>
+                <div className="new-input-field">
+                    <input
+                        required=""
+                        className="new-input"
+                        type="password"
+                        id="password"
+                        value={formValue.password}
+                        onChange={onChange}
+                    />
+                    <label className="new-label" htmlFor="password">
+                        Enter Password
+                    </label>
+                </div>
+                <button
+                    className="new-submit-btn"
+                    type="button"
+                    onClick={() => actions.signUp(formValue, navigate)}
+                >
+                    Signup
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="col">
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+       
     );
 }
 

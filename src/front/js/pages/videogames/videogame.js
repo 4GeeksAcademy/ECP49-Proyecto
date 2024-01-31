@@ -7,33 +7,36 @@ export const Videogame = () => {
   const { store, actions } = useContext(Context);
   const params = useParams();
 
-  const handleDeleteVideogame = (videogame_id) => {
-    actions.deleteVideogame(videogame_id);
-  };
+ 
 
   return (
-    <div className="jumbotron">
+    <div className="px-4 py-5 my-5 text-center">
       {store.videogames[params.theid] ? (
         <>
-          <h1 className="display-4">Name: {store.videogames[params.theid].name}</h1>
-          <h1 className="display-4">PEGI: {store.videogames[params.theid].pegi}</h1>
-          <h1 className="display-4">Year: {store.videogames[params.theid].year}</h1>
+          <h1 className="display-5 fw-bold text-body-emphasis">{store.videogames[params.theid].name}</h1>
+          <p className="lead m-4">PEGI: {store.videogames[params.theid].pegi}</p>
+          <p className="lead m-4">Year: {store.videogames[params.theid].year}</p>
+
           <hr className="my-4" />
         </>
       ) : (
         <p>Videogame not found</p>
       )}
 
-      <Link to="/">
-        <span className="btn btn-primary btn-lg" href="#" role="button">
-          Back home
-        </span>
-      </Link>
-      <Link to="/videogames">
-        <span className="btn btn-primary btn-lg" href="#" role="button">
-          Back to the list
-        </span>
-      </Link>
+      <div className="col-lg-6 mx-auto">
+        <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <Link to="/">
+            <span className="btn btn-primary btn-lg" href="#" role="button">
+              Back home
+            </span>
+          </Link>
+          <Link to="/videogames">
+            <span className="btn btn-primary btn-lg" href="#" role="button">
+              Back to the list
+            </span>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
