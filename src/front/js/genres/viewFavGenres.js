@@ -19,23 +19,31 @@ export const Genres_favorites = () => {
   return (
     <>
       <div>
-        <h2>MyFavorites Genres</h2>
+        <div className="container text-center">
+        <h2>My Favorites Genres</h2>
+        </div>
+        <div style={{width:"900px", margin: "auto"}}>
         <ul className="list-group">
-          {console.log(store.favoriteGenres)}
-          {store.favoriteGenres.map((genreFav, index) => (
+            {store.favoriteGenres.map((genreFav, index) => (
             <li key={index} className="list-group-item d-flex justify-content-between">
-              <Link to={"/genres/" + index} className="text-decoration-none">
-                <span>{genreFav.type}</span>
-              </Link>
-              <Link className="btn btn-success" to={"/genres/" + index}>
-                Learn More...
-              </Link>
-              <button className="btn btn-primary" onClick={() => handleToggleFavorite(genreFav.id)}>
-                Like
-              </button>
+              <h5>{genreFav.type}</h5>
+
+            <div className="d-flex justify-content-end">
+
+            <Link to={"/genres/" + index}>
+              <button className="btn btn-sm m-2" style={{backgroundColor: "#C3E2C2"}} >View More...</button>
+            </Link>
+
+            <button className="btn btn-lg" style={{color: "#EAECCC"}} onClick={() => handleToggleFavorite(genreFav.id)}>
+              <i class="fa-solid fa-star"></i>
+            </button>
+
+            </div>
+
             </li>
           ))}
         </ul>
+        </div>
       </div>
     </>
   );
