@@ -27,7 +27,7 @@ export const Navbar = () => {
 						<button className="btn btn-danger mb-0 h1"><i className="fa fa-user btn-danger" aria-hidden="true"></i>
 						</button>
 					</Link>
-					{store.user ?
+					{store.user == false ?
 						<>
 							<Link to="/signup" className="mx-2">
 								<button className="btn btn-primary"><i className="fa-solid fa-user-plus mx-2 btn-primary"></i>Signup</button>

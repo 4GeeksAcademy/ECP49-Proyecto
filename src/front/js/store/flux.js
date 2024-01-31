@@ -6,7 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       consoles: [],
       favorites: [],
 
-      user: [null],
+      user: false,
       token: null,
 
       auth: false,
@@ -560,7 +560,7 @@ getFavoriteGenres : async () => {
         if (token && token != null && token != undefined) setStore({ token: token });
       },
       logout: (navigate) => {
-        setStore({ user: null });
+        setStore({ user: false });
         sessionStorage.removeItem("token");
         setStore({ token: null });
         navigate("/");
