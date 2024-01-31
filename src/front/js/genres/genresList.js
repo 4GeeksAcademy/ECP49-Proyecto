@@ -25,53 +25,54 @@ export const Genres_list = () => {
       <div>
         <h2>All Genres</h2>
       </div>
-      <div style={{width:"900px", margin: "auto"}}>
+      <div style={{ width: "900px", margin: "auto" }}>
         <ul className="list-group">
           {store.genres == false && <p>...loading</p>}
           {store.genres.length > 0 &&
-          store.genres.map((genre, index) => {
-            return (
-              <li key={index} className="list-group-item d-flex justify-content-between">
-                <h5>{genre.type}</h5>
+            store.genres.map((genre, index) => {
+              return (
+                <li key={index} className="list-group-item d-flex justify-content-between">
+                  <h5>{genre.type}</h5>
 
-                <div className="d-flex justify-content-end">
+                  <div className="d-flex justify-content-end">
 
-                <Link to={"/genres/" + index}>
-                  <button className="btn btn-sm m-2" style={{backgroundColor: "#C3E2C2"}} >View More...</button>
-                </Link>
+                    <Link to={"/genres/" + index}>
+                      <button className="btn btn-sm m-2" style={{ backgroundColor: "#C3E2C2" }} >View More...</button>
+                    </Link>
 
-                {store.auth === true ?
-                  <Link to={`/genres/edit/${genre.id}`}>
-                    <button className="btn btn-sm m-2" style={{backgroundColor: "#DBCC95"}}>Edit</button>
-                  </Link>
-                  : null}
+                    {store.auth === true ?
+                      <Link to={`/genres/edit/${genre.id}`}>
+                        <button className="btn btn-sm m-2" style={{ backgroundColor: "#DBCC95" }}>Edit</button>
+                      </Link>
+                      : null}
 
-                {store.auth === true ?
-                  <button
-                    className="btn btn-sm m-2" style={{backgroundColor: "#CD8D7A"}}
-                    onClick={() => handleDeleteGenre(genre.id)}>
-                    Delete
-                  </button>
-                  : null}
+                    {store.auth === true ?
+                      <button
+                        className="btn btn-sm m-2" style={{ backgroundColor: "#CD8D7A" }}
+                        onClick={() => handleDeleteGenre(genre.id)}>
+                        Delete
+                      </button>
+                      : null}
 
-                  <button
-                    className="btn btn-lg" style={{color: "#EAECCC"}}
-                    onClick={() => handleToggleFavorite(genre.id)}><i class="fa-solid fa-star"></i>
-                    
-                  </button>
+                    {store.auth === true ? null :
+                      <button
+                        className="btn btn-lg" style={{ color: "#EAECCC" }}
+                        onClick={() => handleToggleFavorite(genre.id)}><i class="fa-solid fa-star"></i>
+                      </button>
+                    }
 
                   </div>
 
-              </li>
-            );
-          })}
-      </ul>
+                </li>
+              );
+            })}
+        </ul>
       </div>
       <br />
 
       {store.auth === true ?
         <Link to="/formGenres/">
-          <button className="btn btn-md" style={{backgroundColor: "#C3E2C2"}} >Add New Genre</button>
+          <button className="btn btn-md" style={{ backgroundColor: "#C3E2C2" }} >Add New Genre</button>
         </Link>
         : null}
 
