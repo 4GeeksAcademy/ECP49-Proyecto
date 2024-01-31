@@ -39,9 +39,7 @@ export const Navbar = () => {
 						</>
 						:
 						<>
-							<Link to="/private">
-								<button className="btn btn-primary btn-primary">User</button>
-							</Link>
+							
 							<div className="vr"></div>
 							<button className="btn btn-primary" onClick={() => actions.logout()}>Log Out</button>
 						</>
