@@ -56,7 +56,7 @@ export const SearchBar = () => {
 
     return (
         <>
-            <div className="">
+            <div className="fondo_nav">
                 <div className="input-group mb-3">
                     <input
                         type="text"
@@ -94,7 +94,7 @@ export const SearchBar = () => {
                             data-mdb-ripple-init
                             onClick={(e) => handleSearch(e)}
                         >
-                            <i className="fa fa-search"></i>
+                            <i className="fa fa-search btn-primary"></i>
                         </button>
                     </div>
                 </div>
