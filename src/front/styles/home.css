@@ -5,12 +5,32 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
-/* * {
-    background-color:  #171b32;
-    color: beige;
+* {
+    background-color: #EAECCC;
+    color: black;
 }
 
-.card {
-    background-color:  #171b32;
-    box-shadow: 10px 5px 5px black;
-} */
+.navbar {
+    background-color: #C3E2C2;
+}
+
+.footer {
+    background-color: #C3E2C2;
+}
+
+.fondo {
+    background-color: #EAECCC;
+}
+
+.fondo_nav {
+    background-color: #C3E2C2;
+}
+
+.btn-primary {
+    background-color: #DBCC95;
+    color: black;
+}
+
+.btn-danger {
+    background-color: #CD8D7A
+}
