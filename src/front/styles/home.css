@@ -34,3 +34,8 @@
 .btn-danger {
     background-color: #CD8D7A
 }
+
+.logo {
+    max-width: 45px;
+    border-radius: 20%;
+}

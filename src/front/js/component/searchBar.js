@@ -57,7 +57,7 @@ export const SearchBar = () => {
     return (
         <>
             <div className="fondo_nav">
-                <div className="input-group mb-3">
+                <div className="input-group">
                     <input
                         type="text"
                         className="form-control"
