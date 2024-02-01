@@ -44,3 +44,17 @@ body {
     max-width: 45px;
     border-radius: 20%;
 }
+
+.footer_height {
+    max-height: 60px;
+}
+
+.search_list {
+    z-index: 1;
+    list-style: none;
+}
+
+a:hover {
+    color: red !important;
+    cursor: pointer;
+  }

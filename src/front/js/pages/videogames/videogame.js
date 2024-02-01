@@ -29,18 +29,16 @@ export const Videogame = () => {
 
   return (
 
-    <div className="pb-5 text-center container card fondo">
-
+    <div className="pb-5 text-center container card fondo search_list">
       {store.videogames[params.theid] ? (
         <>
           <h1 className="display-5 fw-bold text-body-emphasis">{store.videogames[params.theid].name}</h1>
-
           <div className="row justify-content-around align-items-center">
             <div className="col-2">
-              <img className="img-thumbnail" style={{ maxWidth: "350px", bottom: "0px" }} src={selectedGame.background_image} alt="Card image cap" />
+              <img className="img-thumbnail mx-2" style={{ maxWidth: "350px", bottom: "0px" }} src={selectedGame.background_image} alt="Card image cap" />
             </div>
             <div className="col-8">
-              <p className="card-text card-body">Description: {selectedGame.description || "Not defined"}</p>
+              <p className="card-text card-body mx-4">Description: {selectedGame.description || "Not defined"}</p>
               <p className="lead m-4 card-hearder">PEGI: {store.videogames[params.theid].pegi}</p>
               <p className="lead m-4 card-hearder">Year: {store.videogames[params.theid].year}</p>
             </div>
