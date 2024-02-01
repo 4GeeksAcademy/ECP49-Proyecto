@@ -89,6 +89,7 @@ def new_videogame():
     data = request.get_json()
     videogame = Videogame(
         name=data['name'],
+        description=data['description'],
         pegi=int(data['pegi']),
         year=int(data['year'])
     )

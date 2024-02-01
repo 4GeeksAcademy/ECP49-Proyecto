@@ -7,6 +7,7 @@ import '../../../styles/home.css';
 export const FormVideogame = () => {
   const { store, actions } = useContext(Context);
   const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [pegi, setPegi] = useState("");
   const [year, setYear] = useState("");
   const [textInput, setTextInput] = useState("");
@@ -20,6 +21,7 @@ export const FormVideogame = () => {
       if (searchResults[i].name === textInput) {
         const selectedGame = searchResults[i];
         setName(selectedGame.name);
+        setDescription(selectedGame.description || "");
         setPegi(selectedGame.pegi || "");
         setYear(selectedGame.released ? new Date(selectedGame.released).getFullYear() : "");
         setIsSearchResultsVisible(false);
@@ -58,18 +60,22 @@ export const FormVideogame = () => {
     if (name === "name") {
       setName(value);
       setTextInput(value);
-      // Limpiar pegi y year cuando cambia el nombre
+      setDescription("");
       setPegi("");
       setYear("");
+    } else if (name === "description") {
+      setDescription(value);
     } else if (name === "pegi") {
       setPegi(value);
     } else if (name === "year") {
       setYear(value);
+      setDescription(`Released in ${value}`); // Update description with year
     }
   };
 
   const handleSearchResultClick = (game) => {
     setName(game.name);
+    setDescription(game.description);
     setPegi(game.pegi !== undefined ? game.pegi : "");
     setYear(game.released ? new Date(game.released).getFullYear() : "");
     setIsSearchResultsVisible(false);
@@ -78,6 +84,7 @@ export const FormVideogame = () => {
   const addVideogame = () => {
     const newVideogame = {
       name: name,
+      description: description,
       pegi: pegi,
       year: year,
     };
@@ -89,12 +96,13 @@ export const FormVideogame = () => {
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      addConsole();
+      addVideogame();
     }
   };
 
   const resetForm = () => {
     setName("");
+    setDescription("");
     setPegi("");
     setYear("");
   };
@@ -123,6 +131,16 @@ export const FormVideogame = () => {
             </ul>
           )}
         </div>
+        <br />
+        <label htmlFor="description">Description:</label>
+        <input
+          type="text"
+          name="description"
+          value={description}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyPress}
+          className="form-control"
+        />
         <br />
         <label htmlFor="pegi">PEGI:</label>
         <input

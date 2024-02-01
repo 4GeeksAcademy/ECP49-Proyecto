@@ -44,6 +44,7 @@ class Administrador(db.Model):
 class Videogame(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(180), unique=False, nullable=False)
+    description = db.Column(db.String(250), unique=False, nullable=False)
     pegi = db.Column(db.Integer)
     year = db.Column(db.Integer)
 
@@ -51,6 +52,7 @@ class Videogame(db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "description": self.description,
             "pegi": self.pegi,
             "year": self.year
         }
