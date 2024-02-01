@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../../store/appContext";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import '../../../styles/home.css';
 
 export const FormConsole = () => {
   const { store, actions } = useContext(Context);
@@ -102,8 +103,8 @@ export const FormConsole = () => {
           {isSearchResultsVisible && searchResults.length > 0 && (
             <ul>
               {searchResults.map((console) => (
-                <li key={console.id} className="list-group-item">
-                  <a onClick={() => handleSearchResultClick(console)}>{console.name}</a>
+                <li key={console.id} className="list-group my-4">
+                  <a onClick={() => handleSearchResultClick(console)} className="list-group-item my-4">{console.name}</a>
                 </li>
               ))}
             </ul>

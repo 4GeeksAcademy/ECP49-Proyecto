@@ -9,7 +9,7 @@ export const Footer = () => {
 
   return (
     <div className="container-fluid fondo_nav">
-    <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 px-5  border-top fixed-bottom fondo_nav">
+    <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 px-5 border-top fixed-bottom fondo_nav footer_height">
         <Link to="/" className="btn btn-outline-danger">
           Go to Home
         </Link>

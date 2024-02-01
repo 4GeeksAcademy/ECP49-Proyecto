@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
+import '../../styles/home.css';
 
 export const FormGenres = () => {
   const { store, actions } = useContext(Context);
@@ -100,8 +101,8 @@ export const FormGenres = () => {
           {isSearchResultsVisible && searchResults.length > 0 && (
             <ul>
               {searchResults.map((genre) => (
-                <li key={genre.id}>
-                  <a onClick={() => handleSearchResultClick(genre)}>
+                <li key={genre.id} className="list-group my-4">
+                  <a onClick={() => handleSearchResultClick(genre)} className="list-group-item my-4">
                     {genre.name}
                   </a>
                 </li>
