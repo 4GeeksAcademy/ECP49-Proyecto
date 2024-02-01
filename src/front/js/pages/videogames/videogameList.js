@@ -34,7 +34,9 @@ export const VideogamesList = () => {
                   <h5>{videogame.name}</h5>
 
 
+
                   <div className="d-flex justify-content-end">
+
 
 
                     <Link to={`/videogames/` + index}>
@@ -54,6 +56,7 @@ export const VideogamesList = () => {
                         Delete
                       </button>
                       : null}
+
 
 
                     {store.auth === true ? null :

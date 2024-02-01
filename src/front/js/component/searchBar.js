@@ -57,7 +57,7 @@ export const SearchBar = () => {
     return (
         <>
             <div className="fondo_nav">
-                <div className="input-group mb-3">
+                <div className="input-group">
                     <input
                         type="text"
                         className="form-control"
@@ -80,7 +80,7 @@ export const SearchBar = () => {
                         {searchResults.length > 0 && (
                             <ul>
                                 {searchResults.map((game) => (
-                                    <li key={game.id}>
+                                    <li key={game.id} className="list-group my-4">
                                         <Link to={`/games/${game.id}`}>{game.name}</Link>
                                     </li>
                                 ))}

@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../../store/appContext";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import '../../../styles/home.css';
 
 export const FormVideogame = () => {
   const { store, actions } = useContext(Context);
@@ -115,7 +116,7 @@ export const FormVideogame = () => {
           {isSearchResultsVisible && searchResults.length > 0 && (
             <ul>
               {searchResults.map((game) => (
-                <li key={game.id}>
+                <li key={game.id} className="list-group my-4">
                   <a onClick={() => handleSearchResultClick(game)}>{game.name}</a>
                 </li>
               ))}
