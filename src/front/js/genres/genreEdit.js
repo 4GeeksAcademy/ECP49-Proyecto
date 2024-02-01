@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom";
 
 const GenreEdit = () => {
   const { store, actions } = useContext(Context);
@@ -30,7 +31,7 @@ const GenreEdit = () => {
   };
 
   return (
-    <div>
+    <div className="container card mt-5 list">
       <h2>Edit Genre</h2>
       <form>
         <label htmlFor="name">Type:</label>
@@ -45,10 +46,17 @@ const GenreEdit = () => {
         <button
           type="button"
           onClick={handleUpdate}
-          className="btn btn-primary"
+          className="btn btn-md m-2 btn-green"
         >
           Update Genre
         </button>
+
+        <Link to="/genresList">
+          <span className="btn btn-md m-2 btn btn-md m-2 btn-beige" href="#" role="button">
+            Back Genres
+          </span>
+        </Link>
+
       </form>
     </div>
   );

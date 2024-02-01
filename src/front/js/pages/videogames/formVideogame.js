@@ -99,7 +99,7 @@ export const FormVideogame = () => {
   };
 
   return (
-    <div className="container card mt-5">
+    <div className="container card mt-5 list">
       <h2 className="m-3">Add Videogame</h2>
       <form className="m-3" onSubmit={handleSearch}>
         <label htmlFor="name">Name:</label>
@@ -143,12 +143,12 @@ export const FormVideogame = () => {
           className="form-control"
         />
         <br />
-        <button type="button" onClick={addVideogame} className="btn btn-primary">
+        <button type="button" onClick={addVideogame} className="btn btn-md m-2 btn-green">
           Add Videogame
         </button>
-        <Link to="/">
-          <span className="btn btn-primary btn-lg" href="#" role="button">
-            Back home
+        <Link to="/videogames/">
+          <span className="btn btn-md m-2 btn btn-md m-2 btn-beige" href="#" role="button">
+            Back Videogames
           </span>
         </Link>
       </form>

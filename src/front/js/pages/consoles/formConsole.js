@@ -85,7 +85,7 @@ export const FormConsole = () => {
   };
 
   return (
-    <div className="container card mt-5">
+    <div className="container card mt-5 list">
       <h2 className="m-3">Add Console</h2>
       <form className="m-3" onSubmit={handleSearch}>
         <label htmlFor="name">Name:</label>
@@ -133,12 +133,12 @@ export const FormConsole = () => {
         />
         <br />
 
-        <button type="button" onClick={addConsole} className="btn btn-primary">
+        <button type="button" onClick={addConsole} className="btn btn-md m-2 btn-green">
           Add Console
         </button>
-        <Link to="/">
-          <span className="btn btn-primary btn-lg" href="#" role="button">
-            Back home
+        <Link to="/consoles">
+          <span className="btn btn-md m-2 btn btn-md m-2 btn-beige" href="#" role="button">
+            Back Consoles
           </span>
         </Link>
       </form>

@@ -1,0 +1,11 @@
+.list {
+    width: 900px;
+    margin: auto;
+    display:flex;
+    justify-content: space-between;
+    border-color: rgba(0,0,0,.125);
+    border-top-right-radius: 10px !important;
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+}

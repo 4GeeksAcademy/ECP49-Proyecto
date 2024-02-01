@@ -10,7 +10,7 @@ export const Videogame = () => {
  
 
   return (
-    <div className="px-4 py-5 my-5 text-center">
+    <div className="px-4 py-5 text-center home">
       {store.videogames[params.theid] ? (
         <>
           <h1 className="display-5 fw-bold text-body-emphasis">{store.videogames[params.theid].name}</h1>
@@ -46,3 +46,4 @@ Videogame.propTypes = {
   pegi: PropTypes.number,
   year: PropTypes.number,
 };
+
