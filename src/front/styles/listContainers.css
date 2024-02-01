@@ -79,6 +79,7 @@ width: 650px;
   margin: 10px;
   transition: border-radius 0.3s, border-color 0.3s;
   width: 1500px;
+  z-index:-1;
   
 }
 

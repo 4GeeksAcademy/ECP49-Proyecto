@@ -55,10 +55,15 @@ export const ConsoleList = () => {
 
 
                     {store.auth === true ? null :
+
+
                       <button
                         className="btn btn-lg" style={{ color: "#EAECCC" }}
-                        onClick={() => handleToggleFavorite(console.id)}><i className="fa-solid fa-star"></i>
+                        onClick={() => handleToggleFavorite(console.id)}><i className="fa-solid fa-star star-like"></i>
                       </button>
+
+
+                      
                     }
 
                   </div>
