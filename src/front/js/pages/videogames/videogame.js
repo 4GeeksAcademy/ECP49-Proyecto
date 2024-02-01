@@ -28,7 +28,9 @@ export const Videogame = () => {
   }, [theid]);
 
   return (
+
     <div className="pb-5 text-center container card fondo">
+
       {store.videogames[params.theid] ? (
         <>
           <h1 className="display-5 fw-bold text-body-emphasis">{store.videogames[params.theid].name}</h1>
@@ -76,3 +78,4 @@ Videogame.propTypes = {
   pegi: PropTypes.number,
   year: PropTypes.number,
 };
+
