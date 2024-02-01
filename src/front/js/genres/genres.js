@@ -32,23 +32,19 @@ export const Genres = () => {
 
       {store.genres[params.theid] ? (
         <>
-          {/* <h1 className="display-5 fw-bold text-body-emphasis">{store.genres[params.theid].type}</h1> */}
-          <h2>{selectedGenre.name}</h2>
+          <h1 className="display-5 fw-bold text-body-emphasis">{store.genres[params.theid].type}</h1>
+          {/* <h2>{selectedGenre.name}</h2> */}
 
           <hr className="my-4" />
 
           <div className="row justify-content-around align-items-center">
-            <div className="col-2">
+            {/* <div className="col-2">
               <img className="img-thumbnail" style={{ maxWidth: "350px" }} src={selectedGenre.image_background} alt="Card image cap" />
-            </div>
+            </div> */}
             <div className="col-8">
-              <p className="card-text"><strong>Description:</strong> {selectedGenre.description || "Not defined"}</p>
-              <p className="card-text"><strong>Games Count:</strong> {selectedGenre.games_count || "Unknown"}</p>
+              {/* <p className="card-text"><strong>Description:</strong> {selectedGenre.description || "Not defined"}</p> */}
+              {/* <p className="card-text"><strong>Games Count:</strong> {selectedGenre.games_count || "Unknown"}</p> */}
             </div>
-            <div className="card-footer text-muted fondo">
-              <h2>{selectedGenre.name}</h2>
-            </div>
-            <hr className="my-4" />
           </div>
         </>
       ) : (

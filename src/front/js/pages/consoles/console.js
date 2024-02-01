@@ -13,7 +13,7 @@ export const Console = () => {
     useEffect(() => {
         const fetchRawgData = async () => {
             try {
-                const response = await fetch(`https://api.rawg.io/api/platforms/${theid}?key=e8722d91c21d4eec9047a9a02fd9efe7`);
+                const response = await fetch(`https://api.rawg.io/api/platforms?key=e8722d91c21d4eec9047a9a02fd9efe7`);
                 const data = await response.json();
 
                 if (data) {
@@ -37,11 +37,11 @@ export const Console = () => {
                     <h1 className="display-5 fw-bold text-body-emphasis">{store.consoles[params.theid].name}</h1>
                     <hr className="my-4" />
                     <div className="row justify-content-around align-items-center">
-                        <div className="col-2">
-                            <img className="img-thumbnail" style={{ maxWidth: "350px" }} src={selectedConsole.background_image} alt="Card image cap" />
-                        </div>
+                        {/* <div className="col-2">
+                            <img className="img-thumbnail" style={{ maxWidth: "350px" }} src={selectedConsole.image_background} alt="Card image cap" />
+                        </div> */}
                         <div className="col-8">
-                            <p className="card-body mx-4"><strong>Description:</strong> {selectedConsole.description || "Not defined"}</p>
+                            {/* <p className="card-body mx-4"><strong>Description:</strong> {selectedConsole.description || "Not defined"}</p> */}
                             <p className="lead m-4"><strong>Company:</strong> {store.consoles[params.theid].company}</p>
                             <p className="lead m-4 card-hearder">Year: {store.consoles[params.theid].year}</p>
 
