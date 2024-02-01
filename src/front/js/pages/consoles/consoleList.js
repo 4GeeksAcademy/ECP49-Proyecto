@@ -24,6 +24,8 @@ export const ConsoleList = () => {
       <div>
         <h2>All Consoles</h2>
       </div>
+
+
       <div className="list">
       <ul className="list-group">
         {store.consoles == false && <p>...loading</p>}
@@ -51,22 +53,27 @@ export const ConsoleList = () => {
                   </button>
                   : null}
 
-                  <button
-                    className="btn btn-lg" style={{color: "#EAECCC"}}
-                    onClick={() => handleToggleFavorite(console.id)}><i class="fa-solid fa-star"></i>
-                  </button>
-                 
-                </div>
-              </li>
-            );
-          })}
-      </ul>
+
+                    {store.auth === true ? null :
+                      <button
+                        className="btn btn-lg" style={{ color: "#EAECCC" }}
+                        onClick={() => handleToggleFavorite(console.id)}><i className="fa-solid fa-star"></i>
+                      </button>
+                    }
+
+                  </div>
+                </li>
+              );
+            })}
+        </ul>
       </div>
       <br />
 
       {store.auth === true ?
         <Link to="/consoles/add">
+
           <button className="btn btn-md m-2 btn-green">Add New Console</button>
+
         </Link>
         : null}
 

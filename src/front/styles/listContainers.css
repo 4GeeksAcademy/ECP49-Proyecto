@@ -10,16 +10,23 @@
  /* Estilo para cada tarjeta */
 .card-bodyList {
   background-color: var(--card-bg-color);
-  border: 2px solid rgba(255, 255, 255, 0.24);
-  border-radius: 2px;
+  border-radius: 16px; 
+  border: 2px solid rgba(0, 0, 0, 0.671);
+  
   margin: 10px;
   padding: 15px;
   transition: border-radius 0.3s, border-color 0.3s;
 }
 
 .card-bodyList:hover {
-  border-radius: 16px; 
+
+  
+  border-radius: 4px;
+
+ 
   border-color: var(--link-color); 
+
+
 }
   
 
@@ -82,7 +89,7 @@ width: 650px;
   transform: translate(-50%, -50%);
   display: block;
   margin-bottom: 10px;
-  color: #ffffff;
+  color: #fffffff3;
   background: rgba(0, 0, 0, 0.466); 
   padding: 6px; 
   border-radius: 6px; 

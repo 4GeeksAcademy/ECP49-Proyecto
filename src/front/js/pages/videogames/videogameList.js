@@ -23,6 +23,7 @@ export const VideogamesList = () => {
       <div>
         <h2>All Videogames</h2>
       </div>
+
       <div className="list">
       <ul className="list-group">
         {store.videogames === false && <p>...loading</p>}
@@ -32,7 +33,9 @@ export const VideogamesList = () => {
               <li key={index} className="list-group-item list m-1">
                 <h5>{videogame.name}</h5>
 
-                <div className="d-flex justify-content-end">
+
+                  <div className="d-flex justify-content-end">
+
 
                 <Link to={`/videogames/` + index}>
                 <button className="btn btn-sm m-2 btn-green">View More...</button>
@@ -57,17 +60,20 @@ export const VideogamesList = () => {
   onClick={() => handleToggleFavorite(videogame.id)}><i className="fa-solid fa-star star-like"></i>
   
 </button>
+
                   </div>
-              </li>
-            );
-          })}
-      </ul>
+                </li>
+              );
+            })}
+        </ul>
       </div>
       <br />
 
       {store.auth === true ?
         <Link to="/videogames/add">
+
           <button className="btn btn-md m-2 btn-green">Add New Videogame</button>
+
         </Link>
         : null}
 

@@ -28,6 +28,8 @@ export const Genres_list = () => {
       <div>
         <h2>All Genres</h2>
       </div>
+
+
       <div className="list">
         <ul className="list-group">
           {store.genres == false && <p>...loading</p>}
@@ -63,18 +65,22 @@ export const Genres_list = () => {
                     
                   </button>
 
+
                   </div>
 
-              </li>
-            );
-          })}
-      </ul>
+                </li>
+              );
+            })}
+        </ul>
       </div>
       <br />
 
       {store.auth === true ?
         <Link to="/formGenres/">
+
+
           <button className="btn btn-md m-2 btn-green">Add New Genre</button>
+
         </Link>
         : null}
 
