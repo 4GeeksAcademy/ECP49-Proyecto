@@ -5,10 +5,15 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
-* {
+body {
+    background-color: #EAECCC;
+
+}
+
+.home {
     background-color: #EAECCC;
     color: black;
-}
+} 
 
 .navbar {
     background-color: #C3E2C2;
