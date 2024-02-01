@@ -84,7 +84,7 @@ export const FormGenres = () => {
   };
 
   return (
-    <div className="container card mt-5">
+    <div className="container card mt-5 list">
       <h2 className="m-3">Add Genre</h2>
       <form className="m-3" onSubmit={handleSearch}>
         <label htmlFor="genre">Type:</label>
@@ -110,9 +110,14 @@ export const FormGenres = () => {
           )}
         </div>
         <br />
-        <button type="button" onClick={addGenres} className="btn btn-primary">
-          add
+        <button type="button" onClick={addGenres} className="btn btn-md m-2 btn-green">
+          Add Genre
         </button>
+        <Link to="/genresList">
+          <span className="btn btn-md m-2 btn btn-md m-2 btn-beige" href="#" role="button">
+            Back Genres
+          </span>
+        </Link>
       </form>
     </div>
   );

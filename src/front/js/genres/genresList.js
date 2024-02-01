@@ -1,6 +1,9 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import "../../styles/home.css"
+import "../../styles/buttons.css"
+import "../../styles/list.css"
 
 import { Context } from "../store/appContext";
 
@@ -21,45 +24,47 @@ export const Genres_list = () => {
   };
 
   return (
-    <div className="container text-center">
+    <div className="container text-center home">
       <div>
         <h2>All Genres</h2>
       </div>
-      <div style={{ width: "900px", margin: "auto" }}>
+
+
+      <div className="list">
         <ul className="list-group">
           {store.genres == false && <p>...loading</p>}
           {store.genres.length > 0 &&
-            store.genres.map((genre, index) => {
-              return (
-                <li key={index} className="list-group-item d-flex justify-content-between">
-                  <h5>{genre.type}</h5>
+          store.genres.map((genre, index) => {
+            return (
+              <li key={index} className="list-group-item list m-1">
+                <h5>{genre.type}</h5>
 
-                  <div className="d-flex justify-content-end">
+                <div className="d-flex justify-content-end">
 
-                    <Link to={"/genres/" + index}>
-                      <button className="btn btn-sm m-2" style={{ backgroundColor: "#C3E2C2" }} >View More...</button>
-                    </Link>
+                <Link to={"/genres/" + index}>
+                  <button className="btn btn-sm m-2 btn-green">View More...</button>
+                </Link>
 
-                    {store.auth === true ?
-                      <Link to={`/genres/edit/${genre.id}`}>
-                        <button className="btn btn-sm m-2" style={{ backgroundColor: "#DBCC95" }}>Edit</button>
-                      </Link>
-                      : null}
+                {store.auth === true ?
+                  <Link to={`/genres/edit/${genre.id}`}>
+                    <button className="btn btn-sm m-2 btn-beige">Edit</button>
+                  </Link>
+                  : null}
 
-                    {store.auth === true ?
-                      <button
-                        className="btn btn-sm m-2" style={{ backgroundColor: "#CD8D7A" }}
-                        onClick={() => handleDeleteGenre(genre.id)}>
-                        Delete
-                      </button>
-                      : null}
+                {store.auth === true ?
+                  <button
+                    className="btn btn-sm m-2 btn-red" style={{backgroundColor: "#CD8D7A"}}
+                    onClick={() => handleDeleteGenre(genre.id)}>
+                    Delete
+                  </button>
+                  : null}
 
-                    {store.auth === true ? null :
-                      <button
-                        className="btn btn-lg" style={{ color: "#EAECCC" }}
-                        onClick={() => handleToggleFavorite(genre.id)}><i class="fa-solid fa-star"></i>
-                      </button>
-                    }
+                  <button
+                    className="btn btn-lg" style={{color: "#EAECCC"}}
+                    onClick={() => handleToggleFavorite(genre.id)}><i class="fa-solid fa-star"></i>
+                    
+                  </button>
+
 
                   </div>
 
@@ -72,7 +77,10 @@ export const Genres_list = () => {
 
       {store.auth === true ?
         <Link to="/formGenres/">
-          <button className="btn btn-md" style={{ backgroundColor: "#C3E2C2" }} >Add New Genre</button>
+
+
+          <button className="btn btn-md m-2 btn-green">Add New Genre</button>
+
         </Link>
         : null}
 

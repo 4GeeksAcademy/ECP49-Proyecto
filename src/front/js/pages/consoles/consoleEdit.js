@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../../store/appContext";
+import { Link } from "react-router-dom";
 
 const ConsoleEdit = () => {
   const { store, actions } = useContext(Context);
@@ -34,7 +35,7 @@ const ConsoleEdit = () => {
   };
 
   return (
-    <div>
+    <div className="container card mt-5 list">
       <h2>Edit Console</h2>
       <form>
         <label htmlFor="name">Name:</label>
@@ -67,10 +68,17 @@ const ConsoleEdit = () => {
         <button
           type="button"
           onClick={handleUpdate}
-          className="btn btn-primary"
+          className="btn btn-md m-2 btn-green"
         >
           Update Console
         </button>
+
+        <Link to="/consoles">
+          <span className="btn btn-md m-2 btn btn-md m-2 btn-beige" href="#" role="button">
+            Back Consoles
+          </span>
+        </Link>
+
       </form>
     </div>
   );

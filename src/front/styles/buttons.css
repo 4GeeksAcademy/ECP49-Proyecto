@@ -1,0 +1,38 @@
+.btn-green {
+    background-color: #C3E2C2;
+}
+
+.btn-green:hover {
+    border: 1px solid black;
+}
+
+.btn-beige {
+    background-color: #DBCC95;
+}
+
+.btn-beige:hover {
+    border: 1px solid black;
+}
+
+.btn-red {
+    background-color: #CD8D7A;
+}
+
+.btn-red:hover {
+    border: 1px solid black;
+}
+
+.star-like {
+    font-size: 27px;
+    color: #EAECCC;
+}
+
+.star-like:hover {
+    border: 1px solid black;
+    color: #DBCC95;
+}
+
+.star-like:active {
+    border: 1px solid black;
+    color: #DBCC95;
+}
