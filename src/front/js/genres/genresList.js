@@ -34,37 +34,39 @@ export const Genres_list = () => {
         <ul className="list-group">
           {store.genres == false && <p>...loading</p>}
           {store.genres.length > 0 &&
-          store.genres.map((genre, index) => {
-            return (
-              <li key={index} className="list-group-item list m-1">
-                <h5>{genre.type}</h5>
+            store.genres.map((genre, index) => {
+              return (
+                <li key={index} className="list-group-item list m-1">
+                  <h5>{genre.type}</h5>
 
-                <div className="d-flex justify-content-end">
+                  <div className="d-flex justify-content-end">
 
-                <Link to={"/genres/" + index}>
-                  <button className="btn btn-sm m-2 btn-green">View More...</button>
-                </Link>
+                    <Link to={"/genres/" + index}>
+                      <button className="btn btn-sm m-2 btn-green">View More...</button>
+                    </Link>
 
-                {store.auth === true ?
-                  <Link to={`/genres/edit/${genre.id}`}>
-                    <button className="btn btn-sm m-2 btn-beige">Edit</button>
-                  </Link>
-                  : null}
+                    {store.auth === true ?
+                      <Link to={`/genres/edit/${genre.id}`}>
+                        <button className="btn btn-sm m-2 btn-beige">Edit</button>
+                      </Link>
+                      : null}
 
-                {store.auth === true ?
-                  <button
-                    className="btn btn-sm m-2 btn-red" style={{backgroundColor: "#CD8D7A"}}
-                    onClick={() => handleDeleteGenre(genre.id)}>
-                    Delete
-                  </button>
-                  : null}
+                    {store.auth === true ?
+                      <button
+                        className="btn btn-sm m-2 btn-red" style={{ backgroundColor: "#CD8D7A" }}
+                        onClick={() => handleDeleteGenre(genre.id)}>
+                        Delete
+                      </button>
+                      : null}
 
-                  <button
-                    className="btn btn-lg" style={{color: "#EAECCC"}}
-                    onClick={() => handleToggleFavorite(genre.id)}><i class="fa-solid fa-star"></i>
-                    
-                  </button>
 
+                    {store.auth === true ? null :
+                      <button
+                        className="btn btn-lg" style={{ color: "#EAECCC" }}
+                        onClick={() => handleToggleFavorite(genre.id)}><i className="fa-solid fa-star star-like"></i>
+
+                      </button>
+                    }
 
                   </div>
 

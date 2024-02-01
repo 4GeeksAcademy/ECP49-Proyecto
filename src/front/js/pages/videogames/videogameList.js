@@ -25,41 +25,44 @@ export const VideogamesList = () => {
       </div>
 
       <div className="list">
-      <ul className="list-group">
-        {store.videogames === false && <p>...loading</p>}
-        {store.videogames.length > 0 &&
-          store.videogames.map((videogame, index) => {
-            return (
-              <li key={index} className="list-group-item list m-1">
-                <h5>{videogame.name}</h5>
+        <ul className="list-group">
+          {store.videogames === false && <p>...loading</p>}
+          {store.videogames.length > 0 &&
+            store.videogames.map((videogame, index) => {
+              return (
+                <li key={index} className="list-group-item list m-1">
+                  <h5>{videogame.name}</h5>
 
 
                   <div className="d-flex justify-content-end">
 
 
-                <Link to={`/videogames/` + index}>
-                <button className="btn btn-sm m-2 btn-green">View More...</button>
-                </Link>
+                    <Link to={`/videogames/` + index}>
+                      <button className="btn btn-sm m-2 btn-green">View More...</button>
+                    </Link>
 
-                {store.auth === true ?
-                  <Link to={`/videogames/edit/${videogame.id}`}>
-                    <button className="btn btn-sm m-2 btn-beige">Edit</button>
-                  </Link>
-                  : null}
+                    {store.auth === true ?
+                      <Link to={`/videogames/edit/${videogame.id}`}>
+                        <button className="btn btn-sm m-2 btn-beige">Edit</button>
+                      </Link>
+                      : null}
 
-                {store.auth === true ?
-                  <button
-                    className="btn btn-sm m-2 btn-red" 
-                    onClick={() => handleDeleteVideogame(videogame.id)}>
-                    Delete
-                  </button>
-                  : null}
+                    {store.auth === true ?
+                      <button
+                        className="btn btn-sm m-2 btn-red"
+                        onClick={() => handleDeleteVideogame(videogame.id)}>
+                        Delete
+                      </button>
+                      : null}
 
-<button
-  className="btn btn-sm" 
-  onClick={() => handleToggleFavorite(videogame.id)}><i className="fa-solid fa-star star-like"></i>
-  
-</button>
+
+                    {store.auth === true ? null :
+                      <button
+                        className="btn btn-sm"
+                        onClick={() => handleToggleFavorite(videogame.id)}><i className="fa-solid fa-star star-like"></i>
+
+                      </button>
+                    }
 
                   </div>
                 </li>
