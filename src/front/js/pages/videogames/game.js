@@ -24,7 +24,7 @@ export const GameRawg = () => {
 
     return (
         <>
-            <div className="card" style={{maxWidth: "18rem"}}>
+            <div className="container card my-2" style={{maxWidth: "18rem"}}>
                 {selectedGame ? (
 
                     <>
